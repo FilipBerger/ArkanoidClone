@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="ArkanoidClone.Entity">
+    <Position X="6" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <FileName>Entity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Enemy">
+    <Position X="4.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemy.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.PlayerBar">
+    <Position X="3.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PlayerBar.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Wall">
+    <Position X="8.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Wall.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.PowerUps">
+    <Position X="10.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>PowerUps.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Ball">
+    <Position X="1.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Ball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Brick">
+    <Position X="7.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Brick.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Destroyable">
+    <Position X="6" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>Destroyable.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Highscore">
+    <Position X="12.75" Y="0.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Highscore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Stage">
+    <Position X="12.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Stage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Game">
+    <Position X="14.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.SizeUp">
+    <Position X="9.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>SizeUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>
