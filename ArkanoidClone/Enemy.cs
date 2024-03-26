@@ -5,7 +5,8 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Enemy : Destroyable
+    public abstract class Enemy : Destroyable
     {
+        public abstract void Update();
     }
 }

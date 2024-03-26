@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Destroyable : Entity
+    public abstract class Destroyable : Entity
     {
         private int hitpoints;
     }

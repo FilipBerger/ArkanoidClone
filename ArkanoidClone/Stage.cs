@@ -7,5 +7,9 @@ namespace ArkanoidClone
 {
     public class Stage
     {
+        private int ball;
+        private int walls;
+        private int bricks;
+        private int playerBar;
     }
 }

@@ -5,14 +5,12 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Ball : Entity
+    public class HighScoreDisplay
     {
-        public override void Update()
-        {
-            throw new System.NotImplementedException();
-        }
+        private int position;
+        private int texture;
 
-        public void Bounce()
+        public void Draw()
         {
             throw new System.NotImplementedException();
         }

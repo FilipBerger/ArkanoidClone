@@ -7,7 +7,12 @@ namespace ArkanoidClone
 {
     public class SizeUp : PowerUps
     {
-        public void ApplyEffect()
+        public override void ApplyEffect()
+        {
+            throw new System.NotImplementedException();
+        }
+
+        public override void Update()
         {
             throw new System.NotImplementedException();
         }

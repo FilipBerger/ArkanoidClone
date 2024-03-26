@@ -5,14 +5,14 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Ball : Entity
+    public class ExtraBalls : PowerUps
     {
-        public override void Update()
+        public override void ApplyEffect()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Bounce()
+        public override void Update()
         {
             throw new System.NotImplementedException();
         }

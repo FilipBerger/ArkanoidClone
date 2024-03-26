@@ -5,14 +5,9 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Ball : Entity
+    public class ShitShooter : Enemy
     {
         public override void Update()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Bounce()
         {
             throw new System.NotImplementedException();
         }
