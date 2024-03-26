@@ -5,14 +5,18 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class Ball : Entity
+    public class MainMenu
     {
-        public override void Update()
+        private List<strings> menuOptions;
+        private int texture;
+        private int position;
+
+        public void Draw()
         {
             throw new System.NotImplementedException();
         }
 
-        public void Bounce()
+        public void Update()
         {
             throw new System.NotImplementedException();
         }

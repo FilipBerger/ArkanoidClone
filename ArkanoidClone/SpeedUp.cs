@@ -5,10 +5,7 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public abstract class PowerUps : Entity
+    public class SpeedUp
     {
-        public abstract void ApplyEffect();
-
-        public abstract void Update();
     }
 }

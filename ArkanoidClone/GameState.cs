@@ -5,10 +5,11 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public abstract class PowerUps : Entity
+    public enum GameState
     {
-        public abstract void ApplyEffect();
-
-        public abstract void Update();
+        MainMenu,
+        Playing,
+        GameOver,
+        HighScore
     }
 }

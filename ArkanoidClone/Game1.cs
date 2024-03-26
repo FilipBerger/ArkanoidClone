@@ -8,12 +8,14 @@ namespace ArkanoidClone
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+        public GameState currentGameState;
 
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            currentGameState = GameState.MainMenu;
         }
 
         protected override void Initialize()
@@ -32,6 +34,7 @@ namespace ArkanoidClone
 
         protected override void Update(GameTime gameTime)
         {
+
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 

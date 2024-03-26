@@ -7,5 +7,9 @@ namespace ArkanoidClone
 {
     public class Wall : Entity
     {
+        public override void Update()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
