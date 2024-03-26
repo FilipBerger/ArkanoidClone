@@ -6,6 +6,8 @@ namespace ArkanoidClone
 {
     public class Game1 : Game
     {
+        PlayerBar playerBar = new PlayerBar();
+
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
@@ -48,6 +50,9 @@ namespace ArkanoidClone
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+
+            playerBar.Draw();
+            _spriteBatch.Draw(playerBar., new Vector2(0, 0), Color.White);
 
             base.Draw(gameTime);
         }
