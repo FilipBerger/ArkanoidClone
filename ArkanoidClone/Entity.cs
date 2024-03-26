@@ -12,22 +12,26 @@ namespace ArkanoidClone
     public abstract class Entity
     {
         // private Vector2 direction;
-        private Texture2D texture;
-        private Vector2 position;
-        private float speed;
-        private Rectangle boundingBox;
+        public Texture2D Texture { get; set; }
+        public Vector2 position { get; set; }
+        public float speed { get; set; }
+        public Rectangle boundingBox { get; set; }
+
 
         public Entity(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox)
         {
-
-        }
-
-        public void Draw(Texture2D texture, Vector2 position)
-        {
-            this.texture = texture;
+            this.Texture = texture;
             this.position = position;
+            this.speed = speed;
+            this.boundingBox = boundingBox;
+
         }
 
-        public abstract void Update();
+        //public void Draw(Texture2D Texture, Vector2 position)
+        //{
+            
+        //}
+
+        public abstract void Update(GameTime gameTime);
     }
 }

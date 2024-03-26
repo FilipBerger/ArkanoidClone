@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,7 +8,7 @@ namespace ArkanoidClone
 {
     public class MainMenu
     {
-        private List<strings> menuOptions;
+        private List<string> menuOptions;
         private int texture;
         private int position;
 
@@ -16,7 +17,7 @@ namespace ArkanoidClone
             throw new System.NotImplementedException();
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             throw new System.NotImplementedException();
         }
