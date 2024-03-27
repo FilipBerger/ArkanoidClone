@@ -27,25 +27,25 @@ namespace ArkanoidClone
         {
             var keystate = Keyboard.GetState();
 
-
             if (keystate.IsKeyDown(Keys.Left))
             {
-                position.X -= speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Position = new Vector2(Position.X - speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
             }
 
             if (keystate.IsKeyDown(Keys.Right))
             {
-                position.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
+                Position = new Vector2(Position.X + speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
             }
 
-            if (position.X > 640 - texture.Width / 2) //640 - 480 spelstorlek
+            if (Position.X > 640 - Texture.Width / 2) //640 - 480 spelstorlek
             {
-                position.X = 640 - texture.Width / 2;
+                Position = new Vector2(640 - Texture.Width / 2, Position.Y);
             }
-            else if (position.X < texture.Width / 2)
+            else if (Position.X < 0)//Texture.Width / 2)
             {
-                position.X = texture.Width / 2;
+                Position = new Vector2(0, Position.Y);//Texture.Width / 2, Position.Y);
             }
         }
+
     }
 }

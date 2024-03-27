@@ -11,11 +11,10 @@ namespace ArkanoidClone
 {
     public abstract class Entity
     {
-        // private Vector2 direction;
-        private Texture2D texture; //{ get; set; }
-        private Vector2 position; // { get; set; }
-        private float speed { get; set; }
-        private Rectangle boundingBox { get; set; }
+        private Texture2D texture;
+        private Vector2 position;
+        private float speed;
+        private Rectangle boundingBox;
 
 
         public Entity(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox)
@@ -40,13 +39,12 @@ namespace ArkanoidClone
             get { return position; }
             set { position = value; }
         }
-        public float Speed 
+        public float Speed
         {
             get { return speed; }
             set { speed = value; }
-            
-        }
 
+        }
         public Rectangle BoundingBox
         {
             get { return boundingBox; }
