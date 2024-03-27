@@ -12,6 +12,10 @@ namespace ArkanoidClone
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
+        
+        private Wall wallLeft;
+        private Wall wallRight;
+        private Wall wallTop;
 
         public Game1()
         {
@@ -35,7 +39,12 @@ namespace ArkanoidClone
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
-                20)); //Content.Load kommer funka när det finns en image i Content för paddle.
+                20));
+
+            //Initialize walls
+            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Left);
+            wallRight = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Right);
+            wallTop = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Top);
 
 
             base.Initialize();
