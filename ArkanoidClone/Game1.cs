@@ -13,6 +13,11 @@ namespace ArkanoidClone
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
 
+        private List<Brick> _bricks;
+        private BrickSpawner _spawner;
+
+
+
         public Game1()
         {
             _graphics = new GraphicsDeviceManager(this);
@@ -21,7 +26,8 @@ namespace ArkanoidClone
             currentGameState = GameState.MainMenu;
             _graphics.PreferredBackBufferWidth = 1224;
             _graphics.PreferredBackBufferHeight = 720;
-        }
+
+           
         
         protected override void Initialize()
         {
@@ -46,6 +52,16 @@ namespace ArkanoidClone
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
 
+            _spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            // Load the brick texture
+            Texture2D brickTexture = Content.Load<Texture2D>("brickTexture");
+
+            // Create the brick spawner
+            _spawner = new BrickSpawner(brickTexture, new Vector2(0, 0), 1f, new Rectangle(0, 0, 64, 32), 3);
+
+            // Spawn the bricks
+            _bricks = _spawner.SpawnBricks(10, 5);
             // TODO: use this.Content to load your game content here
         }
 
@@ -71,9 +87,16 @@ namespace ArkanoidClone
             
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
+            // Draw the bricks
+            foreach (var brick in _bricks)
+            {
+                spriteBatch.Draw(_texture, _position, Color.White);
+            }
 
-            //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);
-            _spriteBatch.End();
+
+                //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);
+                _spriteBatch.End();
+
 
             base.Draw(gameTime);
         }
