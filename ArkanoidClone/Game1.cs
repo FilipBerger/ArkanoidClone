@@ -71,6 +71,10 @@ namespace ArkanoidClone
             
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
+            //Draw the walls surrounding the game
+            wallLeft.Draw(_spriteBatch);
+            wallRight.Draw(_spriteBatch);
+            wallTop.Draw(_spriteBatch);
 
             //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);
             _spriteBatch.End();
