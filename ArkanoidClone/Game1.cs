@@ -26,7 +26,8 @@ namespace ArkanoidClone
         {
             // TODO: Add your initialization logic here
                 playerBar = new PlayerBar(Content.Load<Texture2D>("Paddle"), 
-                new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), 500, //5 = speed
+                new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+                500, //500 = speed
                 new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)); //Content.Load kommer funka när det finns en image i Content för paddle.
 
             base.Initialize();
@@ -35,7 +36,7 @@ namespace ArkanoidClone
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            playerBar.Texture = Content.Load<Texture2D>("Paddle");
+            playerBar.Texture = (Content.Load<Texture2D>("Paddle"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -60,7 +61,7 @@ namespace ArkanoidClone
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             
-            _spriteBatch.Draw(playerBar.Texture, playerBar.position, Color.White);
+            _spriteBatch.Draw(playerBar.Texture, playerBar.Position, Color.White);
 
 
             //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);

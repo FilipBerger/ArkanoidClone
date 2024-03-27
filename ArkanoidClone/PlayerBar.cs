@@ -7,15 +7,15 @@ namespace ArkanoidClone
 {
     public class PlayerBar : Entity
     {
-        public Texture2D Texture { get; set; }
-        public Vector2 position; /* { get; set; }*/  //Getter och setter ska fungera, just nu fungerar det utan
-        public float speed { get; set; }
-        public Rectangle boundingBox { get; set; }
+        private Texture2D texture;
+        private Vector2 position; //Getter och setter ska fungera, just nu fungerar det utan
+        private float speed;
+        private Rectangle boundingBox;
 
 
         public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base (texture, position, speed, boundingBox) 
         {
-            this.Texture = texture;
+            this.texture = texture;
             this.position = position;
             this.speed = speed;
             this.boundingBox = boundingBox;
@@ -38,13 +38,13 @@ namespace ArkanoidClone
                 position.X += speed * (float)gameTime.ElapsedGameTime.TotalSeconds;
             }
 
-            if (position.X > 640 - Texture.Width / 2) //640 - 480 spelstorlek
+            if (position.X > 640 - texture.Width / 2) //640 - 480 spelstorlek
             {
-                position.X = 640 - Texture.Width / 2;
+                position.X = 640 - texture.Width / 2;
             }
-            else if (position.X < Texture.Width / 2)
+            else if (position.X < texture.Width / 2)
             {
-                position.X = Texture.Width / 2;
+                position.X = texture.Width / 2;
             }
         }
     }
