@@ -23,7 +23,7 @@ namespace ArkanoidClone
             switch (position)
             {
                 case WallPosition.Left:
-                    return new Wall(texture, Vector2.Zero, new Rectangle(0, 0, WallThickness, screenHeight));
+                    return new Wall(texture, new Vector2(wallOffsetX, 0), new Rectangle(wallOffsetX, 0, WallThickness, screenHeight));
                 case WallPosition.Right:
                     int rightWallX = screenWidth - WallThickness;
                     return new Wall(texture, new Vector2(rightWallX - wallOffsetX, 0), new Rectangle(rightWallX - wallOffsetX, 0, WallThickness, screenHeight));
