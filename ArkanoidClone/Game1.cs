@@ -42,9 +42,9 @@ namespace ArkanoidClone
                 20));
 
             //Initialize walls
-            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Left);
-            wallRight = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Right);
-            wallTop = Wall.CreateWall(Content.Load<Texture2D>("wall_texture"), GraphicsDevice, Wall.WallPosition.Top);
+            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Left);
+            wallRight = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Right);
+            wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
 
 
             base.Initialize();

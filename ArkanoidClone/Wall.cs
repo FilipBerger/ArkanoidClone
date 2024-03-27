@@ -10,7 +10,7 @@ namespace ArkanoidClone
     public class Wall : Entity
     {
 
-        private const int WallThickness = 10;
+        private const int WallThickness = 30;
 
         public static Wall CreateWall(Texture2D texture, GraphicsDevice graphicsDevice, WallPosition position)
         {
@@ -39,7 +39,7 @@ namespace ArkanoidClone
         }
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, BoundingBox, Color.Green);
+            spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
 
         public enum WallPosition
