@@ -9,11 +9,11 @@ namespace ArkanoidClone
 {
     public class Ball : Entity
     {
-        
+
 
         public Ball(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox) //Tillfällig
         {
-            
+
         }
 
         public void Update(GameTime gameTime, Entity entity)
@@ -28,7 +28,7 @@ namespace ArkanoidClone
             {
                 Speed *= -1;
             }
-            
+
 
         }
         public void Draw(SpriteBatch spriteBatch)

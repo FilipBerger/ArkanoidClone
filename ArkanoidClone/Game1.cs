@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Net.Mime;
 
 namespace ArkanoidClone
@@ -13,6 +14,7 @@ namespace ArkanoidClone
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
         private Ball ball;
+        private AdditionalBall additionalBall;
 
 
         public Game1()
@@ -43,7 +45,11 @@ namespace ArkanoidClone
                      new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
                      300f,
                      new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
-
+           
+            additionalBall = new AdditionalBall(Content.Load<Texture2D>("ball"),
+                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2 + 100),
+                     300f,
+                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2 + 100, 30, 30));
 
             base.Initialize();
         }
@@ -66,8 +72,8 @@ namespace ArkanoidClone
 
             playerBar.Update(gameTime);
             ball.Update(gameTime, playerBar);
+            additionalBall.Update(gameTime, playerBar);
             base.Update(gameTime);
-
         }
 
         protected override void Draw(GameTime gameTime)
@@ -78,12 +84,19 @@ namespace ArkanoidClone
 
             
             _spriteBatch.Begin();
-           
+            if (additionalBall.isActive)
+            {
+                _spriteBatch.Draw(additionalBall.Texture, additionalBall.BoundingBox, Color.Blue);
+            }
             _spriteBatch.Draw(ball.Texture, ball.BoundingBox, Color.White);
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+        private void ApplySpeedPowerUp()
+        {
+            playerBar.ApplySpeedPowerUpForDuration(15, 15);
         }
     }
 }
