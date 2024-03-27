@@ -15,20 +15,28 @@ namespace ArkanoidClone
 
         public Game1()
         {
-            
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
             currentGameState = GameState.MainMenu;
+            _graphics.PreferredBackBufferWidth = 1224;
+            _graphics.PreferredBackBufferHeight = 720;
         }
-
+        
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-                playerBar = new PlayerBar(Content.Load<Texture2D>("Paddle"), 
-                new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+            _graphics.IsFullScreen = false;
+            _graphics.ApplyChanges();
+
+                playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"), 
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
                 500, //500 = speed
-                new Rectangle(0, 0, GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height)); //Content.Load kommer funka när det finns en image i Content för paddle.
+                new Rectangle(GraphicsDevice.Viewport.Width / 2,
+                600,
+                100,
+                20)); //Content.Load kommer funka när det finns en image i Content för paddle.
+
 
             base.Initialize();
         }
@@ -36,7 +44,7 @@ namespace ArkanoidClone
         protected override void LoadContent()
         {
             _spriteBatch = new SpriteBatch(GraphicsDevice);
-            playerBar.Texture = (Content.Load<Texture2D>("Paddle"));
+            playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
 
             // TODO: use this.Content to load your game content here
         }
@@ -56,12 +64,12 @@ namespace ArkanoidClone
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DarkSlateGray);
 
             // TODO: Add your drawing code here
             _spriteBatch.Begin();
             
-            _spriteBatch.Draw(playerBar.Texture, playerBar.Position, Color.White);
+            _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
 
             //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);

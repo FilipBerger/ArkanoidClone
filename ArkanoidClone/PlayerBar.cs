@@ -30,20 +30,28 @@ namespace ArkanoidClone
             if (keystate.IsKeyDown(Keys.Left))
             {
                 Position = new Vector2(Position.X - speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
+                BoundingBox = new Rectangle((int)Position.X,
+                    (int)Position.Y,
+                    BoundingBox.Width,
+                    BoundingBox.Height);
             }
 
             if (keystate.IsKeyDown(Keys.Right))
             {
                 Position = new Vector2(Position.X + speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
+                BoundingBox = new Rectangle((int)Position.X,
+                    (int)Position.Y,
+                    BoundingBox.Width,
+                    BoundingBox.Height);
             }
 
-            if (Position.X > 640 - Texture.Width / 2) //640 - 480 spelstorlek
+            if (Position.X > 1024 - BoundingBox.Width) //640 - 480 spelstorlek
             {
-                Position = new Vector2(640 - Texture.Width / 2, Position.Y);
+                Position = new Vector2(1024 - BoundingBox.Width, Position.Y);
             }
-            else if (Position.X < 0)//Texture.Width / 2)
+            else if (Position.X < 200) //+Texture.Width / 2)
             {
-                Position = new Vector2(0, Position.Y);//Texture.Width / 2, Position.Y);
+                Position = new Vector2(200, Position.Y);// + Texture.Width / 2, Position.Y);
             }
         }
 
