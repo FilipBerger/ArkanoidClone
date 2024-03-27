@@ -12,6 +12,8 @@ namespace ArkanoidClone
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
+        private Ball ball;
+
 
         public Game1()
         {
@@ -36,6 +38,11 @@ namespace ArkanoidClone
                 600,
                 100,
                 20)); //Content.Load kommer funka när det finns en image i Content för paddle.
+               
+                ball = new Ball(Content.Load<Texture2D>("ball"),
+                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+                     300f,
+                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
 
             base.Initialize();
@@ -58,6 +65,7 @@ namespace ArkanoidClone
             // TODO: Add your update logic here
 
             playerBar.Update(gameTime);
+            ball.Update(gameTime, playerBar);
             base.Update(gameTime);
 
         }
@@ -67,12 +75,12 @@ namespace ArkanoidClone
             GraphicsDevice.Clear(Color.DarkSlateGray);
 
             // TODO: Add your drawing code here
-            _spriteBatch.Begin();
+
             
+            _spriteBatch.Begin();
+           
+            _spriteBatch.Draw(ball.Texture, ball.BoundingBox, Color.White);
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
-
-
-            //_spriteBatch.Draw(playerBar, new Vector2(0, 0), Color.White);
             _spriteBatch.End();
 
             base.Draw(gameTime);

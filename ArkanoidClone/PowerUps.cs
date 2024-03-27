@@ -15,7 +15,7 @@ namespace ArkanoidClone
 
         public abstract void ApplyEffect();
 
-        public override void Update(GameTime gameTime) 
+        public void Update(GameTime gameTime) 
         {
             
         }

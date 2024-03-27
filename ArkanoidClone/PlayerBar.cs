@@ -19,11 +19,9 @@ namespace ArkanoidClone
             this.position = position;
             this.speed = speed;
             this.boundingBox = boundingBox;
-           
-
         }
 
-        public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             var keystate = Keyboard.GetState();
 

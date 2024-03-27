@@ -26,6 +26,7 @@ namespace ArkanoidClone
 
         }
 
+
         #region
 
         public Texture2D Texture 
@@ -52,11 +53,6 @@ namespace ArkanoidClone
         }
 
         #endregion
-        //public void Draw(Texture2D Texture, Vector2 position)
-        //{
-
-        //}
-
-        public abstract void Update(GameTime gameTime);
+        
     }
 }
