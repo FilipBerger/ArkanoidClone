@@ -17,7 +17,7 @@ namespace ArkanoidClone
             int screenWidth = graphicsDevice.Viewport.Width;
             int screenHeight = graphicsDevice.Viewport.Height;
 
-            int wallOffsetX = 140; // Number of pixels to move towards the center
+            int wallOffsetX = 140; // Number of pixels to move from the edges
             
 
             switch (position)
