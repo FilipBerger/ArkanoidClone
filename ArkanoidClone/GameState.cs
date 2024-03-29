@@ -9,7 +9,8 @@ namespace ArkanoidClone
     {
         MainMenu,
         Playing,
-        GameOver,
-        HighScore
+        ViewingHighScores,
+        Exiting,
+        GameOver
     }
 }
