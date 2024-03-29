@@ -55,14 +55,14 @@ namespace ArkanoidClone
                 20)); 
            
            
-            for (int i = 0; i < 3; i++)
+            for (int i = 0; i < 15; i++)
 
-                for (int j = 0; j < 3; j++)
+                for (int j = 0; j < 17; j++)
                 {
                     bricks.Add(new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
-                    new Vector2(612 + j * 45, 50 + i * 15),
+                    new Vector2(230 + j * 45, 50 + i * 15),
                     0f,
-                    new Rectangle(612 + j * 45, 50 + i * 15, 45, 15),
+                    new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
                     1));
                 }
 
