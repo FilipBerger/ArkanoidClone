@@ -52,10 +52,7 @@ namespace ArkanoidClone
         }
 
         #endregion
-        //public void Draw(Texture2D Texture, Vector2 position)
-        //{
-
-        //}
+      
 
        
     }

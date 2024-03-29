@@ -13,6 +13,7 @@ namespace ArkanoidClone
     {
         private PlayerBar playerBar;
         private Brick brick;
+        private List<Brick> bricks = new List<Brick>();
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
@@ -32,23 +33,32 @@ namespace ArkanoidClone
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
 
             playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"),
                 new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
-                500, //500 = speed
+                500, 
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
-                20)); //Content.Load will work when there is an image in the Content folder for the paddle.
+                20)); 
            
-            brick = new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
-                 new Vector2(GraphicsDevice.Viewport.Width / 2, 0),
-                 0f,
-                 new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 45, 15), 
-                 1);
+           
+            for (int i = 0; i < 3; i++)
+
+                for (int j = 0; j < 3; j++)
+                {
+                    bricks.Add(new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
+                    new Vector2(612 + j * 45, 50 + i * 15),
+                    0f,
+                    new Rectangle(612 + j * 45, 50 + i * 15, 45, 15),
+                    1));
+                }
+
+
+
 
             base.Initialize();
         }
@@ -61,7 +71,7 @@ namespace ArkanoidClone
             Texture2D brickTexture = Content.Load<Texture2D>("05-Breakout-Tiles");
 
             
-            // TODO: use this.Content to load your game content here
+            
         }
 
         protected override void Update(GameTime gameTime)
@@ -69,7 +79,7 @@ namespace ArkanoidClone
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            
 
             playerBar.Update(gameTime);
             base.Update(gameTime);
@@ -79,13 +89,17 @@ namespace ArkanoidClone
         {
             GraphicsDevice.Clear(Color.DarkSlateGray);
 
-            // TODO: Add your drawing code here
+           
             _spriteBatch.Begin();
 
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
             
-            brick.Draw(_spriteBatch);
+            
+            foreach (Brick brick in bricks)
+            {
+                brick.Draw(_spriteBatch);
+            }
 
             _spriteBatch.End();
 

@@ -12,7 +12,8 @@ namespace ArkanoidClone
 
     public class Brick : Destroyable
     {
-      
+        
+
         public Brick(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints) : base(texture, position, speed, boundingBox, hitpoints)
         
         {
@@ -23,16 +24,16 @@ namespace ArkanoidClone
             this.Speed = speed;
 
         }
-
+        
 
 
         public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
-      
-        
-        
+
+
+
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(Texture, BoundingBox, Color.White);
