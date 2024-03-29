@@ -9,7 +9,7 @@ using System.Text;
 namespace ArkanoidClone
 {
 
-    public class Brick : GameObject
+    public class Brick 
     {
         private Texture2D _texture;
         private Vector2 _position;
@@ -24,6 +24,7 @@ namespace ArkanoidClone
             _speed = speed;
             _boundingBox = boundingBox;
             _hitPoints = hitPoints;
+            
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -31,15 +32,4 @@ namespace ArkanoidClone
             spriteBatch.Draw(_texture, _position, Color.White);
         }
     }
-
-    BrickSpawner spawner = new BrickSpawner(brickTexture, spawnPosition, brickSpeed, brickBoundingBox, maxHitPoints);
-    List<Brick> bricks = spawner.SpawnBricks(numberOfBricks, numberOfRows);
-    gameObjects.AddRange(bricks); // Add the bricks to your game objects
-   
-        foreach (var gameObject in gameObjects)
-    {
-        gameObject.Draw(spriteBatch);
-    }
-}
-}
 }

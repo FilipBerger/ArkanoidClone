@@ -2,8 +2,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
 namespace ArkanoidClone
 {
@@ -40,25 +38,57 @@ namespace ArkanoidClone
 
             return bricks;
         }
+
+       
+
+        internal List<Brick> SpawnBricks(object numberOfBricks, object numberOfRows)
+        {
+            List<Brick> bricks = new List<Brick>();
+
+            int bricksCount = Convert.ToInt32(numberOfBricks);
+            int rowsCount = Convert.ToInt32(numberOfRows);
+
+            for (int row = 0; row < rowsCount; row++)
+            {
+                for (int i = 0; i < bricksCount; i++)
+                {
+                    Vector2 position = new Vector2(_spawnPosition.X + (i * _brickBoundingBox.Width), _spawnPosition.Y + (row * _brickBoundingBox.Height));
+                    Brick brick = new Brick(_brickTexture, position, _brickSpeed, _brickBoundingBox, _maxHitPoints);
+                    bricks.Add(brick);
+                }
+            }
+
+            return bricks;
+        }
     }
     public class Game
     {
         private List<Brick> gameObjects = new List<Brick>();
-        private SpriteBatch spriteBatch; // Assuming this is defined elsewhere
+        private SpriteBatch spriteBatch; 
+        private Texture2D brickTexture;
+        private Vector2 spawnPosition;
+        private float brickSpeed;
+        private Rectangle brickBoundingBox;
+        private int maxHitPoints;
+        private int numberOfRows;
+        private int numberOfBricks;
 
         public void LoadContent()
         {
             BrickSpawner spawner = new BrickSpawner(brickTexture, spawnPosition, brickSpeed, brickBoundingBox, maxHitPoints);
             List<Brick> bricks = spawner.SpawnBricks(numberOfBricks, numberOfRows);
-            gameObjects.AddRange(bricks); // Add the bricks to your game objects
+            gameObjects.AddRange(bricks); 
         }
 
-        public void Draw()
+        public void Draw(GameTime gameTime)
         {
             foreach (var gameObject in gameObjects)
             {
                 gameObject.Draw(spriteBatch);
             }
         }
+
+        
     }
+}
    
