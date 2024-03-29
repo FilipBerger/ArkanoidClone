@@ -103,7 +103,7 @@ namespace ArkanoidClone
                 case GameState.Playing:
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, playerBar);
+                    ball.Update(gameTime, playerBar, walls);
                    
                     break;
                 case GameState.ViewingHighScores:
