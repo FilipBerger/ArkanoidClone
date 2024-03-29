@@ -13,7 +13,7 @@ namespace ArkanoidClone
         {
         }
 
-        public override void Update(GameTime gameTime) { } 
+        public void Update(GameTime gameTime) { } 
         
     }
 }

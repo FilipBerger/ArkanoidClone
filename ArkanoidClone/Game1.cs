@@ -12,6 +12,10 @@ namespace ArkanoidClone
         private PlayerBar playerBar;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
+
+        private Wall wallLeft;
+        private Wall wallRight;
+        private Wall wallTop;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
 
@@ -40,7 +44,13 @@ namespace ArkanoidClone
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
-                20)); //Content.Load kommer funka när det finns en image i Content för paddle.
+                20));
+
+            //Initialize walls
+            
+            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Left);
+            wallRight = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Right);
+            wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
 
 
             base.Initialize();
@@ -107,6 +117,10 @@ namespace ArkanoidClone
                     mainMenuScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Playing:
+                //Draw the walls surrounding the game
+                    wallLeft.Draw(_spriteBatch);
+                    wallRight.Draw(_spriteBatch);
+                    wallTop.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
                     break;
                 case GameState.ViewingHighScores:
@@ -118,6 +132,7 @@ namespace ArkanoidClone
                     // Lazy exempel: Environment.Exit(0);
                     break;
             }
+
 
             _spriteBatch.End();
 

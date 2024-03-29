@@ -52,11 +52,13 @@ namespace ArkanoidClone
         }
 
         #endregion
-        //public void Draw(Texture2D Texture, Vector2 position)
-        //{
 
-        //}
+        //added a Draw method again, needed to be overwritten in Wall.cs for now
+        public virtual void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, Position, Color.White);
+        }
 
-        public abstract void Update(GameTime gameTime);
+        
     }
 }
