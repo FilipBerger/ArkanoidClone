@@ -2,22 +2,23 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
 using System.Net.Mime;
+using System.Collections.Generic;
+
+
 
 namespace ArkanoidClone
 {
     public class Game1 : Game
     {
         private PlayerBar playerBar;
+        private Brick brick;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         public GameState currentGameState;
 
-        private List<Brick> _bricks;
-        private BrickSpawner _spawner;
 
-        public object Content { get; }
+        
 
         public Game1()
         {
@@ -42,6 +43,12 @@ namespace ArkanoidClone
                 600,
                 100,
                 20)); //Content.Load will work when there is an image in the Content folder for the paddle.
+           
+            brick = new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
+                 new Vector2(GraphicsDevice.Viewport.Width / 2, 0),
+                 0f,
+                 new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 45, 15), 
+                 1);
 
             base.Initialize();
         }
@@ -51,21 +58,9 @@ namespace ArkanoidClone
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             playerBar.Texture = Content.Load<Texture2D>("49-Breakout-Tiles");
 
-            // Load the brick texture
-            //Texture2D brickTexture = Content.Load<Texture2D>("brickTexture");
+            Texture2D brickTexture = Content.Load<Texture2D>("05-Breakout-Tiles");
 
-            // Create the brick spawner
-            //_spawner = new BrickSpawner(brickTexture, new Vector2(0, 0), 1f, new Rectangle(0, 0, 64, 32), 3);
-
-            // Spawn the bricks
-            //_bricks = _spawner.SpawnBricks(10, 5);
-
-            // Create the brick spawner
-            _spawner = new BrickSpawner(null, new Vector2(0, 0), 1f, new Rectangle(0, 0, 64, 32), 3);
-
-            // Spawn the bricks with different colors
-            _bricks = _spawner.SpawnBricksWithColors(10, 5, new Color[] { Color.Red, Color.Blue, Color.Green, Color.Yellow, Color.Orange });
-
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -89,11 +84,8 @@ namespace ArkanoidClone
 
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
-            // Draw the bricks
-            foreach (var brick in _bricks)
-            {
-                _spriteBatch.Draw(brick.Texture, brick.Position, brick.Color);
-            }
+            
+            brick.Draw(_spriteBatch);
 
             _spriteBatch.End();
 

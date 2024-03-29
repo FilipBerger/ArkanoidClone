@@ -57,6 +57,6 @@ namespace ArkanoidClone
 
         //}
 
-        public abstract void Update(GameTime gameTime);
+       
     }
 }

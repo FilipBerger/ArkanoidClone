@@ -1,6 +1,7 @@
 ﻿
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,27 +10,32 @@ using System.Text;
 namespace ArkanoidClone
 {
 
-    public class Brick 
+    public class Brick : Destroyable
     {
-        private Texture2D _texture;
-        private Vector2 _position;
-        private float _speed;
-        private Rectangle _boundingBox;
-        private int _hitPoints;
-
-        public Brick(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitPoints)
+      
+        public Brick(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints) : base(texture, position, speed, boundingBox, hitpoints)
+        
         {
-            _texture = texture;
-            _position = position;
-            _speed = speed;
-            _boundingBox = boundingBox;
-            _hitPoints = hitPoints;
-            
+            this.Texture = texture;
+            this.Position = position;
+            this.BoundingBox = boundingBox;
+            this.HitPoints = hitpoints;
+            this.Speed = speed;
+
         }
 
+
+
+        public void Update(GameTime gameTime)
+        {
+            throw new NotImplementedException();
+        }
+      
+        
+        
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(_texture, _position, Color.White);
+            spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
     }
 }
