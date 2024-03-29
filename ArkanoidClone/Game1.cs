@@ -67,8 +67,8 @@ namespace ArkanoidClone
 
                 //Top wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(0, 25), // Position
-                    new Rectangle(0, 25, GraphicsDevice.Viewport.Width, 50)) // Bounding box
+                    new Vector2(0, 40), // Position
+                    new Rectangle(0, 40, GraphicsDevice.Viewport.Width, 50)) // Bounding box
             };
 
             base.Initialize();
@@ -103,7 +103,7 @@ namespace ArkanoidClone
                 case GameState.Playing:
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, playerBar, walls);
+                    ball.Update(gameTime, playerBar);
                    
                     break;
                 case GameState.ViewingHighScores:

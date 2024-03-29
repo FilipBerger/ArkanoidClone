@@ -17,7 +17,7 @@ namespace ArkanoidClone
         }
 
 
-        public void Update(GameTime gameTime, PlayerBar playerbar, Wall[] walls)
+        public void Update(GameTime gameTime, PlayerBar playerbar)
         {
             Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
             BoundingBox = new Rectangle((int)Position.X,
@@ -28,15 +28,6 @@ namespace ArkanoidClone
             if (BoundingBox.Intersects(playerbar.BoundingBox))
             {
                 Speed *= -1;
-            }
-
-            foreach (var  wall in walls)
-            {
-                if (BoundingBox.Intersects(wall.BoundingBox))
-                {
-                    Speed *= -1;
-                    break;
-                }
             }
             
 
