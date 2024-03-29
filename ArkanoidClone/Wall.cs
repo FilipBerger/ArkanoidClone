@@ -37,7 +37,7 @@ namespace ArkanoidClone
             : base(texture, position, 0f, boundingBox) //Väggarna ska inte röra sig, 0f
         {
         }
-           public override void Update(GameTime gameTime)
+        public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }
