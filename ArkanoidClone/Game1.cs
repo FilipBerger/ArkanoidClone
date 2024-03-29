@@ -53,20 +53,23 @@ namespace ArkanoidClone
                      new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
             // Initialize walls
-
+            //Inside every wall you can change the position for format and Rectangle for bounding box
             walls = new Wall[]
-            {
+            {           
+                //Left wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(0, 0), // Position
-                    new Rectangle(0, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
+                    new Vector2(140, 0), // Position
+                    new Rectangle(140, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
 
+                //Right wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(GraphicsDevice.Viewport.Width - 50, 0), // Position
-                    new Rectangle(GraphicsDevice.Viewport.Width - 50, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
+                    new Vector2(GraphicsDevice.Viewport.Width - 190, 0), // Position
+                    new Rectangle(GraphicsDevice.Viewport.Width - 190, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
 
+                //Top wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(0, 0), // Position
-                    new Rectangle(0, 0, GraphicsDevice.Viewport.Width, 50)) // Bounding box
+                    new Vector2(0, 20), // Position
+                    new Rectangle(0, 20, GraphicsDevice.Viewport.Width, 50)) // Bounding box
             };
 
             base.Initialize();
