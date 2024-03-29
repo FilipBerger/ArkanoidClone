@@ -78,8 +78,8 @@ namespace ArkanoidClone
 
             
             _spriteBatch.Begin();
-           
-            _spriteBatch.Draw(ball.Texture, ball.BoundingBox, Color.White);
+
+            ball.Draw(_spriteBatch);
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
             _spriteBatch.End();
 

@@ -53,6 +53,6 @@ namespace ArkanoidClone
         }
 
         #endregion
-        
+
     }
 }
