@@ -15,7 +15,6 @@ namespace ArkanoidClone
         
 
         public Brick(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints) : base(texture, position, speed, boundingBox, hitpoints)
-        
         {
             this.Texture = texture;
             this.Position = position;
@@ -25,7 +24,6 @@ namespace ArkanoidClone
 
         }
         
-
 
         public void Update(GameTime gameTime)
         {
