@@ -14,13 +14,7 @@ namespace ArkanoidClone
         {
         }
 
-        public void HandleCollison (Ball ball)
-        {
-            if(BoundingBox.Intersects(ball.BoundingBox))
-            {
-                ball.Speed *= -1;
-            }
-        }
+
         public override void Draw(SpriteBatch spriteBatch)
 
         {

@@ -14,9 +14,6 @@ namespace ArkanoidClone
         private SpriteBatch _spriteBatch;
         private Ball ball;
         private Wall[] walls;
-        //private Wall wallLeft;
-        //private Wall wallRight;
-        //private Wall wallTop;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
 
@@ -52,10 +49,12 @@ namespace ArkanoidClone
                      300f,
                      new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
+            
             // Initialize walls
             //Inside every wall you can change the position for format and Rectangle for bounding box
             walls = new Wall[]
-            {           
+            {
+                
                 //Left wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
                     new Vector2(140, 0), // Position
@@ -68,8 +67,8 @@ namespace ArkanoidClone
 
                 //Top wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(0, 20), // Position
-                    new Rectangle(0, 20, GraphicsDevice.Viewport.Width, 50)) // Bounding box
+                    new Vector2(0, 25), // Position
+                    new Rectangle(0, 25, GraphicsDevice.Viewport.Width, 50)) // Bounding box
             };
 
             base.Initialize();
@@ -105,7 +104,7 @@ namespace ArkanoidClone
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, playerBar);
-                    HandleBallWallCollision();
+                   
                     break;
                 case GameState.ViewingHighScores:
                     // Här lägger vi logik för HighScores när den klassen är klar.
@@ -125,14 +124,6 @@ namespace ArkanoidClone
 
             base.Update(gameTime);
 
-        }
-
-        private void HandleBallWallCollision()
-        {
-            foreach (var wall in walls)
-            {
-                wall.HandleCollison(ball);
-            }
         }
 
         protected override void Draw(GameTime gameTime)
