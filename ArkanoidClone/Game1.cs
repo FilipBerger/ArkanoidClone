@@ -49,13 +49,20 @@ namespace ArkanoidClone
                 ball = new Ball(Content.Load<Texture2D>("ball"),
                      new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
                      300f,
-                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));                
+                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
-            //Initialize walls
-            
-            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Left);
-            wallRight = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Right);
-            wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
+            // Initialize walls
+            wallLeft = new Wall(Content.Load<Texture2D>("Wall-texture"),
+                new Vector2(0, 0), // Position
+                new Rectangle(0, 0, 50, GraphicsDevice.Viewport.Height)); // Bounding box
+
+            wallRight = new Wall(Content.Load<Texture2D>("Wall-texture"),
+                new Vector2(GraphicsDevice.Viewport.Width - 50, 0), // Position
+                new Rectangle(GraphicsDevice.Viewport.Width - 50, 0, 50, GraphicsDevice.Viewport.Height)); // Bounding box
+
+            wallTop = new Wall(Content.Load<Texture2D>("Wall-texture"),
+                new Vector2(0, 0), // Position
+                new Rectangle(0, 0, GraphicsDevice.Viewport.Width, 50)); // Bounding box
 
             base.Initialize();
         }
@@ -90,6 +97,7 @@ namespace ArkanoidClone
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, playerBar);
+                    HandleBallWallCollision();
                     break;
                 case GameState.ViewingHighScores:
                     // Här lägger vi logik för HighScores när den klassen är klar.
@@ -109,6 +117,18 @@ namespace ArkanoidClone
 
             base.Update(gameTime);
 
+        }
+
+        private void HandleBallWallCollision()
+        {
+            // Check collision with left wall
+            wallLeft.HandleCollison(ball);
+
+            // Check collision with right wall
+            wallRight.HandleCollison(ball);
+
+            // Check collision with top wall
+            wallTop.HandleCollison(ball);
         }
 
         protected override void Draw(GameTime gameTime)
