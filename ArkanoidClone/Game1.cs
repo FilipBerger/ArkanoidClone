@@ -12,7 +12,7 @@ namespace ArkanoidClone
         private PlayerBar playerBar;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
+        private Ball ball;
         private Wall wallLeft;
         private Wall wallRight;
         private Wall wallTop;
@@ -46,12 +46,16 @@ namespace ArkanoidClone
                 100,
                 20));
 
+                ball = new Ball(Content.Load<Texture2D>("ball"),
+                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+                     300f,
+                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));                
+
             //Initialize walls
             
             wallLeft = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Left);
             wallRight = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Right);
             wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
-
 
             base.Initialize();
         }
@@ -85,6 +89,7 @@ namespace ArkanoidClone
                 case GameState.Playing:
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
+                    ball.Update(gameTime, playerBar);
                     break;
                 case GameState.ViewingHighScores:
                     // Här lägger vi logik för HighScores när den klassen är klar.
@@ -101,6 +106,7 @@ namespace ArkanoidClone
             }
 
             previousKeyboardState = currentKeyboardState;
+
             base.Update(gameTime);
 
         }
@@ -121,6 +127,7 @@ namespace ArkanoidClone
                     wallLeft.Draw(_spriteBatch);
                     wallRight.Draw(_spriteBatch);
                     wallTop.Draw(_spriteBatch);
+                    ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
                     break;
                 case GameState.ViewingHighScores:
@@ -132,7 +139,6 @@ namespace ArkanoidClone
                     // Lazy exempel: Environment.Exit(0);
                     break;
             }
-
 
             _spriteBatch.End();
 

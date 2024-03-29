@@ -19,8 +19,6 @@ namespace ArkanoidClone
             this.position = position;
             this.speed = speed;
             this.boundingBox = boundingBox;
-           
-
         }
 
         public void Update(GameTime gameTime)

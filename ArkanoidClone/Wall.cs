@@ -20,6 +20,7 @@ namespace ArkanoidClone
             int wallOffsetX = 140; // Number of pixels to move from the edges
             
 
+
             switch (position)
             {
                 case WallPosition.Left:
@@ -42,6 +43,7 @@ namespace ArkanoidClone
             throw new NotImplementedException();
         }
         public override void Draw(SpriteBatch spriteBatch)
+
         {
             spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
