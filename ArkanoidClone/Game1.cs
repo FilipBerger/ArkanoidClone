@@ -13,9 +13,10 @@ namespace ArkanoidClone
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Ball ball;
-        private Wall wallLeft;
-        private Wall wallRight;
-        private Wall wallTop;
+        private Wall[] walls;
+        //private Wall wallLeft;
+        //private Wall wallRight;
+        //private Wall wallTop;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
 
@@ -52,17 +53,21 @@ namespace ArkanoidClone
                      new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
             // Initialize walls
-            wallLeft = new Wall(Content.Load<Texture2D>("Wall-texture"),
-                new Vector2(0, 0), // Position
-                new Rectangle(0, 0, 50, GraphicsDevice.Viewport.Height)); // Bounding box
 
-            wallRight = new Wall(Content.Load<Texture2D>("Wall-texture"),
-                new Vector2(GraphicsDevice.Viewport.Width - 50, 0), // Position
-                new Rectangle(GraphicsDevice.Viewport.Width - 50, 0, 50, GraphicsDevice.Viewport.Height)); // Bounding box
+            walls = new Wall[]
+            {
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(0, 0), // Position
+                    new Rectangle(0, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
 
-            wallTop = new Wall(Content.Load<Texture2D>("Wall-texture"),
-                new Vector2(0, 0), // Position
-                new Rectangle(0, 0, GraphicsDevice.Viewport.Width, 50)); // Bounding box
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(GraphicsDevice.Viewport.Width - 50, 0), // Position
+                    new Rectangle(GraphicsDevice.Viewport.Width - 50, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
+
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(0, 0), // Position
+                    new Rectangle(0, 0, GraphicsDevice.Viewport.Width, 50)) // Bounding box
+            };
 
             base.Initialize();
         }
@@ -121,14 +126,10 @@ namespace ArkanoidClone
 
         private void HandleBallWallCollision()
         {
-            // Check collision with left wall
-            wallLeft.HandleCollison(ball);
-
-            // Check collision with right wall
-            wallRight.HandleCollison(ball);
-
-            // Check collision with top wall
-            wallTop.HandleCollison(ball);
+            foreach (var wall in walls)
+            {
+                wall.HandleCollison(ball);
+            }
         }
 
         protected override void Draw(GameTime gameTime)
@@ -143,10 +144,11 @@ namespace ArkanoidClone
                     mainMenuScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Playing:
-                //Draw the walls surrounding the game
-                    wallLeft.Draw(_spriteBatch);
-                    wallRight.Draw(_spriteBatch);
-                    wallTop.Draw(_spriteBatch);
+                    //Draw the walls surrounding the game
+                    foreach (var wall in walls)
+                    {
+                        wall.Draw(_spriteBatch);
+                    }
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
                     break;
