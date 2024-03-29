@@ -16,6 +16,7 @@ namespace ArkanoidClone
             
         }
 
+
         public void Update(GameTime gameTime, Entity entity)
         {
             Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);

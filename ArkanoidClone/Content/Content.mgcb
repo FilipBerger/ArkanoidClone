@@ -37,6 +37,29 @@
 /processorParam:TextureFormat=Color
 /build:ball.png
 
+#begin File.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:File.spritefont;MenuFont.spritefont
+
+#begin menuFontNormal.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:menuFontNormal.bmp
+
+#begin menuFontSelected.bmp
+/importer:TextureImporter
+/processor:FontTextureProcessor
+/processorParam:FirstCharacter= 
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Color
+/build:menuFontSelected.bmp
+
 #begin Paddle.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -48,4 +71,16 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Paddle.jpg
+
+#begin Wall-texture.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Wall-texture.png
 

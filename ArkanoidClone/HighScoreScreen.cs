@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class HighScoreDisplay
+    public class HighScoreScreen
     {
         private int position;
         private int texture;
