@@ -118,7 +118,19 @@ public class Ball : Entity
         }
         else if (entity is Brick)
         {
-            Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            //Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
+
+            // Kolla om bollens bounding box interagerar med botten av entitetens bounding box
+            if (BoundingBox.Intersects(new Rectangle(entityRect.Left, entityRect.Bottom, entityRect.Width, 1)))
+            {
+                // Här kan du hantera logiken för när bollen träffar botten av entiteten
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            }
+            else
+            {
+                Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            }
         }
         else if (entity is PlayerBar)
         {
