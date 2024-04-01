@@ -1,32 +1,43 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 
 namespace ArkanoidClone
 {
-    public class HighScoreManager
+    public static class HighScoreManager
     {
-        private int filePath;
-        private List<int> highScores;
+        private static string filePath = "";
         private const int MAXIMUM_ENTRIES = 10;
 
-        public void LoadHighScores()
+        public static List<HighScore> LoadHighScores()
+        {
+            try
+            {
+                string jsonString = File.ReadAllText(filePath);
+                List<HighScore> highScores = JsonSerializer.Deserialize<List<HighScore>>(jsonString);
+                return highScores ?? new List<HighScore>();
+            }
+            catch (IOException e)
+            {
+                Console.WriteLine($"An error occurred while loading high scores: {e.Message}");
+                return new List<HighScore>();
+            }
+        }
+
+        public static void SaveHighScores()
         {
             throw new System.NotImplementedException();
         }
 
-        public void SaveHighScores()
+        public static void AddHighScore()
         {
             throw new System.NotImplementedException();
         }
 
-        public void AddHighScore()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void DisplayHighScores()
+        public static void DisplayHighScores()
         {
             throw new System.NotImplementedException();
         }

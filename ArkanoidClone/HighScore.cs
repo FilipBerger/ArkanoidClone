@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ArkanoidClone
 {
-    internal class HighScore
+    public class HighScore
     {
         private string playerName;
         private int score;
