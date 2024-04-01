@@ -29,11 +29,11 @@ namespace ArkanoidClone
 
         #region
 
-        public Texture2D Texture 
+        public Texture2D Texture
         {
-            get {  return texture; }
+            get { return texture; }
             set { texture = value; }
-        } 
+        }
 
         public Vector2 Position
         {
@@ -53,6 +53,6 @@ namespace ArkanoidClone
         }
 
         #endregion
-        
+
     }
 }

@@ -7,7 +7,7 @@ namespace ArkanoidClone
 {
     public class PlayerBar : Entity
     {
-       private Texture2D texture;
+        private Texture2D texture;
         private Vector2 position;
         private float initialSpeed;
         private Rectangle boundingBox;
@@ -21,7 +21,7 @@ namespace ArkanoidClone
             set { size = value; }
         }
 
-        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base (texture, position, speed, boundingBox) 
+        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox)
         {
             this.texture = texture;
             this.position = position;
@@ -37,7 +37,7 @@ namespace ArkanoidClone
         public void ApplySizePowerUpWithDuration(Vector2 newSize, float durationSeconds)
         {
             sizePowerUpDuration = durationSeconds;
-            sizePowerUpTimer = 0f; 
+            sizePowerUpTimer = 0f;
             size = newSize;
 
             float deltaX = (newSize.X - boundingBox.Width) / 2;
@@ -92,6 +92,7 @@ namespace ArkanoidClone
                 BoundingBox = new Rectangle((int)(Position.X - boundingBox.Width / 2), (int)(Position.Y - boundingBox.Height / 2), (int)boundingBox.Width, (int)boundingBox.Height);
             }
         }
+
 
     }
 }

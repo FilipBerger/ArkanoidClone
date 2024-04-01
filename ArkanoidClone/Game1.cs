@@ -26,26 +26,26 @@ namespace ArkanoidClone
             _graphics.PreferredBackBufferWidth = 1224;
             _graphics.PreferredBackBufferHeight = 720;
         }
-        
+
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
 
-                playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"), 
-                new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
-                500, //500 = speed
-                new Rectangle(GraphicsDevice.Viewport.Width / 2,
-                600,
-                100,
-                20)); //Content.Load kommer funka när det finns en image i Content för paddle.
-               
-                ball = new Ball(Content.Load<Texture2D>("ball"),
-                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
-                     300f,
-                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
-           
+            playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"),
+            new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
+            500, //500 = speed
+            new Rectangle(GraphicsDevice.Viewport.Width / 2,
+            600,
+            100,
+            20)); //Content.Load kommer funka när det finns en image i Content för paddle.
+
+            ball = new Ball(Content.Load<Texture2D>("ball"),
+                 new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+                 300f,
+                 new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
+
             additionalBall = new AdditionalBall(Content.Load<Texture2D>("ball"),
                      new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2 + 100),
                      300f,
@@ -82,7 +82,7 @@ namespace ArkanoidClone
 
             // TODO: Add your drawing code here
 
-            
+
             _spriteBatch.Begin();
             if (additionalBall.isActive)
             {

@@ -5,17 +5,17 @@ namespace ArkanoidClone
 {
     public class AdditionalBall : Entity
     {
-        public bool isActive { get; private set; } 
+        public bool isActive { get; private set; }
 
         public AdditionalBall(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox)
             : base(texture, position, speed, boundingBox)
         {
-            isActive = true; 
+            isActive = true;
         }
         public void Update(GameTime gameTime, PlayerBar playerBar)
         {
             if (!isActive)
-                return; 
+                return;
 
             Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
             BoundingBox = new Rectangle((int)Position.X,
