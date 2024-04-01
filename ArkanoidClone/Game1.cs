@@ -49,11 +49,16 @@ namespace ArkanoidClone
                      300f,
                      new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
+
+            //variables to make sure the width of top bar is the same as the side walls.
+            int horizontalSpacing = 140;
+            int topWallWidth = GraphicsDevice.Viewport.Width - 2 * horizontalSpacing;
             
             // Initialize walls
             //Inside every wall you can change the position for format and Rectangle for bounding box
             walls = new Wall[]
             {
+                
                 
                 //Left wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
@@ -67,8 +72,8 @@ namespace ArkanoidClone
 
                 //Top wall
                 new Wall(Content.Load<Texture2D>("Wall-texture"),
-                    new Vector2(0, 40), // Position
-                    new Rectangle(0, 40, GraphicsDevice.Viewport.Width, 50)) // Bounding box
+                    new Vector2(horizontalSpacing, 0), // Position
+                    new Rectangle(horizontalSpacing, 0, topWallWidth, 50)) // Bounding box
             };
 
             base.Initialize();
