@@ -36,5 +36,37 @@ namespace ArkanoidClone
         {
             spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
+
+
+       /* public void TakeDamage(int damage)
+        {
+            HitPoints -= damage;
+            if (HitPoints <= 0)
+            {
+                BrickDespawn();
+            }
+        }
+
+        private void BrickDespawn()
+        {
+            Game.brick.Remove(this);
+        }
+
+        *//*public void CollideWithBrick(Brick brick)
+        {
+            if (BoundingBox.Intersects(brick.BoundingBox))
+            {
+                brick.TakeDamage(5);
+            }
+        }*//*
+        // skapa denna metod i boll klassen 
+        public void CollideWithBall(Ball ball)
+        {
+            if (BoundingBox.Intersects(ball.BoundingBox))
+            {
+                ball.Bounce();
+                TakeDamage(1);
+            }
+        }*/
     }
 }
