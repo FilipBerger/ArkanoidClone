@@ -9,7 +9,7 @@ namespace ArkanoidClone
 {
     public class BrickShitter : Enemy
     {
-        public BrickShitter(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox)
+        public BrickShitter(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints) : base(texture, position, speed, boundingBox, hitpoints)
         {
         }
 

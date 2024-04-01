@@ -8,7 +8,7 @@ namespace ArkanoidClone
     public class PlayerBar : Entity
     {
         private Texture2D texture;
-        private Vector2 position; //Getter och setter ska fungera, just nu fungerar det utan
+        private Vector2 position; 
         private float speed;
         private Rectangle boundingBox;
 
