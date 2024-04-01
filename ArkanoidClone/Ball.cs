@@ -61,6 +61,7 @@ using ArkanoidClone;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
+using System;
 
 public class Ball : Entity
 {
@@ -85,10 +86,11 @@ public class Ball : Entity
             if (entity != this && BoundingBox.Intersects(entity.BoundingBox))
             {
 
-                HandleCollision(entity, gameTime); 
-                break;  
+                HandleCollision(entity, gameTime);
+                break;
             }
         }
+
     }
 
     private void HandleCollision(Entity entity, GameTime gameTime)
@@ -98,7 +100,20 @@ public class Ball : Entity
 
         if (entity is Wall)
         {
-            Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            //if(BoundingBox.Intersects(entity.BoundingBox.Bottom))
+            //Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
+
+            // Kolla om bollens bounding box interagerar med botten av entitetens bounding box
+            if (BoundingBox.Intersects(new Rectangle(entityRect.Left, entityRect.Bottom, entityRect.Width, 1)))
+            {
+                // Här kan du hantera logiken för när bollen träffar botten av entiteten
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            }
+            else
+            {
+                Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            }
 
         }
         else if (entity is Brick)
@@ -107,7 +122,29 @@ public class Ball : Entity
         }
         else if (entity is PlayerBar)
         {
-            Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            ////Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width;
+            float maxBounceAngle = MathHelper.Pi / 3;
+            float bounceAngle = relativeIntersectX * maxBounceAngle;
+
+            // Beräkna den nya hastigheten baserat på vinkeln
+            float newVelocityX = (float)Math.Sin(bounceAngle) * Velocity.Length();
+            float newVelocityY = -(float)Math.Cos(bounceAngle) * Velocity.Length();
+
+            // Tilldela den nya hastigheten till Velocity
+            Velocity = new Vector2(newVelocityX, newVelocityY);
+
+            //float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width;
+            //float maxBounceAngle = MathHelper.Pi / 3;
+            //float bounceAngle = relativeIntersectX * maxBounceAngle;
+
+            //// Beräkna den nya hastigheten baserat på vinkeln
+            //float newVelocityX = (float)Math.Cos(bounceAngle) * Velocity.Length();
+            //float newVelocityY = -(float)Math.Sin(bounceAngle) * Velocity.Length();
+
+            //// Tilldela den nya hastigheten till Velocity
+            //Velocity = new Vector2(newVelocityX, newVelocityY);
+
         }
     }
 
