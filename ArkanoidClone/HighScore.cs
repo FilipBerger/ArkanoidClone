@@ -8,6 +8,19 @@ namespace ArkanoidClone
 {
     internal class HighScore
     {
+        private string playerName;
+        private int score;
 
+        public string PlayerName
+        {
+            get { return playerName; }
+            set { playerName = value; }
+        }
+
+        public int Score
+        {
+            get { return score; }
+            set { score = value; }
+        }
     }
 }
