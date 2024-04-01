@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-
 namespace ArkanoidClone
 {
     public class PlayerBar : Entity
@@ -34,20 +33,26 @@ namespace ArkanoidClone
         {
             Speed = speedValue;
         }
-        public void ApplySizePowerUpWithDuration(Vector2 newSize, float durationSeconds)
+
+        public void ApplySizePowerUpWithDuration(float factor, float durationSeconds)
         {
             sizePowerUpDuration = durationSeconds;
             sizePowerUpTimer = 0f;
+
+            Vector2 newSize = new Vector2(boundingBox.Width, boundingBox.Height) * factor;
+
             size = newSize;
 
-            float deltaX = (newSize.X - boundingBox.Width) / 2;
-            float deltaY = (newSize.Y - boundingBox.Height) / 2;
-            float newX = Position.X - deltaX;
-            float newY = Position.Y - deltaY;
-
-            Position = new Vector2(newX, newY);
-            BoundingBox = new Rectangle((int)newX, (int)newY, (int)newSize.X, (int)newSize.Y);
+            BoundingBox = new Rectangle(
+                (int)(position.X - newSize.X / 2),
+                (int)(position.Y - newSize.Y / 2),
+                (int)newSize.X,
+                (int)newSize.Y
+            );
         }
+
+
+
 
 
         public void Update(GameTime gameTime)
@@ -89,10 +94,9 @@ namespace ArkanoidClone
             {
                 size = new Vector2(boundingBox.Width, boundingBox.Height);
                 sizePowerUpTimer = 0f;
-                BoundingBox = new Rectangle((int)(Position.X - boundingBox.Width / 2), (int)(Position.Y - boundingBox.Height / 2), (int)boundingBox.Width, (int)boundingBox.Height);
             }
+
+            BoundingBox = new Rectangle((int)(Position.X - size.X / 2), (int)(Position.Y - size.Y / 2), (int)size.X, (int)size.Y);
         }
-
-
     }
 }

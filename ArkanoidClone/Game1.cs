@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Net.Mime;
 
 namespace ArkanoidClone
 {
@@ -80,20 +79,21 @@ namespace ArkanoidClone
         {
             GraphicsDevice.Clear(Color.DarkSlateGray);
 
-            // TODO: Add your drawing code here
-
-
             _spriteBatch.Begin();
-            if (additionalBall.isActive)
+
+            if (additionalBall.IsActive) // Only draw if the additional ball is active
             {
                 _spriteBatch.Draw(additionalBall.Texture, additionalBall.BoundingBox, Color.Blue);
             }
+
             _spriteBatch.Draw(ball.Texture, ball.BoundingBox, Color.White);
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+
             _spriteBatch.End();
 
             base.Draw(gameTime);
         }
+
         private void ApplySpeedPowerUp()
         {
             playerBar.ApplySpeedPowerUpForDuration(15, 15);
