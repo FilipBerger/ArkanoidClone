@@ -39,9 +39,7 @@ namespace ArkanoidClone
             sizePowerUpDuration = durationSeconds;
             sizePowerUpTimer = 0f;
 
-            Vector2 newSize = new Vector2(boundingBox.Width, boundingBox.Height) * factor;
-
-            size = newSize;
+            Vector2 newSize = size * factor;
 
             BoundingBox = new Rectangle(
                 (int)(position.X - newSize.X / 2),
@@ -49,11 +47,9 @@ namespace ArkanoidClone
                 (int)newSize.X,
                 (int)newSize.Y
             );
+
+            size = newSize;
         }
-
-
-
-
 
         public void Update(GameTime gameTime)
         {

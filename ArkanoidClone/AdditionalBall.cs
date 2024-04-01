@@ -48,7 +48,7 @@ namespace ArkanoidClone
         private void GivePowerUp(PlayerBar playerBar)
         {
             // Apply the power-up to the player bar
-            playerBar.ApplySizePowerUpWithDuration(1.5f, 10); // Example: Increase size by 50% for 10 seconds
+            playerBar.ApplySizePowerUpWithDuration(2f, 10); // Example: Increase size by 50% for 10 seconds
             playerBar.ApplySpeedPowerUpForDuration(15, 1000); // Example: Increase speed for 15 seconds
         }
     }
