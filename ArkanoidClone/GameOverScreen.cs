@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class GameOver
+    public class GameOverScreen
     {
     }
 }
