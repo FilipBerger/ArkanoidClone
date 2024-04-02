@@ -177,8 +177,6 @@ namespace ArkanoidClone
             _spriteBatch.Draw(ball.Texture, ball.BoundingBox, Color.White);
             _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
-            
-            _spriteBatch.Begin();
 
             switch (currentGameState)
             {
