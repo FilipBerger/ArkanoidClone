@@ -24,7 +24,7 @@ namespace ArkanoidClone
                     BoundingBox.Width,
                     BoundingBox.Height);
 
-            if (BoundingBox.Intersects(playerbar.BoundingBox))
+            if (BoundingBox.Intersects(entity.BoundingBox))
             {
                 Speed *= -1;
             }
