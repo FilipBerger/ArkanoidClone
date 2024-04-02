@@ -66,12 +66,10 @@ namespace ArkanoidClone
 
             public override void ApplyEffect(PlayerBar playerBar)
             {
-                // Calculate the new size based on a factor
-                Vector2 newSize = playerBar.Size * new Vector2(1.5f, 1.5f); // Increase size by 50%
+                Vector2 newSize = playerBar.Size * new Vector2(1.5f, 1.5f); 
 
-                // Example usage of size power-up
-                float factor = 1.5f; // Increase size by 50%
-                playerBar.ApplySizePowerUpWithDuration(factor, 10); // Apply the size power-up to the player bar
+                float factor = 1.5f;
+                playerBar.ApplySizePowerUpWithDuration(factor, 10); 
 
 
                 Console.WriteLine("Size power-up applied to player bar!");
