@@ -21,7 +21,7 @@ namespace ArkanoidClone
 
         }
 
-        public GameState Update(GameTime gameTime, KeyboardState keyboardState, KeyboardState previousKeyboardState)
+        public GameState Update(KeyboardState keyboardState, KeyboardState previousKeyboardState)
         {
             if (keyboardState.IsKeyDown(Keys.Down) && previousKeyboardState.IsKeyUp(Keys.Down))
             {

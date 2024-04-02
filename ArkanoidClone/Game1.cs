@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Net.Http.Headers;
 using System.Net.Mime;
 using System.Collections.Generic;
 
@@ -21,6 +22,7 @@ namespace ArkanoidClone
         private Wall[] walls;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
+        private HighScoreScreen highScoreScreen;
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -106,6 +108,7 @@ namespace ArkanoidClone
             playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
+            highScoreScreen = new HighScoreScreen(menuFont);
 
         }
 
@@ -119,7 +122,7 @@ namespace ArkanoidClone
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    GameState newState = mainMenuScreen.Update(gameTime, currentKeyboardState, previousKeyboardState);
+                    GameState newState = mainMenuScreen.Update(currentKeyboardState, previousKeyboardState);
                     if (newState != GameState.MainMenu)
                     {
                         currentGameState = newState;
@@ -132,7 +135,7 @@ namespace ArkanoidClone
                    
                     break;
                 case GameState.ViewingHighScores:
-                    // Här lägger vi logik för HighScores när den klassen är klar.
+                    currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
@@ -178,7 +181,7 @@ namespace ArkanoidClone
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
                     break;
                 case GameState.ViewingHighScores:
-                    // Här lägger vi logik för HighScores när den klassen är klar.
+                    highScoreScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
