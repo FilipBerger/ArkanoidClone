@@ -1,0 +1,44 @@
+{
+  "highScores": [
+    {
+      "playerName": "Alice",
+      "score": 9500
+    },
+    {
+      "playerName": "Bob",
+      "score": 8500
+    },
+    {
+      "playerName": "Charlie",
+      "score": 7500
+    },
+    {
+      "playerName": "Dana",
+      "score": 6500
+    },
+    {
+      "playerName": "Eli",
+      "score": 5500
+    },
+    {
+      "playerName": "Fiona",
+      "score": 4500
+    },
+    {
+      "playerName": "George",
+      "score": 3500
+    },
+    {
+      "playerName": "Hannah",
+      "score": 2500
+    },
+    {
+      "playerName": "Ivan",
+      "score": 1500
+    },
+    {
+      "playerName": "Julia",
+      "score": 500
+    }
+  ]
+}

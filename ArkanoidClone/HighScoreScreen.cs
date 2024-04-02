@@ -20,5 +20,24 @@ namespace ArkanoidClone
             this.font = font;
             highScores = HighScoreManager.LoadHighScores();
         }
+        public GameState Update(KeyboardState keyboardState)
+        {
+            if (keyboardState.IsKeyDown(Keys.Escape))
+                return GameState.MainMenu;
+
+            else return GameState.ViewingHighScores;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            for (int i = 0; i < highScores.Count; i++)
+            {
+                string text = $"{highScores[i].PlayerName}: {highScores[i].Score}";
+                spriteBatch.DrawString(font, text, new Vector2(position.X, position.Y + i * 30), Color.Yellow);
+            }
+        }
     }
+
+
+
 }
