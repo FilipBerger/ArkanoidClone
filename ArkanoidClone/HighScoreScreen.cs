@@ -20,9 +20,9 @@ namespace ArkanoidClone
             this.font = font;
             highScores = HighScoreManager.LoadHighScores();
         }
-        public GameState Update(KeyboardState keyboardState)
+        public GameState Update(KeyboardState keyboardState, KeyboardState previousKeyboardState)
         {
-            if (keyboardState.IsKeyDown(Keys.Escape))
+            if (keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
                 return GameState.MainMenu;
 
             else return GameState.ViewingHighScores;
@@ -37,7 +37,4 @@ namespace ArkanoidClone
             }
         }
     }
-
-
-
 }

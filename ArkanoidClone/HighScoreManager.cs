@@ -9,7 +9,7 @@ namespace ArkanoidClone
 {
     public static class HighScoreManager
     {
-        private static string filePath = "";
+        private static string filePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, @"Data\highScores.json");
         private const int MAXIMUM_ENTRIES = 10;
 
         public static List<HighScore> LoadHighScores()

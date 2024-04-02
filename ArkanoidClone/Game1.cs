@@ -83,7 +83,7 @@ namespace ArkanoidClone
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    GameState newState = mainMenuScreen.Update(gameTime, currentKeyboardState, previousKeyboardState);
+                    GameState newState = mainMenuScreen.Update(currentKeyboardState, previousKeyboardState);
                     if (newState != GameState.MainMenu)
                     {
                         currentGameState = newState;
@@ -95,7 +95,7 @@ namespace ArkanoidClone
                     ball.Update(gameTime, playerBar);
                     break;
                 case GameState.ViewingHighScores:
-                    highScoreScreen.Update(currentKeyboardState);
+                    currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
