@@ -134,9 +134,9 @@ namespace ArkanoidClone
                     // Här lägger vi all spellogik
                     List<Entity> allEntities = new List<Entity>();
                     allEntities.Add(playerBar);
-                    allEntities.Add(wallTop);
-                    allEntities.Add(wallLeft); 
-                    allEntities.Add(wallRight);
+                    allEntities.Add(walls[2]);
+                    allEntities.Add(walls[0]);
+                    allEntities.Add(walls[1]);
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, allEntities);
                     break;
