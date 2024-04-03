@@ -23,6 +23,7 @@ namespace ArkanoidClone
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
         private HighScoreScreen highScoreScreen;
+        private ScoreManager scoreManager;
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -38,6 +39,7 @@ namespace ArkanoidClone
             currentGameState = GameState.MainMenu;
             _graphics.PreferredBackBufferWidth = 1224;
             _graphics.PreferredBackBufferHeight = 720;
+
         }
 
         protected override void Initialize()
@@ -99,6 +101,9 @@ namespace ArkanoidClone
                     new Vector2(horizontalSpacing, 0), // Position
                     new Rectangle(horizontalSpacing, 0, topWallWidth, 50)) // Bounding box
             };
+
+            //vad man får för poäng vid träff
+            scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
 
             base.Initialize();
         }
@@ -189,6 +194,9 @@ namespace ArkanoidClone
 
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+
+                    //draw score
+                    scoreManager.Draw(_spriteBatch, menuFont);
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
