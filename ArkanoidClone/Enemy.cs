@@ -9,7 +9,7 @@ namespace ArkanoidClone
 {
     public abstract class Enemy : Destroyable
     {
-        protected Enemy(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox)
+        protected Enemy(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints) : base(texture, position, speed, boundingBox, hitpoints)
         {
         }
 

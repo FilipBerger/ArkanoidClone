@@ -31,7 +31,6 @@ public class Ball : Entity
                 break;
             }
         }
-
     }
 
     private void HandleCollision(Entity entity, GameTime gameTime)
@@ -86,10 +85,8 @@ public class Ball : Entity
 
             // Tilldela den nya hastigheten till Velocity
             Velocity = new Vector2(newVelocityX, newVelocityY);
-
         }
     }
-
     public void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Texture, BoundingBox, Color.White);

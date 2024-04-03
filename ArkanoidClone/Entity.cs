@@ -61,6 +61,5 @@ namespace ArkanoidClone
             spriteBatch.Draw(Texture, Position, Color.White);
         }
 
-
     }
 }
