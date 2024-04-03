@@ -1,63 +1,4 @@
-﻿//using Microsoft.Xna.Framework;
-//using Microsoft.Xna.Framework.Graphics;
-//using System;
-//using System.Collections.Generic;
-//using System.Linq;
-//using System.Text;
-
-//namespace ArkanoidClone
-//{
-//    public class Ball : Entity
-//    {
-
-
-//        public Ball(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox) //Tillfällig
-//        {
-
-//        }
-
-
-//        public void Update(GameTime gameTime, Entity entity)
-//        {
-//            Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-//            BoundingBox = new Rectangle((int)Position.X,
-//                    (int)Position.Y,
-//                    BoundingBox.Width,
-//                    BoundingBox.Height);
-
-//            if (BoundingBox.Intersects(entity.BoundingBox))
-//            {
-//                Speed *= -1;
-//            }
-
-
-//        }
-//        public void Draw(SpriteBatch spriteBatch)
-//        {
-//            spriteBatch.Draw(
-//                //Texture,
-//                //Position,
-//                //null,
-//                //Color.White,
-//                //0f,
-//                //new Vector2(Texture.Width / 2, Texture.Height / 2),
-//                //Vector2.One,
-//                //SpriteEffects.None,
-//                //0f
-//                Texture,
-//                BoundingBox,
-//                Color.White
-//            );
-//        }
-
-//        public void Bounce()
-//        {
-//            throw new System.NotImplementedException();
-//        }
-//    }
-//}
-
-using ArkanoidClone;
+﻿using ArkanoidClone;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
@@ -100,8 +41,7 @@ public class Ball : Entity
 
         if (entity is Wall)
         {
-            //if(BoundingBox.Intersects(entity.BoundingBox.Bottom))
-            //Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            
             Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
 
             // Kolla om bollens bounding box interagerar med botten av entitetens bounding box
@@ -134,8 +74,9 @@ public class Ball : Entity
         }
         else if (entity is PlayerBar)
         {
-            ////Velocity = new Vector2(Velocity.X, -Velocity.Y);
-            float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width;
+            
+            //float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width; // äldre version
+            float relativeIntersectX = Math.Abs((BoundingBox.Center.X - entity.BoundingBox.Center.X) / (float)entity.BoundingBox.Width); //ny test version
             float maxBounceAngle = MathHelper.Pi / 3;
             float bounceAngle = relativeIntersectX * maxBounceAngle;
 
@@ -145,17 +86,6 @@ public class Ball : Entity
 
             // Tilldela den nya hastigheten till Velocity
             Velocity = new Vector2(newVelocityX, newVelocityY);
-
-            //float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width;
-            //float maxBounceAngle = MathHelper.Pi / 3;
-            //float bounceAngle = relativeIntersectX * maxBounceAngle;
-
-            //// Beräkna den nya hastigheten baserat på vinkeln
-            //float newVelocityX = (float)Math.Cos(bounceAngle) * Velocity.Length();
-            //float newVelocityY = -(float)Math.Sin(bounceAngle) * Velocity.Length();
-
-            //// Tilldela den nya hastigheten till Velocity
-            //Velocity = new Vector2(newVelocityX, newVelocityY);
 
         }
     }
