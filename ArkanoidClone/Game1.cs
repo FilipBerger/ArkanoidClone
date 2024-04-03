@@ -3,9 +3,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using System.Collections.Generic;
 using System.Net.Http.Headers;
 using System.Net.Mime;
-using System.Collections.Generic;
 
 
 
@@ -52,9 +52,16 @@ namespace ArkanoidClone
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
-                20)); 
+                20));
+
+            ball = new Ball(
+            Content.Load<Texture2D>("ball"),
+            new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+            new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
+            new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30)); // Bollens storlek och startposition
+
            
-           
+           // Spawn bricklayout
             for (int i = 0; i < 15; i++)
 
                 for (int j = 0; j < 17; j++)
@@ -65,11 +72,6 @@ namespace ArkanoidClone
                     new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
                     1));
                 }
-
-             ball = new Ball(Content.Load<Texture2D>("ball"),
-                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
-                     300f,
-                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
 
 
             //variables to make sure the width of top bar is the same as the side walls.
@@ -129,10 +131,14 @@ namespace ArkanoidClone
                     }
                     break;
                 case GameState.Playing:
-                    // Här lägger vi all spellogik.
+                    // Här lägger vi all spellogik
+                    List<Entity> allEntities = new List<Entity>();
+                    allEntities.Add(playerBar);
+                    allEntities.Add(wallTop);
+                    allEntities.Add(wallLeft); 
+                    allEntities.Add(wallRight);
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, playerBar);
-                   
+                    ball.Update(gameTime, allEntities);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
