@@ -16,7 +16,8 @@ namespace ArkanoidClone
             this.score = 0;
         }
 
-        public void BrickHit()
+        public void BrickHit() //inuti brickhit och enemyhit kan man lägga till logik från ball.cs och enemy.cs för när dem går sönder
+                               //och kan lägga till poäng. Väntar tills all logik på övriga är klara.
         {
             score += brickHitPoints;
         }
