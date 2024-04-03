@@ -23,6 +23,7 @@ namespace ArkanoidClone
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
         private HighScoreScreen highScoreScreen;
+        private CreateHighScoreScreen createHighScoreScreen;
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -109,6 +110,7 @@ namespace ArkanoidClone
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
+            createHighScoreScreen = new CreateHighScoreScreen(menuFont);
 
         }
 
@@ -136,6 +138,9 @@ namespace ArkanoidClone
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
+                    break;
+                case GameState.CreatingHighScore:
+                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
@@ -182,6 +187,9 @@ namespace ArkanoidClone
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
+                    break;
+                case GameState.CreatingHighScore:
+                    createHighScoreScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.

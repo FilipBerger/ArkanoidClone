@@ -32,7 +32,7 @@ namespace ArkanoidClone
             throw new System.NotImplementedException();
         }
 
-        public static void AddHighScore()
+        public static void AddHighScore(HighScore newHighScore)
         {
             throw new System.NotImplementedException();
         }
