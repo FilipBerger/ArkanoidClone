@@ -137,6 +137,10 @@ namespace ArkanoidClone
                     allEntities.Add(walls[2]);
                     allEntities.Add(walls[0]);
                     allEntities.Add(walls[1]);
+                    foreach(Brick brick in bricks)
+                    {
+                        allEntities.Add(brick);
+                    }
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, allEntities);
                     break;
