@@ -73,18 +73,27 @@ public class Ball : Entity
         }
         else if (entity is PlayerBar)
         {
-            
-            //float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width; // äldre version
-            float relativeIntersectX = Math.Abs((BoundingBox.Center.X - entity.BoundingBox.Center.X) / (float)entity.BoundingBox.Width); //ny test version
-            float maxBounceAngle = MathHelper.Pi / 3;
-            float bounceAngle = relativeIntersectX * maxBounceAngle;
+            float intersectX = BoundingBox.Center.X - entity.BoundingBox.Center.X;
+            float normalizedIntersectX = intersectX / entity.BoundingBox.Width;
+            float angle = normalizedIntersectX * MathHelper.ToRadians(60); // 60 grader är en vanlig vinkeländring i Arkanoid
 
-            // Beräkna den nya hastigheten baserat på vinkeln
-            float newVelocityX = (float)Math.Sin(bounceAngle) * Velocity.Length();
-            float newVelocityY = -(float)Math.Cos(bounceAngle) * Velocity.Length();
+            Vector2 newVelocity = Vector2.Transform(Velocity, Matrix.CreateRotationZ(angle));
 
-            // Tilldela den nya hastigheten till Velocity
+            float newVelocityX = (float)Math.Sin(angle) * Velocity.Length();
+            float newVelocityY = -(float)Math.Cos(angle) * Velocity.Length();
             Velocity = new Vector2(newVelocityX, newVelocityY);
+
+            ////float relativeIntersectX = (BoundingBox.Center.X - entity.BoundingBox.Left) / (float)entity.BoundingBox.Width; // äldre version
+            //float relativeIntersectX = Math.Abs((BoundingBox.Center.X - entity.BoundingBox.Center.X) / (float)entity.BoundingBox.Width); //ny test version
+            //float maxBounceAngle = MathHelper.Pi / 3;
+            //float bounceAngle = relativeIntersectX * maxBounceAngle;
+
+            //// Beräkna den nya hastigheten baserat på vinkeln
+            //float newVelocityX = (float)Math.Sin(bounceAngle) * Velocity.Length();
+            //float newVelocityY = -(float)Math.Cos(bounceAngle) * Velocity.Length();
+
+            //// Tilldela den nya hastigheten till Velocity
+            //Velocity = new Vector2(newVelocityX, newVelocityY);
         }
     }
     public void Draw(SpriteBatch spriteBatch)
