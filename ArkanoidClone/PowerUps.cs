@@ -8,11 +8,14 @@ namespace ArkanoidClone
     {
         protected float newSpeed;
         protected bool isActive = true;
+        protected float speedPowerUpTimer;
+        protected float sizePowerUpTimer;
 
         protected PowerUps(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, float newSpeed)
             : base(texture, position, speed, boundingBox)
         {
             this.newSpeed = newSpeed;
+            speedPowerUpTimer = 0f;
         }
 
         public abstract void ApplyEffect(PlayerBar playerBar);
@@ -33,48 +36,24 @@ namespace ArkanoidClone
                     ApplyEffect(playerBar);
                 }
             }
-        }
-        public static void TestPowerUpFunctionality(PlayerBar playerBar)
-        {
-            SpeedPowerUp speedPowerUp = new SpeedPowerUp(null, Vector2.Zero, 0f, Rectangle.Empty, 1000);
-            speedPowerUp.ApplyEffect(playerBar);
-        }
 
-        public class SpeedPowerUp : PowerUps
-        {
-            public SpeedPowerUp(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, float newSpeed)
-                : base(texture, position, speed, boundingBox, newSpeed)
+            if (speedPowerUpTimer > 0)
+                speedPowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (sizePowerUpTimer > 0)
+                sizePowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (speedPowerUpTimer <= 0)
             {
+                playerBar.Speed = playerBar.InitialSpeed;
+                speedPowerUpTimer = 0;
             }
 
-            public override void ApplyEffect(PlayerBar playerBar)
+            if (sizePowerUpTimer <= 0)
             {
-                playerBar.Speed = newSpeed;
-                Console.WriteLine("Speed power-up applied to player bar!");
+                playerBar.ApplySizePowerUpWithDuration(1f, 0);
+                sizePowerUpTimer = 0;
             }
-        }
-
-        public class SizePowerUp : PowerUps
-        {
-            private Vector2 newSize;
-
-            public SizePowerUp(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, Vector2 newSize)
-                : base(texture, position, speed, boundingBox, 0)
-            {
-                this.newSize = newSize;
-            }
-
-            public override void ApplyEffect(PlayerBar playerBar)
-            {
-                Vector2 newSize = playerBar.Size * new Vector2(1.5f, 1.5f); 
-
-                float factor = 1.5f;
-                playerBar.ApplySizePowerUpWithDuration(factor, 10); 
-
-
-                Console.WriteLine("Size power-up applied to player bar!");
-            }
-
         }
     }
 }

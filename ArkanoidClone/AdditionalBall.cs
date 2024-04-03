@@ -6,6 +6,8 @@ namespace ArkanoidClone
     public class AdditionalBall : Entity
     {
         private bool isActive;
+        private float sizePowerUpTimer;
+        private float speedPowerUpTimer;
 
         public bool IsActive
         {
@@ -17,6 +19,8 @@ namespace ArkanoidClone
             : base(texture, position, speed, boundingBox)
         {
             isActive = true;
+            sizePowerUpTimer = 0f;
+            speedPowerUpTimer = 0f;
         }
 
         public void Update(GameTime gameTime, PlayerBar playerBar)
@@ -30,12 +34,26 @@ namespace ArkanoidClone
             if (BoundingBox.Intersects(playerBar.BoundingBox))
             {
                 Speed *= -1;
-                GivePowerUp(playerBar); // Give power-up to the player bar
-                isActive = false; // Set the ball to be inactive
+                GivePowerUp(playerBar);
+                isActive = false;
+            }
+
+            if (speedPowerUpTimer > 0)
+                speedPowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (sizePowerUpTimer > 0)
+                sizePowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (speedPowerUpTimer <= 0)
+            {
+                playerBar.Speed = playerBar.InitialSpeed;
+            }
+
+            if (sizePowerUpTimer <= 0)
+            {
+                playerBar.ApplySizePowerUpWithDuration(1f, 0);
             }
         }
-
-
 
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -47,9 +65,18 @@ namespace ArkanoidClone
 
         private void GivePowerUp(PlayerBar playerBar)
         {
-            // Apply the power-up to the player bar
-            playerBar.ApplySizePowerUpWithDuration(2f, 10); // Example: Increase size by 50% for 10 seconds
-            playerBar.ApplySpeedPowerUpForDuration(15, 1000); // Example: Increase speed for 15 seconds
+            playerBar.ApplySizePowerUpWithDuration(2f, 10);
+            playerBar.ApplySpeedPowerUpForDuration(15, 1000);
+
+            sizePowerUpTimer = 10;
+            speedPowerUpTimer = 15;
         }
+
+        public void Spawn(Vector2 position)
+        {
+            Position = position; 
+            isActive = true; 
+        }
+
     }
 }

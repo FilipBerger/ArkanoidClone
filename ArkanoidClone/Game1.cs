@@ -15,7 +15,7 @@ namespace ArkanoidClone
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Ball ball;
-        private AdditionalBall additionalBall; 
+        private AdditionalBall additionalBall;
         private Wall[] walls;
         private List<Entity> allEntities = new List<Entity>();
         private Wall wallLeft;
@@ -139,7 +139,6 @@ namespace ArkanoidClone
                     allEntities.Add(playerBar);
                     allEntities.AddRange(bricks);
                     allEntities.AddRange(walls);
-
                     // Update the player bar
                     playerBar.Update(gameTime);
 
@@ -210,12 +209,6 @@ namespace ArkanoidClone
 
             _spriteBatch.End();
             base.Draw(gameTime);
-        }
-
-        // Method to apply speed power-up to the player bar
-        private void ApplySpeedPowerUp()
-        {
-            playerBar.ApplySpeedPowerUpForDuration(15, 15); // Example duration and speed values
         }
     }
 }

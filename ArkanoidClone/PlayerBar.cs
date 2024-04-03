@@ -1,5 +1,4 @@
-﻿
-using Microsoft.Xna.Framework.Input;
+﻿using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -13,13 +12,16 @@ namespace ArkanoidClone
         private Rectangle boundingBox;
         private Vector2 size;
         private float speedPowerUpDuration;
-        private float sizePowerUpDuration; 
-        private float speedPowerUpTimer; 
-        private float sizePowerUpTimer; 
+        private float sizePowerUpDuration;
+        private float speedPowerUpTimer;
+        private float sizePowerUpTimer;
         private Wall wallLeft;
         private Wall wallRight;
 
-
+        public float InitialSpeed
+        {
+            get { return initialSpeed; }
+        }
         public Vector2 Size
         {
             get { return size; }
@@ -37,36 +39,34 @@ namespace ArkanoidClone
             this.wallRight = wallRight;
         }
 
-
-        public void ApplySpeedPowerUpForDuration(int durationSeconds, float speedValue)
+        public void ApplySpeedPowerUpForDuration(float speedValue, float durationSeconds)
         {
             Speed = speedValue;
             speedPowerUpDuration = durationSeconds;
             speedPowerUpTimer = durationSeconds;
         }
 
+        public void ApplySpeedPowerUpForDuration(int durationSeconds, float speedValue)
+        {
+            Speed = speedValue;
+        }
+
         public void ApplySizePowerUpWithDuration(float factor, float durationSeconds)
         {
             sizePowerUpDuration = durationSeconds;
-            sizePowerUpTimer = durationSeconds;
+            sizePowerUpTimer = 0f;
 
-            // Calculate the new size based on the factor and ensure it maintains the center position
             Vector2 newSize = size * factor;
-            Vector2 newSizeFromCenter = newSize - size;
-            position -= newSizeFromCenter / 2;
 
-            // Update the bounding box with the new size and position
             BoundingBox = new Rectangle(
-                (int)position.X,
-                (int)position.Y,
+                (int)(position.X - newSize.X / 2),
+                (int)(position.Y - newSize.Y / 2),
                 (int)newSize.X,
                 (int)newSize.Y
             );
 
             size = newSize;
         }
-
-
         public void Update(GameTime gameTime)
         {
             var keystate = Keyboard.GetState();
@@ -74,29 +74,46 @@ namespace ArkanoidClone
             if (keystate.IsKeyDown(Keys.Left))
             {
                 Position = new Vector2(Position.X - Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
-                BoundingBox = new Rectangle((int)Position.X,
-                    (int)Position.Y,
-                    BoundingBox.Width,
-                    BoundingBox.Height);
             }
 
             if (keystate.IsKeyDown(Keys.Right))
             {
                 Position = new Vector2(Position.X + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, Position.Y);
-                BoundingBox = new Rectangle((int)Position.X,
-                    (int)Position.Y,
-                    BoundingBox.Width,
-                    BoundingBox.Height);
             }
 
-            if (Position.X > 1024 - BoundingBox.Width) 
+            if (Position.X + size.X / 2 > wallRight.Position.X)
             {
-                Position = new Vector2(1024 - BoundingBox.Width, Position.Y);
+                Position = new Vector2(wallRight.Position.X - size.X / 2, Position.Y);
             }
-            else if (Position.X < 200) 
+            if (Position.X - size.X / 2 < wallLeft.Position.X + wallLeft.BoundingBox.Width)
             {
-                Position = new Vector2(200, Position.Y);
+                Position = new Vector2(wallLeft.Position.X + wallLeft.BoundingBox.Width + size.X / 2, Position.Y);
+            }
+
+            BoundingBox = new Rectangle((int)(Position.X - size.X / 2), (int)(Position.Y - size.Y / 2), (int)size.X, (int)size.Y);
+
+            if (sizePowerUpTimer < sizePowerUpDuration)
+            {
+                sizePowerUpTimer += (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else
+            {
+                size = new Vector2(boundingBox.Width, boundingBox.Height);
+                sizePowerUpTimer = 0f;
+            }
+
+            if (speedPowerUpTimer > 0)
+            {
+                speedPowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+                if (speedPowerUpTimer <= 0)
+                {
+                    Speed = InitialSpeed;
+                    speedPowerUpTimer = 0;
+                }
             }
         }
+
+
     }
 }
