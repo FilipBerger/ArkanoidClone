@@ -34,9 +34,10 @@ namespace ArkanoidClone
             if (BoundingBox.Intersects(playerBar.BoundingBox))
             {
                 Speed *= -1;
-                GivePowerUp(playerBar);
+                GivePowerUp(playerBar, playerBar.PowerUpManager); 
                 isActive = false;
             }
+
 
             if (speedPowerUpTimer > 0)
                 speedPowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -51,7 +52,6 @@ namespace ArkanoidClone
 
             if (sizePowerUpTimer <= 0)
             {
-                playerBar.ApplySizePowerUpWithDuration(1f, 0);
             }
         }
 
@@ -63,19 +63,19 @@ namespace ArkanoidClone
             }
         }
 
-        private void GivePowerUp(PlayerBar playerBar)
+        private void GivePowerUp(PlayerBar playerBar, PowerUpManager powerUpManager)
         {
-            playerBar.ApplySizePowerUpWithDuration(2f, 10);
-            playerBar.ApplySpeedPowerUpForDuration(15, 1000);
-
+            powerUpManager.ApplySizePowerUpWithDuration(playerBar, 2f, 10); 
+            powerUpManager.ApplySpeedPowerUpForDuration(playerBar, 1000, 15); 
             sizePowerUpTimer = 10;
             speedPowerUpTimer = 15;
         }
 
+
         public void Spawn(Vector2 position)
         {
-            Position = position; 
-            isActive = true; 
+            Position = position;
+            isActive = true;
         }
 
     }

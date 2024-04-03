@@ -1,8 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.PowerUps
 {
     public abstract class PowerUps : Entity
     {
@@ -18,9 +17,9 @@ namespace ArkanoidClone
             speedPowerUpTimer = 0f;
         }
 
-        public abstract void ApplyEffect(PlayerBar playerBar);
+        public abstract void ApplyEffect(PlayerBar playerBar, PowerUpManager powerUpManager);
 
-        public void Update(GameTime gameTime, Entity entity, PlayerBar playerBar)
+        public void Update(GameTime gameTime, Entity entity, PlayerBar playerBar, PowerUpManager powerUpManager) 
         {
             if (isActive)
             {
@@ -33,7 +32,7 @@ namespace ArkanoidClone
                 if (BoundingBox.Intersects(entity.BoundingBox))
                 {
                     isActive = false;
-                    ApplyEffect(playerBar);
+                    ApplyEffect(playerBar, powerUpManager); 
                 }
             }
 
@@ -51,8 +50,7 @@ namespace ArkanoidClone
 
             if (sizePowerUpTimer <= 0)
             {
-                playerBar.ApplySizePowerUpWithDuration(1f, 0);
-                sizePowerUpTimer = 0;
+                // No need to apply size power-up here
             }
         }
     }
