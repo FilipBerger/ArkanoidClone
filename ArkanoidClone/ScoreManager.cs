@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 namespace ArkanoidClone
 {
@@ -37,6 +34,11 @@ namespace ArkanoidClone
         public int GetScore()
         {
             return score;
+        }
+
+        public void Draw(SpriteBatch spriteBatch, SpriteFont font)
+        {
+            spriteBatch.DrawString(font, "Score: " + score.ToString(), new Vector2(20, 20), Color.White);
         }
     }
 }
