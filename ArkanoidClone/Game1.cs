@@ -158,6 +158,29 @@ namespace ArkanoidClone
                     break;
             }
 
+            for(int k = 0; k < bricks.Count; k++)
+            {
+                Brick b = bricks[k];
+                
+                
+                if (ball.BoundingBox.Intersects(b.BoundingBox))
+                {
+                    b.HitPoints--;
+                    if (b.HitPoints == 0)
+                    {
+                        bricks.RemoveAt(k);
+                        k--;
+                    }
+                }
+                
+            }
+
+
+
+
+
+
+
             previousKeyboardState = currentKeyboardState;
 
             base.Update(gameTime);
