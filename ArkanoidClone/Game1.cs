@@ -28,6 +28,7 @@ namespace ArkanoidClone
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
+        private PowerUps SizeUp;
 
         
 
@@ -62,19 +63,17 @@ namespace ArkanoidClone
                 100,
                 20));
 
-
-
             bulletTexture = Content.Load<Texture2D>("poop");
 
             shitShooter = new ShitShooter(
-        Content.Load<Texture2D>("ufo"), // should be the enemy
-        new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
-        200, // the speed
-        new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
-        1, // The hitpoints
-        bulletTexture, // The bullet texture
-        100 // The bullet speed
-        );
+            Content.Load<Texture2D>("ufo"), // should be the enemy
+            new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
+            200, // the speed
+            new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
+            1, // The hitpoints
+            bulletTexture, // The bullet texture
+            100 // The bullet speed
+            );
             
 
             ball = new Ball(
