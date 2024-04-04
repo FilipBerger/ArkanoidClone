@@ -23,6 +23,10 @@ namespace ArkanoidClone
         private Wall wallTop;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
+        private ShitShooter shitShooter;
+        private Texture2D bulletTexture;
+        //private ShitBullet shitBullet;
+        
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -52,9 +56,21 @@ namespace ArkanoidClone
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
-                20)); 
-           
-           
+                20));
+
+
+            bulletTexture = Content.Load<Texture2D>("poop");
+
+            shitShooter = new ShitShooter(
+        Content.Load<Texture2D>("ufo"), // should be the enemy
+        new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
+        200, // the speed
+        new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
+        1, // The hitpoints
+        bulletTexture, // The bullet texture
+        100 // The bullet speed
+        );
+            
             for (int i = 0; i < 15; i++)
 
                 for (int j = 0; j < 17; j++)
@@ -85,8 +101,11 @@ namespace ArkanoidClone
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D brickTexture = Content.Load<Texture2D>("05-Breakout-Tiles");
             playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
+            bulletTexture = Content.Load<Texture2D>("poop");
+            shitShooter.Texture = Content.Load<Texture2D>("ufo");
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
+             
 
         }
 
@@ -110,6 +129,8 @@ namespace ArkanoidClone
                     // Här lägger vi all spellogik.
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, playerBar);
+                    shitShooter.Update(gameTime, playerBar);
+                    
                     break;
                 case GameState.ViewingHighScores:
                     // Här lägger vi logik för HighScores när den klassen är klar.
@@ -125,7 +146,11 @@ namespace ArkanoidClone
                     break;
             }
 
+           
+           
+            
             previousKeyboardState = currentKeyboardState;
+            
 
             base.Update(gameTime);
         }
@@ -153,6 +178,9 @@ namespace ArkanoidClone
                       }
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+                    shitShooter.Draw(_spriteBatch);//Detta är enemy
+                    //shitBullet.Draw(_spriteBatch);
+                    
                     break;
                 case GameState.ViewingHighScores:
                     // Här lägger vi logik för HighScores när den klassen är klar.
@@ -164,6 +192,7 @@ namespace ArkanoidClone
                     break;
             }
 
+           
             _spriteBatch.End();
 
             base.Draw(gameTime);
