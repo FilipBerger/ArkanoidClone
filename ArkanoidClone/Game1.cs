@@ -24,6 +24,9 @@ namespace ArkanoidClone
         private MainMenuScreen mainMenuScreen;
         private HighScoreScreen highScoreScreen;
         private ScoreManager scoreManager;
+        private int initialLives = 3;
+        private Life life;
+        
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -104,6 +107,8 @@ namespace ArkanoidClone
 
             //vad man får för poäng vid träff
             scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
+
+            life = new Life(initialLives);
 
             base.Initialize();
         }
@@ -197,6 +202,13 @@ namespace ArkanoidClone
 
                     //draw score
                     scoreManager.Draw(_spriteBatch, menuFont);
+
+                    // Draw remaining lives
+                    Vector2 lifeTextPosition = new Vector2(20, 50);
+                    _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
+
+
+
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
