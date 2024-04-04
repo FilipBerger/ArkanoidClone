@@ -26,7 +26,8 @@ namespace ArkanoidClone
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
-        
+        private Vector2 originalBallPosition; 
+
 
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
@@ -109,6 +110,7 @@ namespace ArkanoidClone
             scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
 
             life = new Life(initialLives);
+            originalBallPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); // Spara den ursprungliga positionen för bollen
 
             base.Initialize();
         }
@@ -147,12 +149,12 @@ namespace ArkanoidClone
                     allEntities.Add(walls[2]);
                     allEntities.Add(walls[0]);
                     allEntities.Add(walls[1]);
-                    foreach(Brick brick in bricks)
+                    foreach (Brick brick in bricks)
                     {
                         allEntities.Add(brick);
                     }
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, allEntities);
+                    ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
