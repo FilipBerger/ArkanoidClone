@@ -3,8 +3,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
-using System.Net.Mime;
 using System.Collections.Generic;
+using System.Net.Http.Headers;
+using System.Net.Mime;
 
 
 
@@ -18,14 +19,16 @@ namespace ArkanoidClone
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private Ball ball;
-        private Wall wallLeft;
-        private Wall wallRight;
-        private Wall wallTop;
+        private Wall[] walls;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
         private ShitShooter shitShooter;
         private Texture2D bulletTexture;
-        //private ShitBullet shitBullet;
+        private HighScoreScreen highScoreScreen;
+        private ScoreManager scoreManager;
+        private int initialLives = 3;
+        private Life life;
+
         
 
         private GameState currentGameState = GameState.MainMenu;
@@ -42,6 +45,7 @@ namespace ArkanoidClone
             currentGameState = GameState.MainMenu;
             _graphics.PreferredBackBufferWidth = 1224;
             _graphics.PreferredBackBufferHeight = 720;
+
         }
 
         protected override void Initialize()
@@ -59,6 +63,7 @@ namespace ArkanoidClone
                 20));
 
 
+
             bulletTexture = Content.Load<Texture2D>("poop");
 
             shitShooter = new ShitShooter(
@@ -71,6 +76,16 @@ namespace ArkanoidClone
         100 // The bullet speed
         );
             
+
+            ball = new Ball(
+            Content.Load<Texture2D>("ball"),
+            new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+            new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
+            new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
+
+           
+           // Spawn bricklayout
+
             for (int i = 0; i < 15; i++)
 
                 for (int j = 0; j < 17; j++)
@@ -82,16 +97,37 @@ namespace ArkanoidClone
                     1));
                 }
 
-             ball = new Ball(Content.Load<Texture2D>("ball"),
-                     new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
-                     300f,
-                     new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));                
 
-            //Initialize walls
+            //variables to make sure the width of top bar is the same as the side walls.
+            int horizontalSpacing = 140;
+            int topWallWidth = GraphicsDevice.Viewport.Width - 2 * horizontalSpacing;
             
-            wallLeft = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Left);
-            wallRight = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Right);
-            wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
+            // Initialize walls
+            //Inside every wall you can change the position for format and Rectangle for bounding box
+            walls = new Wall[]
+            {
+                
+                
+                //Left wall
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(140, 0), // Position
+                    new Rectangle(140, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
+
+                //Right wall
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(GraphicsDevice.Viewport.Width - 190, 0), // Position
+                    new Rectangle(GraphicsDevice.Viewport.Width - 190, 0, 50, GraphicsDevice.Viewport.Height)), // Bounding box
+
+                //Top wall
+                new Wall(Content.Load<Texture2D>("Wall-texture"),
+                    new Vector2(horizontalSpacing, 0), // Position
+                    new Rectangle(horizontalSpacing, 0, topWallWidth, 50)) // Bounding box
+            };
+
+            //vad man får för poäng vid träff
+            scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
+
+            life = new Life(initialLives);
 
             base.Initialize();
         }
@@ -105,7 +141,8 @@ namespace ArkanoidClone
             shitShooter.Texture = Content.Load<Texture2D>("ufo");
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
-             
+            highScoreScreen = new HighScoreScreen(menuFont);
+
 
         }
 
@@ -119,21 +156,30 @@ namespace ArkanoidClone
             switch (currentGameState)
             {
                 case GameState.MainMenu:
-                    GameState newState = mainMenuScreen.Update(gameTime, currentKeyboardState, previousKeyboardState);
+                    GameState newState = mainMenuScreen.Update(currentKeyboardState, previousKeyboardState);
                     if (newState != GameState.MainMenu)
                     {
                         currentGameState = newState;
                     }
                     break;
                 case GameState.Playing:
-                    // Här lägger vi all spellogik.
+                    // Här lägger vi all spellogik
+                    List<Entity> allEntities = new List<Entity>();
+                    allEntities.Add(playerBar);
+                    allEntities.Add(walls[2]);
+                    allEntities.Add(walls[0]);
+                    allEntities.Add(walls[1]);
+                    foreach(Brick brick in bricks)
+                    {
+                        allEntities.Add(brick);
+                    }
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, playerBar);
                     shitShooter.Update(gameTime, playerBar);
-                    
+                    ball.Update(gameTime, allEntities);
+
                     break;
                 case GameState.ViewingHighScores:
-                    // Här lägger vi logik för HighScores när den klassen är klar.
+                    currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
@@ -167,23 +213,36 @@ namespace ArkanoidClone
                     mainMenuScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Playing:
-                //Draw the walls surrounding the game
-                    
-                    wallLeft.Draw(_spriteBatch);
-                    wallRight.Draw(_spriteBatch);
-                    wallTop.Draw(_spriteBatch);
+
+                    //Draw the walls surrounding the game
+                    foreach (var wall in walls)
+                    {
+                        wall.Draw(_spriteBatch);
+                    }
+
                     foreach (Brick brick in bricks)
                      {
                         brick.Draw(_spriteBatch);
                       }
+
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+
                     shitShooter.Draw(_spriteBatch);//Detta är enemy
-                    //shitBullet.Draw(_spriteBatch);
-                    
+
+                    //draw score
+                    scoreManager.Draw(_spriteBatch, menuFont);
+
+                    // Draw remaining lives
+                    Vector2 lifeTextPosition = new Vector2(20, 50);
+                    _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
+
+
+
+
                     break;
                 case GameState.ViewingHighScores:
-                    // Här lägger vi logik för HighScores när den klassen är klar.
+                    highScoreScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
