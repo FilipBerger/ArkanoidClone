@@ -19,20 +19,18 @@ namespace ArkanoidClone.PowerUps
 
         public abstract void ApplyEffect(PlayerBar playerBar, PowerUpManager powerUpManager);
 
-        public void Update(GameTime gameTime, Entity entity, PlayerBar playerBar, PowerUpManager powerUpManager) 
+        public void Update(GameTime gameTime, Entity entity, PlayerBar playerBar, PowerUpManager powerUpManager)
         {
             if (isActive)
             {
-                Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-                BoundingBox = new Rectangle((int)Position.X,
-                        (int)Position.Y,
-                        BoundingBox.Width,
-                        BoundingBox.Height);
+                // Adjust the following line to make the power-up balls fall
+                Position = new Vector2(Position.X, Position.Y - Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
+                BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
 
                 if (BoundingBox.Intersects(entity.BoundingBox))
                 {
                     isActive = false;
-                    ApplyEffect(playerBar, powerUpManager); 
+                    ApplyEffect(playerBar, powerUpManager);
                 }
             }
 
@@ -50,7 +48,7 @@ namespace ArkanoidClone.PowerUps
 
             if (sizePowerUpTimer <= 0)
             {
-                // No need to apply size power-up here
+                // Handle size power-up expiration
             }
         }
     }

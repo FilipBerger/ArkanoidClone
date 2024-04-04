@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ArkanoidClone.PowerUps;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -16,6 +17,8 @@ namespace ArkanoidClone
         private SpriteBatch _spriteBatch;
         private Ball ball;
         private AdditionalBall additionalBall;
+        private SpeedPowerUp speedPowerUp;
+        private PowerUpManager powerUpManager;
         private Wall[] walls;
         private List<Entity> allEntities = new List<Entity>();
         private Wall wallLeft;
@@ -23,9 +26,10 @@ namespace ArkanoidClone
         private Wall wallTop;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
-
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
+        private bool speedballSpawned = false;
+
 
         public Game1()
         {
@@ -47,11 +51,13 @@ namespace ArkanoidClone
             wallTop = Wall.CreateWall(Content.Load<Texture2D>("Wall-texture"), GraphicsDevice, Wall.WallPosition.Top);
 
             playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"),
-                new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
-                500,
-                new Rectangle(GraphicsDevice.Viewport.Width / 2, 600, 100, 20),
-                wallLeft,
-                wallRight);
+    new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
+    500,
+    new Rectangle(GraphicsDevice.Viewport.Width / 2, 600, 100, 20),
+    wallLeft,
+    wallRight,
+    Content
+);
 
 
 
@@ -73,13 +79,6 @@ namespace ArkanoidClone
                             new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
                             new Vector2(0, 300f), // Velocity
                             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30));
-
-
-            // Initialize additional ball
-            additionalBall = new AdditionalBall(Content.Load<Texture2D>("ball"),
-                new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2 + 100),
-                300f,
-                new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2 + 100, 30, 30));
 
             // Initialize walls
             int horizontalSpacing = 140;
@@ -118,7 +117,24 @@ namespace ArkanoidClone
             // Exit the game if the escape key is pressed
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            float elapsedSeconds = (float)gameTime.TotalGameTime.TotalSeconds;
 
+            // Check if 20 seconds have elapsed
+            if (elapsedSeconds >= 20 && !speedballSpawned)
+            {
+                // Spawn the speedball at the same position as the starting ball
+                speedPowerUp = new SpeedPowerUp(Content.Load<Texture2D>("ball"),
+                      new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), // Center of the screen
+                      200f,
+                      new Rectangle(0, 0, 30, 30),
+                      1000f,
+                      15f
+                  );
+
+
+                // Set a flag to indicate that the speedball has been spawned
+                speedballSpawned = true;
+            }
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
@@ -146,7 +162,11 @@ namespace ArkanoidClone
                     ball.Update(gameTime, allEntities);
 
                     // Update additional ball if active
-                    additionalBall.Update(gameTime, playerBar);
+                    //           additionalBall.Update(gameTime, playerBar);
+                    if (speedPowerUp != null)
+                    {
+                        speedPowerUp.Update(gameTime, playerBar);
+                    }
                     break;
                 case GameState.ViewingHighScores:
                     // Handle logic for viewing high scores
@@ -196,8 +216,12 @@ namespace ArkanoidClone
 
                     // Draw balls and player bar
                     ball.Draw(_spriteBatch);
-                    additionalBall.Draw(_spriteBatch); // Draw additional ball
+                //    additionalBall.Draw(_spriteBatch); // Draw additional ball
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+                    if (speedPowerUp != null)
+                    {
+                        speedPowerUp.Draw(_spriteBatch);
+                    }
                     break;
                 case GameState.ViewingHighScores:
                     // Draw high scores screen

@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
@@ -17,7 +18,7 @@ namespace ArkanoidClone
             get { return initialSpeed; }
         }
 
-        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, Wall wallLeft, Wall wallRight) : base(texture, position, speed, boundingBox)
+        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, Wall wallLeft, Wall wallRight, ContentManager content) : base(texture, position, speed, boundingBox)
         {
             this.texture = texture;
             this.position = position;
@@ -25,8 +26,9 @@ namespace ArkanoidClone
             this.BoundingBox = boundingBox;
             this.wallLeft = wallLeft;
             this.wallRight = wallRight;
-            PowerUpManager = new PowerUpManager(new Vector2(boundingBox.Width, boundingBox.Height));
+            this.PowerUpManager = new PowerUpManager(new Vector2(boundingBox.Width, boundingBox.Height), content);
         }
+
 
         public PowerUpManager PowerUpManager { get; private set; }
 

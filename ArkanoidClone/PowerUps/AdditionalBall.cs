@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.PowerUps
 {
     public class AdditionalBall : Entity
     {
@@ -28,16 +28,16 @@ namespace ArkanoidClone
             if (!isActive)
                 return;
 
+            // Update the position to move the ball downwards
             Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
             BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
 
             if (BoundingBox.Intersects(playerBar.BoundingBox))
             {
-                Speed *= -1;
-                GivePowerUp(playerBar, playerBar.PowerUpManager); 
+                Speed *= -1; // Reverse the direction if it intersects with the player bar
+                GivePowerUp(playerBar, playerBar.PowerUpManager);
                 isActive = false;
             }
-
 
             if (speedPowerUpTimer > 0)
                 speedPowerUpTimer -= (float)gameTime.ElapsedGameTime.TotalSeconds;
@@ -65,11 +65,12 @@ namespace ArkanoidClone
 
         private void GivePowerUp(PlayerBar playerBar, PowerUpManager powerUpManager)
         {
-            powerUpManager.ApplySizePowerUpWithDuration(playerBar, 2f, 10); 
-            powerUpManager.ApplySpeedPowerUpForDuration(playerBar, 1000, 15); 
+            powerUpManager.ApplySizePowerUpWithDuration(playerBar, new Vector2(200, 40), 10);
+            powerUpManager.ApplySpeedPowerUpForDuration(playerBar, 1000, 15);
             sizePowerUpTimer = 10;
             speedPowerUpTimer = 15;
         }
+
 
 
         public void Spawn(Vector2 position)

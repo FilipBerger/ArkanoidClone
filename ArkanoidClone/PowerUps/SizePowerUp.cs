@@ -1,6 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using ArkanoidClone.PowerUps; 
+using ArkanoidClone.PowerUps;
 
 namespace ArkanoidClone.PowerUps
 {
@@ -16,8 +16,13 @@ namespace ArkanoidClone.PowerUps
 
         public override void ApplyEffect(PlayerBar playerBar, PowerUpManager powerUpManager)
         {
-            powerUpManager.ApplySizePowerUpWithDuration(playerBar, 2f, 10); 
+            powerUpManager.ApplySizePowerUpWithDuration(playerBar, new Vector2(200, 40), 10); 
             sizePowerUpTimer = 10;
+        }
+        public void Spawn(Vector2 position)
+        {
+            Position = position;
+            isActive = true;
         }
     }
 }
