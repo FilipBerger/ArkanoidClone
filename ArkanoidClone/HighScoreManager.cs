@@ -47,7 +47,7 @@ namespace ArkanoidClone
             
             highScores.Add(newHighScore);
 
-            highScores = highScores.OrderBy(highScore => highScore.Score).ToList();
+            highScores = highScores.OrderByDescending(highScore => highScore.Score).ToList();
 
             if (highScores.Count > MAXIMUM_ENTRIES)
                 highScores = highScores.Take(MAXIMUM_ENTRIES).ToList();
