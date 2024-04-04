@@ -158,6 +158,8 @@ namespace ArkanoidClone
                     break;
             }
 
+
+            // Check for collision between ball and bricks and remove brick if hitpoints is 0
             for(int k = 0; k < bricks.Count; k++)
             {
                 Brick b = bricks[k];
