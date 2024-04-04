@@ -13,7 +13,7 @@ namespace ArkanoidClone
         private int selectedOption = 0;
         private List<string> options = new List<string> { "Start Game", "High Scores", "Exit" };
         private SpriteFont font;
-        private Vector2 position = new Vector2(100, 100); // Placeholder position, var jobbigt att få den centrerad.
+        private Vector2 position = new Vector2(100, 100); // Placeholder position, was a bit too much work to make everything centered correctly.
 
         public MainMenuScreen(SpriteFont font)
         {

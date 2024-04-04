@@ -10,7 +10,7 @@ namespace ArkanoidClone
 {
     internal class CreateHighScoreScreen
     {
-        private const int PLAYER_NAME_MAX_LENGTH = 10;
+        private const int PLAYER_NAME_MAX_LENGTH = 10; // Felt that a max name length was needed. Set max at 10 to start with.
         private SpriteFont font;
         private string playerName = "";
         private string message1 = "New high score!";
