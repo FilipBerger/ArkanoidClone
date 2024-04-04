@@ -22,10 +22,13 @@ namespace ArkanoidClone
         private Wall[] walls;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
+        private ShitShooter shitShooter;
+        private Texture2D bulletTexture;
         private HighScoreScreen highScoreScreen;
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
+
         
 
         private GameState currentGameState = GameState.MainMenu;
@@ -59,6 +62,21 @@ namespace ArkanoidClone
                 100,
                 20));
 
+
+
+            bulletTexture = Content.Load<Texture2D>("poop");
+
+            shitShooter = new ShitShooter(
+        Content.Load<Texture2D>("ufo"), // should be the enemy
+        new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
+        200, // the speed
+        new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
+        1, // The hitpoints
+        bulletTexture, // The bullet texture
+        100 // The bullet speed
+        );
+            
+
             ball = new Ball(
             Content.Load<Texture2D>("ball"),
             new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
@@ -67,6 +85,7 @@ namespace ArkanoidClone
 
            
            // Spawn bricklayout
+
             for (int i = 0; i < 15; i++)
 
                 for (int j = 0; j < 17; j++)
@@ -118,9 +137,12 @@ namespace ArkanoidClone
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D brickTexture = Content.Load<Texture2D>("05-Breakout-Tiles");
             playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
+            bulletTexture = Content.Load<Texture2D>("poop");
+            shitShooter.Texture = Content.Load<Texture2D>("ufo");
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
+
 
         }
 
@@ -152,7 +174,9 @@ namespace ArkanoidClone
                         allEntities.Add(brick);
                     }
                     playerBar.Update(gameTime);
+                    shitShooter.Update(gameTime, playerBar);
                     ball.Update(gameTime, allEntities);
+
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
@@ -168,7 +192,11 @@ namespace ArkanoidClone
                     break;
             }
 
+           
+           
+            
             previousKeyboardState = currentKeyboardState;
+            
 
             base.Update(gameTime);
         }
@@ -200,12 +228,15 @@ namespace ArkanoidClone
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
+                    shitShooter.Draw(_spriteBatch);//Detta är enemy
+
                     //draw score
                     scoreManager.Draw(_spriteBatch, menuFont);
 
                     // Draw remaining lives
                     Vector2 lifeTextPosition = new Vector2(20, 50);
                     _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
+
 
 
 
@@ -220,6 +251,7 @@ namespace ArkanoidClone
                     break;
             }
 
+           
             _spriteBatch.End();
 
             base.Draw(gameTime);
