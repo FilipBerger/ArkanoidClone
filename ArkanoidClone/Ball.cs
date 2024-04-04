@@ -8,6 +8,7 @@ public class Ball : Entity
 {
     public Vector2 Velocity { get; set; } 
 
+
     public Ball(Texture2D texture, Vector2 position, Vector2 velocity, Rectangle boundingBox) : base(texture, position, 0, boundingBox) // Hastighet sätts till 0 eftersom hastigheten kommer att styras av Velocity-egenskapen
     {
         Velocity = velocity;
@@ -36,7 +37,7 @@ public class Ball : Entity
     private void HandleCollision(Entity entity, GameTime gameTime)
     {
         Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
-        
+        Vector2 oldPosition = Position;
 
         if (entity is Wall)
         {
@@ -57,19 +58,49 @@ public class Ball : Entity
         }
         else if (entity is Brick)
         {
-            //Velocity = new Vector2(Velocity.X, -Velocity.Y);
-            Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
+            Rectangle intersection = Rectangle.Intersect(BoundingBox, entity.BoundingBox);
 
-            // Kolla om bollens bounding box interagerar med botten av entitetens bounding box
-            if (BoundingBox.Intersects(new Rectangle(entityRect.Left, entityRect.Bottom, entityRect.Width, 1)))
+            // Beräkna om bollen träffar brickan från sidan eller från toppen/botten
+            bool hitFromSide = intersection.Width < intersection.Height;
+
+            if (hitFromSide)
             {
-                // Här kan du hantera logiken för när bollen träffar botten av entiteten
-                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+                // Ändra riktningen horisontellt
+                Velocity = new Vector2(-Velocity.X, Velocity.Y);
             }
             else
             {
-                Velocity = new Vector2(-Velocity.X, Velocity.Y);
+                // Ändra riktningen vertikalt
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
             }
+
+            ////Senaste version Bollen fastnar/studsar mellan bricks
+            //if (BoundingBox.Intersects(entity.BoundingBox))
+            //{
+            //    float intersectX = BoundingBox.Center.X - entity.BoundingBox.Center.X;
+            //    float normalizedIntersectX = intersectX / entity.BoundingBox.Width;
+            //    float angle = normalizedIntersectX * MathHelper.ToRadians(60);
+
+            //    Vector2 newVelocity = Vector2.Transform(Velocity, Matrix.CreateRotationZ(angle));
+            //    Velocity = newVelocity;
+
+            //    Position = oldPosition + Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+            //}
+
+            ////Tidigare Version
+            ////Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            //Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
+
+            //// Kolla om bollens bounding box interagerar med botten av entitetens bounding box
+            //if (BoundingBox.Intersects(new Rectangle(entityRect.Left, entityRect.Bottom, entityRect.Width, 1)))
+            //{
+            //    // Här kan du hantera logiken för när bollen träffar botten av entiteten
+            //    Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            //}
+            //else
+            //{
+            //    Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            //}
         }
         else if (entity is PlayerBar)
         {
@@ -96,7 +127,7 @@ public class Ball : Entity
             //Velocity = new Vector2(newVelocityX, newVelocityY);
         }
     }
-    public void Draw(SpriteBatch spriteBatch)
+    public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Texture, BoundingBox, Color.White);
     }
