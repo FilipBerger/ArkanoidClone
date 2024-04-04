@@ -11,18 +11,13 @@ namespace ArkanoidClone
         private Vector2 position; 
         private float speed;
         private Rectangle boundingBox;
-        private int lives;
-
-        public int Lives { get { return lives; } }
-
-
-        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int lives) : base (texture, position, speed, boundingBox) 
+        public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base (texture, position, speed, boundingBox) 
         {
             this.texture = texture;
             this.position = position;
             this.speed = speed;
             this.boundingBox = boundingBox;
-            this.lives = lives;
+            
         }
 
         public void Update(GameTime gameTime)
@@ -57,15 +52,15 @@ namespace ArkanoidClone
             }
         }
 
-        public void DecreaseLife() 
-        {
-            lives--;
-        }
+        //public void DecreaseLife() Flyttas till egen klass
+        //{
+        //    lives--;
+        //}
 
-        public void ResetLives(int initialLives)
-        {
-            lives = initialLives;
-        }
+        //public void ResetLives(int initialLives)
+        //{
+        //    lives = initialLives;
+        //}
 
     }
 }

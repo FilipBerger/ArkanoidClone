@@ -3,7 +3,7 @@
   <Class Name="ArkanoidClone.Entity">
     <Position X="6" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAgAAAAIAABACAAAwAgAAIAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAgAAAAIAABACAAAwAgAAIAAAAAAAA=</HashCode>
       <FileName>Entity.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -31,6 +31,13 @@
   </Class>
   <Class Name="ArkanoidClone.Wall">
     <Position X="9" Y="7.25" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ArkanoidClone.Wall.WallPosition" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Wall.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <InheritanceLine Type="ArkanoidClone.Entity" ManuallyRouted="true">
       <Path>
         <Point X="6.75" Y="3.853" />
@@ -40,7 +47,7 @@
       </Path>
     </InheritanceLine>
     <TypeIdentifier>
-      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Wall.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -77,22 +84,22 @@
   <Class Name="ArkanoidClone.Brick">
     <Position X="7" Y="7.25" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAQAAIAAAAAAAAAAAAIEAAAAAAAAAAAAAAAAAAAQAAA=</HashCode>
+      <HashCode>AAQAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>Brick.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Destroyable">
     <Position X="6" Y="5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
       <FileName>Destroyable.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.HighScoreManager">
     <Position X="12.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAABAAAAABAAAAAAAwAAAAAAAAAAEAAAAAAAAAABAE=</HashCode>
-      <FileName>Highscore.cs</FileName>
+      <HashCode>AAAAAAAAAABAAAAAAAwAAAAAAAAAAEAAAAAAAAAABAE=</HashCode>
+      <FileName>HighScoreManager.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Stage">
@@ -154,7 +161,7 @@
   <Enum Name="ArkanoidClone.GameState">
     <Position X="10.75" Y="0.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAgAAAAAAAAAAAAAAgAAAYAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <HashCode>AAAAgAAAAAAAAAAAAAAAAAAYAAAAAgAAAAAAgAAAAAA=</HashCode>
       <FileName>GameState.cs</FileName>
     </TypeIdentifier>
   </Enum>
