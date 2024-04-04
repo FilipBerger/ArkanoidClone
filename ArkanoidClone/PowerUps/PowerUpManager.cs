@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata;
 
 namespace ArkanoidClone
 {
@@ -16,7 +15,6 @@ namespace ArkanoidClone
         private float sizePowerUpDuration;
         private float speedPowerUpTimer;
         private float sizePowerUpTimer;
-        private List<Entity> allEntities = new List<Entity>(); // Ensure you have this list
         private ContentManager content;
 
         public PowerUpManager(Vector2 initialSize, ContentManager content)
@@ -30,10 +28,7 @@ namespace ArkanoidClone
             this.content = content;
         }
 
-        public Vector2 CurrentSize
-        {
-            get { return currentSize; }
-        }
+        public Vector2 CurrentSize => currentSize;
 
         public void ApplySpeedPowerUpForDuration(PlayerBar playerBar, float speedValue, float durationSeconds)
         {
@@ -57,43 +52,6 @@ namespace ArkanoidClone
             );
 
             currentSize = newSize;
-        }
-
-        public void SpawnPowerUpBall(Vector2 position, Type powerUpType)
-        {
-            float initialSpeed = -100; // Adjust the initial speed as needed
-
-            if (powerUpType == typeof(SpeedPowerUp))
-            {
-                // Spawn a SpeedPowerUp ball
-                SpeedPowerUp speedPowerUp = new SpeedPowerUp(
-                    content.Load<Texture2D>("ball"),
-                    position,
-                    initialSpeed, // Set initial speed
-                    new Rectangle((int)position.X, (int)position.Y, 20, 20),
-                    200f,
-                    5f
-                );
-
-                speedPowerUp.Spawn(position);
-                allEntities.Add(speedPowerUp);
-            }
-            else if (powerUpType == typeof(SizePowerUp))
-            {
-                // Spawn a SizePowerUp ball
-                SizePowerUp sizePowerUp = new SizePowerUp(
-                    content.Load<Texture2D>("ball"),
-                    position,
-                    initialSpeed, // Set initial speed
-                    new Rectangle((int)position.X, (int)position.Y, 30, 30),
-                    1.5f,
-                    10f
-                );
-
-                sizePowerUp.Spawn(position);
-                allEntities.Add(sizePowerUp);
-            }
-            // Add more conditions for other types of power-ups if needed
         }
 
         public void Update(GameTime gameTime, PlayerBar playerBar)
@@ -121,7 +79,7 @@ namespace ArkanoidClone
 
                 if (speedPowerUpTimer <= 0)
                 {
-                    playerBar.Speed = playerBar.InitialSpeed; // Change this line to playerBar.Speed
+                    playerBar.Speed = playerBar.InitialSpeed;
                     speedPowerUpTimer = 0;
                 }
             }

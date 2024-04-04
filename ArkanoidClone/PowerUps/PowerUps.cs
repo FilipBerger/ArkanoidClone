@@ -23,7 +23,6 @@ namespace ArkanoidClone.PowerUps
         {
             if (isActive)
             {
-                // Adjust the following line to make the power-up balls fall
                 Position = new Vector2(Position.X, Position.Y - Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
                 BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
 

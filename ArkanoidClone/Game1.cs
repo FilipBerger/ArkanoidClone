@@ -17,7 +17,8 @@ namespace ArkanoidClone
         private SpriteBatch _spriteBatch;
         private Ball ball;
         private AdditionalBall additionalBall;
-        private SpeedPowerUp speedPowerUp;
+        public SpeedPowerUp speedPowerUp;
+        public SizePowerUp sizePowerUp;
         private PowerUpManager powerUpManager;
         private Wall[] walls;
         private List<Entity> allEntities = new List<Entity>();
@@ -29,7 +30,7 @@ namespace ArkanoidClone
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
         private bool speedballSpawned = false;
-
+        private bool sizeballSpawned = false;
 
         public Game1()
         {
@@ -58,6 +59,8 @@ namespace ArkanoidClone
     wallRight,
     Content
 );
+            powerUpManager = new PowerUpManager(new Vector2(30, 30), Content);
+
 
 
 
@@ -111,7 +114,6 @@ namespace ArkanoidClone
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
         }
-
         protected override void Update(GameTime gameTime)
         {
             // Exit the game if the escape key is pressed
@@ -123,18 +125,22 @@ namespace ArkanoidClone
             if (elapsedSeconds >= 20 && !speedballSpawned)
             {
                 // Spawn the speedball at the same position as the starting ball
-                speedPowerUp = new SpeedPowerUp(Content.Load<Texture2D>("ball"),
-                      new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2), // Center of the screen
-                      200f,
-                      new Rectangle(0, 0, 30, 30),
-                      1000f,
-                      15f
-                  );
-
+                SpeedPowerUpSpawner.SpawnSpeedPowerUp(this, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
 
                 // Set a flag to indicate that the speedball has been spawned
                 speedballSpawned = true;
             }
+
+            // Check if 30 seconds have elapsed
+            if (elapsedSeconds >= 30 && !sizeballSpawned)
+            {
+                // Spawn the size power-up at the same position as the starting ball
+                SizePowerUpSpawner.SpawnSizePowerUp(this, new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2));
+
+                // Set a flag to indicate that the size power-up has been spawned
+                sizeballSpawned = true;
+            }
+
             // Get the current keyboard state
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
@@ -166,6 +172,10 @@ namespace ArkanoidClone
                     if (speedPowerUp != null)
                     {
                         speedPowerUp.Update(gameTime, playerBar);
+                    }
+                    if (sizePowerUp != null)
+                    {
+                        sizePowerUp.Update(gameTime, playerBar);
                     }
                     break;
                 case GameState.ViewingHighScores:
@@ -216,11 +226,15 @@ namespace ArkanoidClone
 
                     // Draw balls and player bar
                     ball.Draw(_spriteBatch);
-                //    additionalBall.Draw(_spriteBatch); // Draw additional ball
+                    //    additionalBall.Draw(_spriteBatch); // Draw additional ball
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
                     if (speedPowerUp != null)
                     {
                         speedPowerUp.Draw(_spriteBatch);
+                    }
+                    if (sizePowerUp != null)
+                    {
+                        sizePowerUp.Draw(_spriteBatch);
                     }
                     break;
                 case GameState.ViewingHighScores:
