@@ -7,27 +7,30 @@ using System;
 public class Ball : Entity
 {
     public Vector2 Velocity { get; set; }
+    private int previousLife;
 
     public Ball(Texture2D texture, Vector2 position, Vector2 velocity, Rectangle boundingBox) : base(texture, position, 0, boundingBox) // Hastighet sätts till 0 eftersom hastigheten kommer att styras av Velocity-egenskapen
     {
         Velocity = velocity;
     }
 
-    public void Update(GameTime gameTime, List<Entity> entities)
+    public Life Update(GameTime gameTime, List<Entity> entities, PlayerBar playerBar, Life life, Vector2 originalBallPosition)
     {
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+        previousLife = life.RemainingLives;
 
         BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
+        CheckOutOfBounds(playerBar, life, originalBallPosition);
 
         foreach (Entity entity in entities)
         {
             if (entity != this && BoundingBox.Intersects(entity.BoundingBox))
             {
-
                 HandleCollision(entity, gameTime);
                 break;
             }
         }
+        return life;
     }
 
     private void HandleCollision(Entity entity, GameTime gameTime)
@@ -90,6 +93,32 @@ public class Ball : Entity
             Velocity = new Vector2(newVelocityX, newVelocityY);
         }
     }
+    public Life CheckOutOfBounds(PlayerBar playerBar, Life life, Vector2 originalBallPosition)
+    {
+        if (Position.Y > playerBar.Position.Y + 20)
+        {
+            life.DecreaseLife();
+            // Återställ bollens position om livet har minskats
+            if (life.RemainingLives < previousLife)
+            {
+                ResetPosition(originalBallPosition);
+            }
+        }
+        return life;
+    }
+    //public bool CheckOutOfBounds(PlayerBar playerBar)
+    //{
+    //    if (Position.Y > playerBar.Position.Y + 20)
+    //    {
+    //        return true;
+    //    }
+    //    return false;
+    //}
+    public void ResetPosition(Vector2 originalPosition)
+    {
+        Position = originalPosition;
+    }
+
     public override void Draw(SpriteBatch spriteBatch)
     {
         spriteBatch.Draw(Texture, BoundingBox, Color.White);

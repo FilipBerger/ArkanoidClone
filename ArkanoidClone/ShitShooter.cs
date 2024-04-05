@@ -15,7 +15,7 @@ namespace ArkanoidClone
         private float direction = 1;
         private double shootingTimer = 1;
         private double shootingInterval = 2;
-        
+
 
         public ShitShooter(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox, int hitpoints, Texture2D bulletTexture, float bulletSpeed)
             : base(texture, position, speed, boundingBox, hitpoints)
@@ -24,7 +24,7 @@ namespace ArkanoidClone
             this.bulletSpeed = bulletSpeed;
             this.bullets = new List<ShitBullet>();
         }
-       
+
         //Creates a bullet
         public void Shoot()
         {
@@ -34,7 +34,7 @@ namespace ArkanoidClone
             bullets.Add(bullet);
         }
 
-        public void Update(GameTime gameTime, PlayerBar playerBar)
+        public void Update(GameTime gameTime, PlayerBar playerBar, Life life)
         {
             Position += new Vector2(direction * Speed * (float)gameTime.ElapsedGameTime.TotalSeconds, 0);
             BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
@@ -58,35 +58,29 @@ namespace ArkanoidClone
             }
 
 
-            // Update each bullet
-            foreach (var bullet in bullets)
+            for (int i = bullets.Count - 1; i >= 0; i--)
             {
-                bullet.Update(gameTime, playerBar);
-                
-            }
-
-            foreach (var bullet in bullets)
-            {
-                if (bullet.Position.Y > 720)
+                var bullet = bullets[i];
+                life = bullet.Update(gameTime, playerBar, life);
+                if (bullet.IsMarkedForRemoval)
                 {
-                    bullets.Remove(bullet);
-                    break;
+                    bullets.RemoveAt(i);
                 }
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-            spriteBatch.Draw(Texture, BoundingBox, Color.White);
-
-            foreach (var bullet in bullets)
+            public void Draw(SpriteBatch spriteBatch)
             {
-                bullet.Draw(spriteBatch);
+
+                spriteBatch.Draw(Texture, BoundingBox, Color.White);
+
+                foreach (var bullet in bullets)
+                {
+                    bullet.Draw(spriteBatch);
+                }
+
+
             }
-
-
-        }
 
     }
 }

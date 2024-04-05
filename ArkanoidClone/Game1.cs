@@ -25,16 +25,18 @@ namespace ArkanoidClone
         private ShitShooter shitShooter;
         private Texture2D bulletTexture;
         private HighScoreScreen highScoreScreen;
+        private BrickManager brickManager;
         private CreateHighScoreScreen createHighScoreScreen;
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
-
+        private Vector2 originalBallPosition; 
         private SizeUp sizeUp;
         private LifeUp lifeUp;
-
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
+        
+        
 
         public Game1()
         {
@@ -80,19 +82,7 @@ namespace ArkanoidClone
             new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
 
-           
-           // Spawn bricklayout
-
-            for (int i = 0; i < 15; i++)
-
-                for (int j = 0; j < 17; j++)
-                {
-                    bricks.Add(new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
-                    new Vector2(230 + j * 45, 50 + i * 15),
-                    0f,
-                    new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
-                    1));
-                }
+           brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), 1);
 
             //variables to make sure the width of top bar is the same as the side walls.
             int horizontalSpacing = 140;
@@ -124,6 +114,7 @@ namespace ArkanoidClone
             scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
 
             life = new Life(initialLives);
+            originalBallPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); // Spara den ursprungliga positionen för bollen
 
             //Test SizeUp
             sizeUp = new SizeUp(Content.Load<Texture2D>("mario_mushroom"),
@@ -178,13 +169,14 @@ namespace ArkanoidClone
                     allEntities.Add(walls[2]);
                     allEntities.Add(walls[0]);
                     allEntities.Add(walls[1]);
-                    foreach(Brick brick in bricks)
+                    foreach (Brick brick in bricks)
                     {
                         allEntities.Add(brick);
                     }
                     playerBar.Update(gameTime);
-                    shitShooter.Update(gameTime, playerBar);
-                    ball.Update(gameTime, allEntities);
+                    bricks = brickManager.Update();
+                    shitShooter.Update(gameTime, playerBar, life);
+                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     playerBar = sizeUp.Update(gameTime, playerBar);
                     life = lifeUp.Update(gameTime, playerBar, life);
                     currentGameState = life.Update();
@@ -204,8 +196,8 @@ namespace ArkanoidClone
                 case GameState.GameOver:
                     // Här lägger vi logik för GameOverScreen när den klassen är klar.
                     break;
-            } 
-            
+            }
+
             previousKeyboardState = currentKeyboardState;
             
 
