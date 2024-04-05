@@ -184,6 +184,9 @@ namespace ArkanoidClone
                         allEntities.Add(brick);
                     }
                     playerBar.Update(gameTime);
+
+                    shitShooter.Update(gameTime, playerBar, life);
+                    ball.Update(gameTime, allEntities);
                     life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     shitShooter.Update(gameTime, playerBar);
                     playerBar = sizeUp.Update(gameTime, playerBar);
