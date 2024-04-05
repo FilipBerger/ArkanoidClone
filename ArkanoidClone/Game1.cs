@@ -23,9 +23,11 @@ namespace ArkanoidClone
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
         private HighScoreScreen highScoreScreen;
-
+        private BrickManager brickManager;
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
+        
+        
 
 
         
@@ -60,19 +62,7 @@ namespace ArkanoidClone
             new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 30, 30)); // Bollens storlek och startposition
 
-           
-           // Spawn bricklayout
-            for (int i = 0; i < 15; i++)
-
-                for (int j = 0; j < 17; j++)
-                {
-                    bricks.Add(new Brick(Content.Load<Texture2D>("05-Breakout-Tiles"),
-                    new Vector2(230 + j * 45, 50 + i * 15),
-                    0f,
-                    new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
-                    1));
-                }
-
+           brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), 1);
 
             //variables to make sure the width of top bar is the same as the side walls.
             int horizontalSpacing = 140;
@@ -143,6 +133,7 @@ namespace ArkanoidClone
                     }
                     playerBar.Update(gameTime);
                     ball.Update(gameTime, allEntities);
+                    bricks = brickManager.Update();
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
@@ -159,6 +150,7 @@ namespace ArkanoidClone
             }
 
 
+/*
             // Check for collision between ball and bricks and remove brick if hitpoints is 0
             for(int k = 0; k < bricks.Count; k++)
             {
@@ -182,7 +174,7 @@ namespace ArkanoidClone
 
 
 
-
+*/
             previousKeyboardState = currentKeyboardState;
 
             base.Update(gameTime);
