@@ -11,6 +11,12 @@ namespace ArkanoidClone
         private string playerName;
         private int score;
 
+        public HighScore(string playerName, int score)
+        {
+            this.playerName = playerName;
+            this.score = score;
+        }
+
         public string PlayerName
         {
             get { return playerName; }
