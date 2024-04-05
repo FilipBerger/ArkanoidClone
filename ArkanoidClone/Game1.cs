@@ -168,6 +168,7 @@ namespace ArkanoidClone
                     allEntities.Add(walls[2]);
                     allEntities.Add(walls[0]);
                     allEntities.Add(walls[1]);
+                    allEntities.Add(shitShooter);
                     foreach (Brick brick in bricks)
                     {
                         allEntities.Add(brick);
