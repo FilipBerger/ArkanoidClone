@@ -7,6 +7,8 @@ using System;
 public class Ball : Entity
 {
     public Vector2 Velocity { get; set; }
+    
+
     private int previousLife;
 
     public Ball(Texture2D texture, Vector2 position, Vector2 velocity, Rectangle boundingBox) : base(texture, position, 0, boundingBox) // Hastighet sätts till 0 eftersom hastigheten kommer att styras av Velocity-egenskapen
@@ -31,6 +33,24 @@ public class Ball : Entity
             }
         }
         return life;
+    }
+
+    public BrickManager UpdateBricks(BrickManager brickManager)
+    {
+
+        if (brickManager != null)
+        {
+            foreach (Brick brick in brickManager.Bricks)
+            {
+                if (BoundingBox.Intersects(brick.BoundingBox))
+                {
+                    brickManager.HandleCollision(brick);
+                    break;
+                }
+            }
+        }
+
+        return brickManager;
     }
 
     private void HandleCollision(Entity entity, GameTime gameTime)
@@ -93,6 +113,8 @@ public class Ball : Entity
             Velocity = new Vector2(newVelocityX, newVelocityY);
         }
     }
+
+
     public Life CheckOutOfBounds(PlayerBar playerBar, Life life, Vector2 originalBallPosition)
     {
         if (Position.Y > playerBar.Position.Y + 20)
@@ -123,5 +145,7 @@ public class Ball : Entity
     {
         spriteBatch.Draw(Texture, BoundingBox, Color.White);
     }
+
+
 }
 
