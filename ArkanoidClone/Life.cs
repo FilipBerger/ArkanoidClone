@@ -20,6 +20,11 @@ namespace ArkanoidClone
             remainingLives--;
         }
 
+        public void IncreaseLife()
+        {
+            remainingLives++;
+        }
+
         public void ResetLives(int initialLives)
         {
             remainingLives = initialLives;

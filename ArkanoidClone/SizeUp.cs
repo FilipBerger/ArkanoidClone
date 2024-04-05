@@ -7,7 +7,7 @@ using System.Text;
 
 namespace ArkanoidClone
 {
-    public class SizeUp : PowerUps
+    public class SizeUp : PowerUp
     {
         private bool effectApplied = false;
 
@@ -41,11 +41,6 @@ namespace ArkanoidClone
                 effectApplied = true;
             }
             return playerBar;
-        }
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
     }
 }

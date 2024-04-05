@@ -29,6 +29,7 @@ namespace ArkanoidClone
         private int initialLives = 3;
         private Life life;
         private SizeUp sizeUp;
+        private LifeUp lifeUp;
 
         
 
@@ -134,6 +135,11 @@ namespace ArkanoidClone
                 100f,
                 new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
 
+            //Test LifeUp
+            lifeUp = new LifeUp(Content.Load<Texture2D>("life_up"),
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 200),
+                100f,
+                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
 
 
             base.Initialize();
@@ -184,7 +190,7 @@ namespace ArkanoidClone
                     shitShooter.Update(gameTime, playerBar);
                     ball.Update(gameTime, allEntities);
                     playerBar = sizeUp.Update(gameTime, playerBar);
-
+                    life = lifeUp.Update(gameTime, playerBar, life);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
@@ -248,6 +254,7 @@ namespace ArkanoidClone
 
                     sizeUp.Draw(_spriteBatch);
 
+                    lifeUp.Draw(_spriteBatch);
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
