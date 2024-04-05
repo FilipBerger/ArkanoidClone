@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -142,6 +143,12 @@ namespace ArkanoidClone
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
             createHighScoreScreen = new CreateHighScoreScreen(menuFont);
+            
+            //Musik
+            Song backgroundMusic = Content.Load<Song>("");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Play(backgroundMusic);
 
         }
 
