@@ -25,11 +25,11 @@ namespace ArkanoidClone
         public CreateHighScoreScreen(SpriteFont font)
         {
             this.font = font;
-            this.score = score;
+            
             // Add logic to get score from somewhere.
         }
 
-        public GameState Update(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
+        public GameState Update(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState, int currentScore)
         {
             foreach (var key in currentKeyboardState.GetPressedKeys())
             {

@@ -185,7 +185,7 @@ namespace ArkanoidClone
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.CreatingHighScore:
-                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState);
+                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState, scoreManager.GetScore());
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
