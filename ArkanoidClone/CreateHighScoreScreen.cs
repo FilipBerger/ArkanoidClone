@@ -20,11 +20,12 @@ namespace ArkanoidClone
         private Vector2 positionMessage2 = new Vector2(100, 150);
         private Vector2 positionMessage3 = new Vector2(100, 200);
         private bool isEnteringName = true;
-        private int score = 10000; // Placeholder value for score. Add logic to get score in the constructor when proper score counter is implemented.
+        private int score;  
 
         public CreateHighScoreScreen(SpriteFont font)
         {
             this.font = font;
+            this.score = score;
             // Add logic to get score from somewhere.
         }
 
