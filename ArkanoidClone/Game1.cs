@@ -145,7 +145,7 @@ namespace ArkanoidClone
             createHighScoreScreen = new CreateHighScoreScreen(menuFont);
             
             //Musik
-            Song backgroundMusic = Content.Load<Song>("");
+            Song backgroundMusic = Content.Load<Song>("Metal-Man-Stage");
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(backgroundMusic);
