@@ -1,57 +1,98 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ArkanoidClone;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using System;
 
-namespace ArkanoidClone
+public class Ball : Entity
 {
-    public class Ball : Entity
+    public Vector2 Velocity { get; set; }
+
+    public Ball(Texture2D texture, Vector2 position, Vector2 velocity, Rectangle boundingBox) : base(texture, position, 0, boundingBox) // Hastighet sätts till 0 eftersom hastigheten kommer att styras av Velocity-egenskapen
     {
-        
-        public Ball(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox) //Tillfällig
+        Velocity = velocity;
+    }
+
+    public void Update(GameTime gameTime, List<Entity> entities)
+    {
+        Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
+
+        foreach (Entity entity in entities)
         {
-            
-        }
-
-        public void Update(GameTime gameTime, Entity entity)
-
-        {
-            Position = new Vector2(Position.X, Position.Y + Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
-            BoundingBox = new Rectangle((int)Position.X,
-                    (int)Position.Y,
-                    BoundingBox.Width,
-                    BoundingBox.Height);
-
-            if (BoundingBox.Intersects(entity.BoundingBox))
+            if (entity != this && BoundingBox.Intersects(entity.BoundingBox))
             {
-                Speed *= -1;
+
+                HandleCollision(entity, gameTime);
+                break;
             }
-            
-
-        }
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(
-                //Texture,
-                //Position,
-                //null,
-                //Color.White,
-                //0f,
-                //new Vector2(Texture.Width / 2, Texture.Height / 2),
-                //Vector2.One,
-                //SpriteEffects.None,
-                //0f
-                Texture,
-                BoundingBox,
-                Color.White
-            );
-        }
-
-        public void Bounce()
-        {
-            throw new System.NotImplementedException();
         }
     }
+
+    private void HandleCollision(Entity entity, GameTime gameTime)
+    {
+        Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
+
+        Vector2 oldPosition = Position;
+
+        if (entity is Wall)
+        {
+            
+            Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
+
+            // Kolla om bollens bounding box interagerar med botten av entitetens bounding box
+            if (BoundingBox.Intersects(new Rectangle(entityRect.Left, entityRect.Bottom, entityRect.Width, 1)))
+            {
+                // Här kan du hantera logiken för när bollen träffar botten av entiteten
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            }
+            else
+            {
+                Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            }
+
+        }
+        else if (entity is Brick)
+        {
+            Rectangle intersection = Rectangle.Intersect(BoundingBox, entity.BoundingBox);
+
+            // Beräkna om bollen träffar brickan från sidan eller från toppen/botten
+            bool hitFromSide = intersection.Width < intersection.Height;
+
+            if (hitFromSide)
+            {
+                // Ändra riktningen horisontellt
+                Velocity = new Vector2(-Velocity.X, Velocity.Y);
+            }
+            else
+            {
+                // Ändra riktningen vertikalt
+                Velocity = new Vector2(Velocity.X, -Velocity.Y);
+            }
+        }
+        else if (entity is PlayerBar)
+        {
+            float intersectX = BoundingBox.Center.X - entity.BoundingBox.Center.X;
+
+            float normalizedIntersectX = intersectX / entity.BoundingBox.Width;
+
+            float angle = normalizedIntersectX * MathHelper.ToRadians(60); // 60 grader är en vanlig vinkeländring i Arkanoid
+
+
+            Vector2 newVelocity = Vector2.Transform(Velocity, Matrix.CreateRotationZ(angle));
+
+
+            float newVelocityX = (float)Math.Sin(angle) * Velocity.Length();
+
+            float newVelocityY = -(float)Math.Cos(angle) * Velocity.Length();
+
+            Velocity = new Vector2(newVelocityX, newVelocityY);
+        }
+    }
+    public override void Draw(SpriteBatch spriteBatch)
+    {
+        spriteBatch.Draw(Texture, BoundingBox, Color.White);
+    }
 }
+
