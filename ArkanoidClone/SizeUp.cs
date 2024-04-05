@@ -9,6 +9,8 @@ namespace ArkanoidClone
 {
     public class SizeUp : PowerUps
     {
+        private bool effectApplied = false;
+
         public SizeUp(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox)
         {
             Texture = texture;
@@ -22,7 +24,7 @@ namespace ArkanoidClone
             var newPlayerBar = new PlayerBar(playerBar.Texture, playerBar.Position, playerBar.Speed, new Rectangle(
                 playerBar.BoundingBox.X,
                 playerBar.BoundingBox.Y,
-                playerBar.BoundingBox.Width + 50,
+                playerBar.BoundingBox.Width + 30,
                 playerBar.BoundingBox.Height));
 
             return newPlayerBar;
@@ -33,11 +35,17 @@ namespace ArkanoidClone
             Position += new Vector2(0, Speed * (float)gameTime.ElapsedGameTime.TotalSeconds);
             BoundingBox = new Rectangle((int)Position.X, (int)Position.Y, BoundingBox.Width, BoundingBox.Height);
 
-            if (BoundingBox.Intersects(playerBar.BoundingBox))
+            if (BoundingBox.Intersects(playerBar.BoundingBox) && !effectApplied)
             {
-                return ApplyEffect(playerBar);
+                playerBar = ApplyEffect(playerBar);
+                effectApplied = true;
             }
-            else return playerBar;
+            return playerBar;
+        }
+
+        public void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(Texture, BoundingBox, Color.White);
         }
     }
 }

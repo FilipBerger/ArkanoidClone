@@ -28,7 +28,7 @@ namespace ArkanoidClone
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
-        private PowerUps SizeUp;
+        private SizeUp sizeUp;
 
         
 
@@ -128,6 +128,14 @@ namespace ArkanoidClone
 
             life = new Life(initialLives);
 
+            //Test SizeUp
+            sizeUp = new SizeUp(Content.Load<Texture2D>("mario_mushroom"),
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 0),
+                100f,
+                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
+
+
+
             base.Initialize();
         }
 
@@ -175,6 +183,7 @@ namespace ArkanoidClone
                     playerBar.Update(gameTime);
                     shitShooter.Update(gameTime, playerBar);
                     ball.Update(gameTime, allEntities);
+                    playerBar = sizeUp.Update(gameTime, playerBar);
 
                     break;
                 case GameState.ViewingHighScores:
@@ -220,9 +229,9 @@ namespace ArkanoidClone
                     }
 
                     foreach (Brick brick in bricks)
-                     {
+                    {
                         brick.Draw(_spriteBatch);
-                      }
+                    }
 
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
@@ -237,7 +246,7 @@ namespace ArkanoidClone
                     _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
 
 
-
+                    sizeUp.Draw(_spriteBatch);
 
                     break;
                 case GameState.ViewingHighScores:
