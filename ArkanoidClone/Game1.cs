@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -149,6 +150,9 @@ namespace ArkanoidClone
             MediaPlayer.IsRepeating = true;
             MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(backgroundMusic);
+
+            SoundEffect brickhitSound = Content.Load<SoundEffect>("Blip");
+            SoundEffect powerUpSound = Content.Load<SoundEffect>("nioce");
 
         }
 
