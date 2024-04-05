@@ -151,9 +151,6 @@ namespace ArkanoidClone
             MediaPlayer.Volume = 0.1f;
             MediaPlayer.Play(backgroundMusic);
 
-            SoundEffect brickhitSound = Content.Load<SoundEffect>("Blip");
-            SoundEffect powerUpSound = Content.Load<SoundEffect>("nioce");
-
         }
 
         protected override void Update(GameTime gameTime)
