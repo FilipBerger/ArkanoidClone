@@ -10,6 +10,7 @@ namespace ArkanoidClone
         MainMenu,
         Playing,
         ViewingHighScores,
+        CreatingHighScore,
         Exiting,
         GameOver
     }

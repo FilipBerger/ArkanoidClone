@@ -27,19 +27,32 @@ namespace ArkanoidClone
             }
         }
 
-        public static void SaveHighScores()
+        private static void SaveHighScores(List<HighScore> highScoresToSave)
         {
-            throw new System.NotImplementedException();
+            try
+            {
+                string jsonString = JsonSerializer.Serialize(highScoresToSave, new JsonSerializerOptions { WriteIndented = true });
+
+                File.WriteAllText(filePath, jsonString);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"An error occurred while saving high scores: {ex.Message}");
+            }
         }
 
-        public static void AddHighScore()
+        public static void AddHighScore(HighScore newHighScore)
         {
-            throw new System.NotImplementedException();
-        }
+            var highScores = LoadHighScores();
+            
+            highScores.Add(newHighScore);
 
-        public static void DisplayHighScores()
-        {
-            throw new System.NotImplementedException();
+            highScores = highScores.OrderByDescending(highScore => highScore.Score).ToList();
+
+            if (highScores.Count > MAXIMUM_ENTRIES)
+                highScores = highScores.Take(MAXIMUM_ENTRIES).ToList();
+
+            SaveHighScores(highScores);
         }
     }
 }
