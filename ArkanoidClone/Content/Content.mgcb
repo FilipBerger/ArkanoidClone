@@ -120,6 +120,12 @@
 /processorParam:TextureFormat=Color
 /build:menuFontSelected.bmp
 
+#begin Metal-Man-Stage.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:Metal-Man-Stage.mp3
+
 #begin Paddle.jpg
 /importer:TextureImporter
 /processor:TextureProcessor
