@@ -16,7 +16,7 @@ public class Ball : Entity
         Velocity = velocity;
     }
 
-    public Life Update(GameTime gameTime, List<Entity> entities, PlayerBar playerBar, Life life, Vector2 originalBallPosition)
+    public Life Update(GameTime gameTime, List<Entity> entities, PlayerBar playerBar, Life life, Vector2 originalBallPosition, ScoreManager scoreManager)
     {
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         previousLife = life.RemainingLives;
@@ -28,7 +28,7 @@ public class Ball : Entity
         {
             if (entity != this && BoundingBox.Intersects(entity.BoundingBox))
             {
-                HandleCollision(entity, gameTime);
+                HandleCollision(entity, gameTime, scoreManager);
                 break;
             }
         }
@@ -53,7 +53,7 @@ public class Ball : Entity
         return brickManager;
     }
 
-    private void HandleCollision(Entity entity, GameTime gameTime)
+    private void HandleCollision(Entity entity, GameTime gameTime, ScoreManager scoreManager)
     {
         Position -= Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
 
@@ -93,6 +93,8 @@ public class Ball : Entity
                 // Ändra riktningen vertikalt
                 Velocity = new Vector2(Velocity.X, -Velocity.Y);
             }
+
+            scoreManager.BrickHit(); //Lägger till poäng när boll träffar brick
         }
         else if (entity is PlayerBar)
         {
@@ -111,6 +113,10 @@ public class Ball : Entity
             float newVelocityY = -(float)Math.Cos(angle) * Velocity.Length();
 
             Velocity = new Vector2(newVelocityX, newVelocityY);
+        }
+        else if (entity is Enemy) //added to give point to enemy hit.
+        {
+            scoreManager.EnemyHit();
         }
     }
 
