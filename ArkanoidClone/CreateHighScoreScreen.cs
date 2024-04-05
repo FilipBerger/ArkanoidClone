@@ -25,7 +25,7 @@ namespace ArkanoidClone
         public CreateHighScoreScreen(SpriteFont font)
         {
             this.font = font;
-            this.score = score;
+            
             
             // Add logic to get score from somewhere.
         }
