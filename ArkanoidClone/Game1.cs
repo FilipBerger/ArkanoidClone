@@ -179,7 +179,7 @@ namespace ArkanoidClone
                     life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     playerBar = sizeUp.Update(gameTime, playerBar);
                     life = lifeUp.Update(gameTime, playerBar, life);
-
+                    currentGameState = life.Update();
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);

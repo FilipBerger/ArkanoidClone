@@ -30,6 +30,15 @@ namespace ArkanoidClone
             remainingLives = initialLives;
         }
 
+        public GameState Update()
+        {
+            if (remainingLives <= 0)
+            {
+                return GameState.CreatingHighScore;
+            }
+            return GameState.Playing;
+        }
+
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
         {
             Vector2 position = new Vector2(20, 100); // Adjust position as needed
