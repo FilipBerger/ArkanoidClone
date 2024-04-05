@@ -24,7 +24,7 @@ namespace ArkanoidClone
         {
             highScores = HighScoreManager.LoadHighScores();
             if (keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
-                return GameState.CreatingHighScore;
+                return GameState.MainMenu;
             else return GameState.ViewingHighScores;
         }
 
