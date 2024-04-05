@@ -25,19 +25,16 @@ namespace ArkanoidClone
         private ShitShooter shitShooter;
         private Texture2D bulletTexture;
         private HighScoreScreen highScoreScreen;
+        private CreateHighScoreScreen createHighScoreScreen;
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
+
         private SizeUp sizeUp;
         private LifeUp lifeUp;
 
-        
-
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
-
-
-        
 
         public Game1()
         {
@@ -47,7 +44,6 @@ namespace ArkanoidClone
             currentGameState = GameState.MainMenu;
             _graphics.PreferredBackBufferWidth = 1224;
             _graphics.PreferredBackBufferHeight = 720;
-
         }
 
         protected override void Initialize()
@@ -67,6 +63,7 @@ namespace ArkanoidClone
             bulletTexture = Content.Load<Texture2D>("poop");
 
             shitShooter = new ShitShooter(
+
             Content.Load<Texture2D>("ufo"), // should be the enemy
             new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
             200, // the speed
@@ -75,7 +72,7 @@ namespace ArkanoidClone
             bulletTexture, // The bullet texture
             100 // The bullet speed
             );
-            
+
 
             ball = new Ball(
             Content.Load<Texture2D>("ball"),
@@ -96,7 +93,6 @@ namespace ArkanoidClone
                     new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
                     1));
                 }
-
 
             //variables to make sure the width of top bar is the same as the side walls.
             int horizontalSpacing = 140;
@@ -155,7 +151,7 @@ namespace ArkanoidClone
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
-
+            createHighScoreScreen = new CreateHighScoreScreen(menuFont);
 
         }
 
@@ -195,6 +191,9 @@ namespace ArkanoidClone
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
+                case GameState.CreatingHighScore:
+                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState);
+                    break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
                     // Fancy exempel: En ruta som frågar om konfirmation på att avsluta spelet, "Yes" "No".
@@ -204,10 +203,7 @@ namespace ArkanoidClone
                 case GameState.GameOver:
                     // Här lägger vi logik för GameOverScreen när den klassen är klar.
                     break;
-            }
-
-           
-           
+            } 
             
             previousKeyboardState = currentKeyboardState;
             
@@ -255,9 +251,13 @@ namespace ArkanoidClone
                     sizeUp.Draw(_spriteBatch);
 
                     lifeUp.Draw(_spriteBatch);
+
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
+                    break;
+                case GameState.CreatingHighScore:
+                    createHighScoreScreen.Draw(_spriteBatch);
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.
@@ -265,8 +265,7 @@ namespace ArkanoidClone
                     // Lazy exempel: Environment.Exit(0);
                     break;
             }
-
-           
+  
             _spriteBatch.End();
 
             base.Draw(gameTime);

@@ -22,9 +22,9 @@ namespace ArkanoidClone
         }
         public GameState Update(KeyboardState keyboardState, KeyboardState previousKeyboardState)
         {
+            highScores = HighScoreManager.LoadHighScores();
             if (keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
-                return GameState.MainMenu;
-
+                return GameState.CreatingHighScore;
             else return GameState.ViewingHighScores;
         }
 
