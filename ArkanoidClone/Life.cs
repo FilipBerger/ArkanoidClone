@@ -6,13 +6,15 @@ namespace ArkanoidClone
 {
     public class Life
     {
+        private const int INITIAL_LIVES = 3;
+
         private int remainingLives;
 
         public int RemainingLives { get { return remainingLives; } }
 
-        public Life(int initialLives)
+        public Life()
         {
-            remainingLives = initialLives;
+            remainingLives = INITIAL_LIVES;
         }
 
         public void DecreaseLife()
@@ -25,15 +27,16 @@ namespace ArkanoidClone
             remainingLives++;
         }
 
-        public void ResetLives(int initialLives)
+        public void ResetLives()
         {
-            remainingLives = initialLives;
+            remainingLives = INITIAL_LIVES;
         }
 
         public GameState Update()
         {
             if (remainingLives <= 0)
             {
+                ResetLives();
                 return GameState.CreatingHighScore;
             }
             return GameState.Playing;

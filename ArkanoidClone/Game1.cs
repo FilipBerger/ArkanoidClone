@@ -28,7 +28,6 @@ namespace ArkanoidClone
         private BrickManager brickManager;
         private CreateHighScoreScreen createHighScoreScreen;
         private ScoreManager scoreManager;
-        private int initialLives = 3;
         private Life life;
         private Vector2 originalBallPosition; 
         private SizeUp sizeUp;
@@ -113,7 +112,7 @@ namespace ArkanoidClone
             //vad man får för poäng vid träff
             scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
 
-            life = new Life(initialLives);
+            life = new Life();
             originalBallPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); // Spara den ursprungliga positionen för bollen
 
             //Test SizeUp
