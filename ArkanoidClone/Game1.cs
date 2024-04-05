@@ -29,13 +29,14 @@ namespace ArkanoidClone
         private CreateHighScoreScreen createHighScoreScreen;
         private ScoreManager scoreManager;
         private Life life;
-        private Vector2 originalBallPosition; 
+        private Vector2 originalBallPosition;
         private SizeUp sizeUp;
         private LifeUp lifeUp;
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
-        
-        
+        private List<SizeUp> sizeUps;
+
+
 
         public Game1()
         {
@@ -49,13 +50,13 @@ namespace ArkanoidClone
 
         protected override void Initialize()
         {
-            
+
             _graphics.IsFullScreen = false;
             _graphics.ApplyChanges();
 
             playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"),
                 new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
-                500, 
+                500,
                 new Rectangle(GraphicsDevice.Viewport.Width / 2,
                 600,
                 100,
@@ -81,12 +82,12 @@ namespace ArkanoidClone
             new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
 
-           brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), 1);
+            brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), Content.Load<Texture2D>("mario_mushroom"));
 
             //variables to make sure the width of top bar is the same as the side walls.
             int horizontalSpacing = 140;
             int topWallWidth = GraphicsDevice.Viewport.Width - 2 * horizontalSpacing;
-            
+
             // Initialize walls
             //Inside every wall you can change the position for format and Rectangle for bounding box
             walls = new Wall[]
@@ -149,7 +150,7 @@ namespace ArkanoidClone
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-                
+
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
             switch (currentGameState)
@@ -176,9 +177,18 @@ namespace ArkanoidClone
                     bricks = brickManager.Update();
                     shitShooter.Update(gameTime, playerBar, life);
                     life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
-                    brickManager= ball.UpdateBricks(brickManager);
-                    playerBar = sizeUp.Update(gameTime, playerBar);
+                    brickManager = ball.UpdateBricks(brickManager);
+                    //playerBar = sizeUp.Update(gameTime, playerBar);
                     life = lifeUp.Update(gameTime, playerBar, life);
+                    sizeUps = brickManager.UpdateSizeUps(sizeUps);
+                    if (sizeUps != null)
+                    {
+                        foreach (SizeUp sizeUp in sizeUps)
+                        {
+                            playerBar = sizeUp.Update(gameTime, playerBar);
+                            sizeUps.Remove(sizeUp);
+                        }
+                    }
                     currentGameState = life.Update();
                     break;
                 case GameState.ViewingHighScores:
@@ -199,7 +209,7 @@ namespace ArkanoidClone
             }
 
             previousKeyboardState = currentKeyboardState;
-            
+
 
             base.Update(gameTime);
         }
@@ -207,7 +217,7 @@ namespace ArkanoidClone
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.DarkSlateGray);
-            
+
             _spriteBatch.Begin();
 
             switch (currentGameState)
@@ -245,6 +255,17 @@ namespace ArkanoidClone
 
                     lifeUp.Draw(_spriteBatch);
 
+                    if (sizeUps != null)
+                    {
+
+                        foreach (SizeUp sizeUp in sizeUps)
+                        {
+                            sizeUp.Draw(_spriteBatch);
+                        }
+
+                    }
+
+
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);
@@ -257,8 +278,9 @@ namespace ArkanoidClone
                     // Fancy exempel: En ruta som frågar om konfirmation på att avsluta spelet, "Yes" "No".
                     // Lazy exempel: Environment.Exit(0);
                     break;
+
             }
-  
+
             _spriteBatch.End();
 
             base.Draw(gameTime);

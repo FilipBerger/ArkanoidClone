@@ -13,6 +13,8 @@ namespace ArkanoidClone
     {
         private bool effectApplied = false;
 
+        
+
         public LifeUp(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base(texture, position, speed, boundingBox)
         {
             Texture = texture;

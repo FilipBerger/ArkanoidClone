@@ -14,9 +14,9 @@ namespace ArkanoidClone
     {
         private Texture2D brickTexture;
         private System.Numerics.Vector2 vector2;
-        private float v1;
+        //private float v1;
         private System.Drawing.Rectangle rectangle;
-        private int v2;
+        //private int v2;
 
         public bool IsDestroyed { get; private set; }
 
