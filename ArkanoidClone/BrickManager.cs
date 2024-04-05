@@ -31,45 +31,25 @@ namespace ArkanoidClone
             return bricks;
         }
 
-        public void HandleCollision(Brick brickHit)
+        public void HandleCollision(Brick brick)
         {
-            foreach (Brick brick in bricks)
+            brick.HitPoints--;
+            if (brick.HitPoints == 0)
             {
-                if (brickHit is Brick)
-                {
-                    brick.HitPoints--;
-                    if (brick.HitPoints == 0)
-                    {
-                        bricks.Remove(brick);
-
-                        // Randomly spawn new enemy
-
-                        /*int randomNumber = RandomNumberGenerator.GenerateRandomNumber(1, 10);
-                        Console.WriteLine(randomNumber);
-                        if (randomNumber == 1)
-                        {
-                            // Spawn enemy1
-                        }*/
+                bricks.Remove(brick);
 
 
-                    }
-                }
+
+
             }
 
-           
         }
-/*
-        public class RandomNumberGenerator
+
+        public List <Brick> Bricks
         {
-            private static Random random = new Random();
-
-            public static int GenerateRandomNumber(int min, int max)
-            {
-                return random.Next(min, max + 1);
-            }
+            get { return bricks; }
+            set { bricks = value; }
         }
-
-*/
-
     }
+
 }
