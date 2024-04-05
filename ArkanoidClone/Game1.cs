@@ -29,6 +29,10 @@ namespace ArkanoidClone
         private ScoreManager scoreManager;
         private int initialLives = 3;
         private Life life;
+
+        private SizeUp sizeUp;
+        private LifeUp lifeUp;
+
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
 
@@ -59,14 +63,16 @@ namespace ArkanoidClone
             bulletTexture = Content.Load<Texture2D>("poop");
 
             shitShooter = new ShitShooter(
-        Content.Load<Texture2D>("ufo"), // should be the enemy
-        new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
-        200, // the speed
-        new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
-        1, // The hitpoints
-        bulletTexture, // The bullet texture
-        100 // The bullet speed
-        );
+
+            Content.Load<Texture2D>("ufo"), // should be the enemy
+            new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
+            200, // the speed
+            new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
+            1, // The hitpoints
+            bulletTexture, // The bullet texture
+            100 // The bullet speed
+            );
+
 
             ball = new Ball(
             Content.Load<Texture2D>("ball"),
@@ -119,6 +125,19 @@ namespace ArkanoidClone
 
             life = new Life(initialLives);
 
+            //Test SizeUp
+            sizeUp = new SizeUp(Content.Load<Texture2D>("mario_mushroom"),
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 0),
+                100f,
+                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
+
+            //Test LifeUp
+            lifeUp = new LifeUp(Content.Load<Texture2D>("life_up"),
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 200),
+                100f,
+                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
+
+
             base.Initialize();
         }
 
@@ -166,7 +185,8 @@ namespace ArkanoidClone
                     playerBar.Update(gameTime);
                     shitShooter.Update(gameTime, playerBar);
                     ball.Update(gameTime, allEntities);
-
+                    playerBar = sizeUp.Update(gameTime, playerBar);
+                    life = lifeUp.Update(gameTime, playerBar, life);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
@@ -211,9 +231,9 @@ namespace ArkanoidClone
                     }
 
                     foreach (Brick brick in bricks)
-                     {
+                    {
                         brick.Draw(_spriteBatch);
-                      }
+                    }
 
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
@@ -226,6 +246,11 @@ namespace ArkanoidClone
                     // Draw remaining lives
                     Vector2 lifeTextPosition = new Vector2(20, 50);
                     _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
+
+
+                    sizeUp.Draw(_spriteBatch);
+
+                    lifeUp.Draw(_spriteBatch);
 
                     break;
                 case GameState.ViewingHighScores:
