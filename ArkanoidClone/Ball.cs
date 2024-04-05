@@ -14,7 +14,7 @@ public class Ball : Entity
         Velocity = velocity;
     }
 
-    public void Update(GameTime gameTime, List<Entity> entities, PlayerBar playerBar, Life life, Vector2 originalBallPosition)
+    public Life Update(GameTime gameTime, List<Entity> entities, PlayerBar playerBar, Life life, Vector2 originalBallPosition)
     {
         Position += Velocity * (float)gameTime.ElapsedGameTime.TotalSeconds;
         previousLife = life.RemainingLives;
@@ -30,6 +30,7 @@ public class Ball : Entity
                 break;
             }
         }
+        return life;
     }
 
     private void HandleCollision(Entity entity, GameTime gameTime)
@@ -92,7 +93,7 @@ public class Ball : Entity
             Velocity = new Vector2(newVelocityX, newVelocityY);
         }
     }
-    public void CheckOutOfBounds(PlayerBar playerBar, Life life, Vector2 originalBallPosition)
+    public Life CheckOutOfBounds(PlayerBar playerBar, Life life, Vector2 originalBallPosition)
     {
         if (Position.Y > playerBar.Position.Y + 20)
         {
@@ -103,6 +104,7 @@ public class Ball : Entity
                 ResetPosition(originalBallPosition);
             }
         }
+        return life;
     }
     //public bool CheckOutOfBounds(PlayerBar playerBar)
     //{

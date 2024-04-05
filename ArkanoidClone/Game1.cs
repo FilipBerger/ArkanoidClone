@@ -154,7 +154,7 @@ namespace ArkanoidClone
                         allEntities.Add(brick);
                     }
                     playerBar.Update(gameTime);
-                    ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
+                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
