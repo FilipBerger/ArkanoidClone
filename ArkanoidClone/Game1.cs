@@ -146,7 +146,7 @@ namespace ArkanoidClone
                     {
                         shitShooter.Update(gameTime, playerBar, life);
                     }
-                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
+                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition, scoreManager);
                     brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
                     playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
                     life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
