@@ -150,14 +150,13 @@ namespace ArkanoidClone
                     brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
                     playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
                     life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
-
                     currentGameState = life.Update();
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
                 case GameState.CreatingHighScore:
-                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState);
+                    currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState, scoreManager.GetScore());
                     break;
                 case GameState.Exiting:
                     // Här lägger vi logik för att avsluta spelet.

@@ -30,6 +30,7 @@ namespace ArkanoidClone
 
         public void Draw(SpriteBatch spriteBatch)
         {
+            highScores = HighScoreManager.LoadHighScores();
             for (int i = 0; i < highScores.Count; i++)
             {
                 string text = $"{highScores[i].PlayerName}: {highScores[i].Score}";
