@@ -7,7 +7,7 @@ using System;
 public class Ball : Entity
 {
     public Vector2 Velocity { get; set; }
-    
+
 
     private int previousLife;
 
@@ -70,7 +70,7 @@ public class Ball : Entity
 
         if (entity is Wall)
         {
-            
+
             Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
 
             // Kolla om bollens bounding box interagerar med botten av entitetens bounding box

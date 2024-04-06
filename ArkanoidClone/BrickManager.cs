@@ -146,17 +146,17 @@ namespace ArkanoidClone
 
                 if (chance > 0.05 && chance < 0.1) // 5% chance
                 {
-                    lifeUps.Add(new LifeUp(lifeUpTexture, 
-                        brick.Position, 
-                        100f, 
+                    lifeUps.Add(new LifeUp(lifeUpTexture,
+                        brick.Position,
+                        100f,
                         new Rectangle((int)brick.Position.X, (int)brick.Position.Y, 25, 25)));
                 }
 
-                if (chance > 0.1 && chance < 1) // 5% chance
+                if (chance > 0.1 && chance < 0.2) // 10% chance
                 {
-                    shitShooters.Add(new ShitShooter(shitShooterTexture, 
-                        brick.Position, 
-                        100f, 
+                    shitShooters.Add(new ShitShooter(shitShooterTexture,
+                        brick.Position,
+                        100f,
                         new Rectangle((int)brick.Position.X, (int)brick.Position.Y, 30, 20),
                         1,
                         shitBulletTexture,

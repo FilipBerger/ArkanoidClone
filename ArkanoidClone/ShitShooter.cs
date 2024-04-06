@@ -69,18 +69,18 @@ namespace ArkanoidClone
             }
         }
 
-            public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch)
+        {
+
+            spriteBatch.Draw(Texture, BoundingBox, Color.White);
+
+            foreach (var bullet in bullets)
             {
-
-                spriteBatch.Draw(Texture, BoundingBox, Color.White);
-
-                foreach (var bullet in bullets)
-                {
-                    bullet.Draw(spriteBatch);
-                }
-
-
+                bullet.Draw(spriteBatch);
             }
+
+
+        }
 
     }
 }
