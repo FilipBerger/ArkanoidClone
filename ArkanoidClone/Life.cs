@@ -6,7 +6,7 @@ namespace ArkanoidClone
 {
     public class Life
     {
-        private const int INITIAL_LIVES = 3;
+        private const int INITIAL_LIVES = 99999;
 
         private int remainingLives;
 

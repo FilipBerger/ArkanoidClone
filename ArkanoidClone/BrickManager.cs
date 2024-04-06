@@ -120,7 +120,7 @@ namespace ArkanoidClone
         {
             shitShooter.HitPoints--;
 
-            if (shitShooter.HitPoints == 0)
+            if (shitShooter.HitPoints <= 0)
             {
                 shitShooters.Remove(shitShooter);
             }
@@ -129,7 +129,7 @@ namespace ArkanoidClone
         public void HandleBallCollisionWithBrick(Brick brick)
         {
             brick.HitPoints--;
-            if (brick.HitPoints == 0)
+            if (brick.HitPoints <= 0)
             {
                 // Generate a random number between 0 and 1
                 Random rand = new Random();
