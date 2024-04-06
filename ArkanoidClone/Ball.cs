@@ -7,7 +7,7 @@ using System;
 public class Ball : Entity
 {
     public Vector2 Velocity { get; set; }
-    
+
 
     private int previousLife;
 
@@ -35,7 +35,7 @@ public class Ball : Entity
         return life;
     }
 
-    public BrickManager UpdateBricks(BrickManager brickManager)
+    public BrickManager DetectCollisionWithBrickOrShitShooter(BrickManager brickManager)
     {
 
         if (brickManager != null)
@@ -44,7 +44,16 @@ public class Ball : Entity
             {
                 if (BoundingBox.Intersects(brick.BoundingBox))
                 {
-                    brickManager.HandleCollision(brick);
+                    brickManager.HandleBallCollisionWithBrick(brick);
+                    break;
+                }
+            }
+
+            foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+            {
+                if (BoundingBox.Intersects(shitShooter.BoundingBox))
+                {
+                    brickManager.HandleBallCollisionWithShitShooter(shitShooter);
                     break;
                 }
             }
@@ -61,7 +70,7 @@ public class Ball : Entity
 
         if (entity is Wall)
         {
-            
+
             Rectangle entityRect = entity.BoundingBox; // Antag att BoundingBox är en Rectangle
 
             // Kolla om bollens bounding box interagerar med botten av entitetens bounding box

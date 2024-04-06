@@ -42,5 +42,10 @@ namespace ArkanoidClone
             }
             return playerBar;
         }
+
+        public bool EffectApplied
+        {
+            get { return effectApplied; }
+        }
     }
 }
