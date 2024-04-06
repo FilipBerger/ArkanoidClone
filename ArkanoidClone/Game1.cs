@@ -22,7 +22,7 @@ namespace ArkanoidClone
         private Wall[] walls;
         private SpriteFont menuFont;
         private MainMenuScreen mainMenuScreen;
-        private ShitShooter shitShooter;
+        //private ShitShooter shitShooter;
         private Texture2D bulletTexture;
         private HighScoreScreen highScoreScreen;
         private BrickManager brickManager;
@@ -30,13 +30,8 @@ namespace ArkanoidClone
         private ScoreManager scoreManager;
         private Life life;
         private Vector2 originalBallPosition;
-        private SizeUp sizeUp;
-        private LifeUp lifeUp;
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
-        private List<SizeUp> sizeUps;
-
-
 
         public Game1()
         {
@@ -64,16 +59,16 @@ namespace ArkanoidClone
 
             bulletTexture = Content.Load<Texture2D>("poop");
 
-            shitShooter = new ShitShooter(
+            //shitShooter = new ShitShooter(
 
-            Content.Load<Texture2D>("ufo"), // should be the enemy
-            new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
-            200, // the speed
-            new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
-            1, // The hitpoints
-            bulletTexture, // The bullet texture
-            100 // The bullet speed
-            );
+            //Content.Load<Texture2D>("ufo"), // should be the enemy
+            //new Vector2(GraphicsDevice.Viewport.Width / 2, 200), // the position
+            //200, // the speed
+            //new Rectangle(GraphicsDevice.Viewport.Width / 2, 200, 30, 20), // should be the bounding box
+            //1, // The hitpoints
+            //bulletTexture, // The bullet texture
+            //100 // The bullet speed
+            //);
 
 
             ball = new Ball(
@@ -82,7 +77,11 @@ namespace ArkanoidClone
             new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
 
-            brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), Content.Load<Texture2D>("mario_mushroom"));
+            brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"), 
+                Content.Load<Texture2D>("mario_mushroom"), 
+                Content.Load<Texture2D>("life_up"),
+                Content.Load<Texture2D>("ufo"),
+                bulletTexture = Content.Load<Texture2D>("poop"));
 
             //variables to make sure the width of top bar is the same as the side walls.
             int horizontalSpacing = 140;
@@ -116,19 +115,6 @@ namespace ArkanoidClone
             life = new Life();
             originalBallPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); // Spara den ursprungliga positionen för bollen
 
-            //Test SizeUp
-            sizeUp = new SizeUp(Content.Load<Texture2D>("mario_mushroom"),
-                new Vector2(GraphicsDevice.Viewport.Width / 2, 0),
-                100f,
-                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
-
-            //Test LifeUp
-            lifeUp = new LifeUp(Content.Load<Texture2D>("life_up"),
-                new Vector2(GraphicsDevice.Viewport.Width / 2, 200),
-                100f,
-                new Rectangle(GraphicsDevice.Viewport.Width / 2, 0, 25, 25));
-
-
             base.Initialize();
         }
 
@@ -137,8 +123,8 @@ namespace ArkanoidClone
             _spriteBatch = new SpriteBatch(GraphicsDevice);
             Texture2D brickTexture = Content.Load<Texture2D>("05-Breakout-Tiles");
             playerBar.Texture = (Content.Load<Texture2D>("49-Breakout-Tiles"));
-            bulletTexture = Content.Load<Texture2D>("poop");
-            shitShooter.Texture = Content.Load<Texture2D>("ufo");
+            //bulletTexture = Content.Load<Texture2D>("poop");
+            //shitShooter.Texture = Content.Load<Texture2D>("ufo");
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
@@ -175,20 +161,16 @@ namespace ArkanoidClone
                     }
                     playerBar.Update(gameTime);
                     bricks = brickManager.Update();
-                    shitShooter.Update(gameTime, playerBar, life);
+                    foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+                    {
+                        shitShooter.Update(gameTime, playerBar, life);
+                    }
+                    //shitShooter.Update(gameTime, playerBar, life);
                     life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition);
                     brickManager = ball.UpdateBricks(brickManager);
-                    //playerBar = sizeUp.Update(gameTime, playerBar);
-                    life = lifeUp.Update(gameTime, playerBar, life);
-                    sizeUps = brickManager.UpdateSizeUps(sizeUps);
-                    if (sizeUps != null)
-                    {
-                        foreach (SizeUp sizeUp in sizeUps)
-                        {
-                            playerBar = sizeUp.Update(gameTime, playerBar);
-                            sizeUps.Remove(sizeUp);
-                        }
-                    }
+                    playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
+                    life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
+
                     currentGameState = life.Update();
                     break;
                 case GameState.ViewingHighScores:
@@ -241,30 +223,42 @@ namespace ArkanoidClone
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
 
-                    shitShooter.Draw(_spriteBatch);//Detta är enemy
+                    //shitShooter.Draw(_spriteBatch);//Detta är enemy
 
-                    //draw score
+                    //Draw score
                     scoreManager.Draw(_spriteBatch, menuFont);
 
                     // Draw remaining lives
                     Vector2 lifeTextPosition = new Vector2(20, 50);
                     _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
 
-
-                    sizeUp.Draw(_spriteBatch);
-
-                    lifeUp.Draw(_spriteBatch);
-
-                    if (sizeUps != null)
+                    if (brickManager.SizeUps != null)
                     {
 
-                        foreach (SizeUp sizeUp in sizeUps)
+                        foreach (SizeUp sizeUp in brickManager.SizeUps)
                         {
                             sizeUp.Draw(_spriteBatch);
                         }
 
                     }
 
+                    if (brickManager.LifeUps != null)
+                    {
+
+                        foreach (LifeUp lifeUp in brickManager.LifeUps)
+                        {
+                            lifeUp.Draw(_spriteBatch);
+                        }
+                    }
+
+                    if (brickManager.ShitShooters != null)
+                    {
+
+                        foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+                        {
+                            shitShooter.Draw(_spriteBatch);
+                        }
+                    }
 
                     break;
                 case GameState.ViewingHighScores:

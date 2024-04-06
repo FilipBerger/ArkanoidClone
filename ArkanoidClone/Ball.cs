@@ -44,7 +44,7 @@ public class Ball : Entity
             {
                 if (BoundingBox.Intersects(brick.BoundingBox))
                 {
-                    brickManager.HandleCollision(brick);
+                    brickManager.HandleBallCollisionWithBrick(brick);
                     break;
                 }
             }
