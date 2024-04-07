@@ -20,25 +20,36 @@ namespace ArkanoidClone
         private Texture2D lifeUpTexture;
         private Texture2D shitShooterTexture;
         private Texture2D shitBulletTexture;
+        private Texture2D brickTexture;
 
         public BrickManager(Texture2D brickTexture, Texture2D sizeUpTexture, Texture2D lifeUpTexture, Texture2D shitShooterTexture, Texture2D shitBulletTexture)
         {
-            for (int i = 0; i < 15; i++)
-            {
-                for (int j = 0; j < 17; j++)
-                {
-                    bricks.Add(new Brick(brickTexture,
-                    new Vector2(230 + j * 45, 50 + i * 15),
-                    0f,
-                    new Rectangle(230 + j * 45, 50 + i * 15, 45, 15),
-                    1));
-                }
-            }
-
+            this.brickTexture = brickTexture;
             this.sizeUpTexture = sizeUpTexture;
             this.lifeUpTexture = lifeUpTexture;
             this.shitShooterTexture = shitShooterTexture;
             this.shitBulletTexture = shitBulletTexture;
+
+            bricks = CreateBrickLayout(brickTexture, 8, 15, 275, 110);
+        }
+
+        private List<Brick> CreateBrickLayout(Texture2D brickTexture, int numberOfRows, int numberOfColumns, int startingPositionX, int startingPositionY)
+        {
+            List<Brick> newBrickLayout = new List<Brick>();
+
+            for (int i = 0; i < numberOfRows; i++)
+            {
+                for (int j = 0; j < numberOfColumns; j++)
+                {
+                    newBrickLayout.Add(new Brick(brickTexture,
+                    new Vector2(startingPositionX + j * 45, startingPositionY + i * 15),
+                    0f,
+                    new Rectangle(startingPositionX + j * 45, startingPositionY + i * 15, 45, 15),
+                    1));
+                }
+            }
+
+            return newBrickLayout;
         }
 
         public List<Brick> Update()
