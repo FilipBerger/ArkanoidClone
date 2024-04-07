@@ -11,7 +11,6 @@ namespace ArkanoidClone
     internal class NextStageScreen
     {
         private string message = "Get ready for the next stage!";
-        private string loadingMessage = "Loading...";
         private string readyMessage = "Press 'Enter' to start the next Stage!";
 
         private SpriteFont font;
@@ -23,28 +22,17 @@ namespace ArkanoidClone
 
         }
 
-        public bool Update(KeyboardState keyboardState, KeyboardState previousKeyboardState, bool nextStageIsReady)
+        public GameState Update(KeyboardState keyboardState, KeyboardState previousKeyboardState)
         {
-            if (nextStageIsReady)
-            {
                 if (keyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
-                    return true;
-                else return false;
-            }
-            else return false;
+                    return GameState.PlayingStage2;
+                else return GameState.SetUpStage2;
         }
 
-        public void Draw(SpriteBatch spriteBatch, bool nextStageIsReady)
+        public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.DrawString(font, message, position, Color.White);
-            if (nextStageIsReady)
-            {
-                spriteBatch.DrawString(font, readyMessage, new Vector2(position.X, position.Y + 30), Color.White);
-            }
-            else
-            {
-                spriteBatch.DrawString(font, loadingMessage, new Vector2(position.X, position.Y + 30), Color.White);
-            }
+            spriteBatch.DrawString(font, readyMessage, new Vector2(position.X, position.Y + 30), Color.Yellow);
         }
     }
 }

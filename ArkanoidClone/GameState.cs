@@ -9,8 +9,10 @@ namespace ArkanoidClone
     {
         MainMenu,
         PlayingStage1,
-        SetUpStage2,
         PlayingStage2,
+        SetUpStage1,
+        SetUpStage2,
+        Paused,
         ViewingHighScores,
         CreatingHighScore,
         Exiting,

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using System.Reflection.Metadata;
 
 public class Ball : Entity
 {
@@ -153,7 +154,17 @@ public class Ball : Entity
     //}
     public void ResetPosition(Vector2 originalPosition)
     {
+        // Fixa så att bollen stannar kvar i mitten och faller rakt ner när spelaren trycker Enter.
+        // Detta kan typ göras genom att sätta speed till noll och och "direction" (vet inte hur det är implementerat i boll klassen) till rakt ner.
+        // Och sen en PlayerBar.Update liknande metod som tar en keyboard input om spelaren tryckt Enter ännu eller inte och sätter då tillbaka speed.
         Position = originalPosition;
+        Velocity = new Vector2(0, 300);
+
+        //ball = new Ball(
+        //    Content.Load<Texture2D>("ball"),
+        //    new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2),
+        //    new Vector2(0, 300), // Bollens hastighet: X = 0 (ingen horisontell rörelse), Y = 300 (vertikal rörelse nedåt)
+        //    new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
     }
 
     public override void Draw(SpriteBatch spriteBatch)

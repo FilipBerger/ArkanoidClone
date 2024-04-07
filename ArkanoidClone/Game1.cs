@@ -29,8 +29,9 @@ namespace ArkanoidClone
         private Life life;
         private Vector2 originalBallPosition;
         private GameState currentGameState = GameState.MainMenu;
+        private GameState gameStateBeforePaus;
         private KeyboardState previousKeyboardState;
-        private bool stage2IsReady = false;
+        private bool stageWasJustSetUp = true;
 
         public Game1()
         {
@@ -63,6 +64,7 @@ namespace ArkanoidClone
             new Rectangle(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2, 20, 20)); // Bollens storlek och startposition
 
             brickManager = new BrickManager(Content.Load<Texture2D>("05-Breakout-Tiles"),
+                Content.Load<Texture2D>("01-Breakout-Tiles"),
                 Content.Load<Texture2D>("mario_mushroom"),
                 Content.Load<Texture2D>("life_up"),
                 Content.Load<Texture2D>("ufo"),
@@ -115,6 +117,42 @@ namespace ArkanoidClone
             createHighScoreScreen = new CreateHighScoreScreen(menuFont);
         }
 
+        private void UpdatePlayingLoop(GameTime gameTime)
+        {
+            List<Entity> allEntities = new List<Entity>
+                    {
+                        playerBar,
+                        walls[2],
+                        walls[0],
+                        walls[1]
+                    };
+            foreach (Brick brick in bricks)
+            {
+                allEntities.Add(brick);
+            }
+            playerBar.Update(gameTime);
+            bricks = brickManager.Update();
+            foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+            {
+                shitShooter.Update(gameTime, playerBar, life);
+            }
+            life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition, scoreManager);
+            brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
+            playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
+            life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
+            currentGameState = life.Update(currentGameState);
+            currentGameState = brickManager.UpdateStageProgress(currentGameState);
+        }
+
+        private void PauseAtReset()
+        {
+            if (stageWasJustSetUp)
+            {
+                stageWasJustSetUp = false;
+                gameStateBeforePaus = currentGameState;
+                currentGameState = GameState.Paused;
+            }
+        }
         protected override void Update(GameTime gameTime)
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
@@ -131,85 +169,50 @@ namespace ArkanoidClone
                         currentGameState = newState;
                     }
                     break;
-                case GameState.PlayingStage1:
-                    // Här lägger vi all spellogik
-                    List<Entity> allEntities = new List<Entity>
-                    {
-                        playerBar,
-                        walls[2],
-                        walls[0],
-                        walls[1]
-                    };
-                    foreach (Brick brick in bricks)
-                    {
-                        allEntities.Add(brick);
-                    }
-                    playerBar.Update(gameTime);
-                    bricks = brickManager.Update();
-                    foreach (ShitShooter shitShooter in brickManager.ShitShooters)
-                    {
-                        shitShooter.Update(gameTime, playerBar, life);
-                    }
-                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition, scoreManager);
-                    brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
-                    playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
-                    life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
-                    currentGameState = life.Update();
-                    currentGameState = brickManager.UpdateStageProgress(currentGameState, bricks);
-                    break;
-                case GameState.SetUpStage2:
-                    stage2IsReady = nextStageScreen.Update(currentKeyboardState, previousKeyboardState, stage2IsReady);
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
 
-                    // Add entity reset logic here.
-                    if (stage2IsReady)
-                        currentGameState = GameState.PlayingStage2;
+                case GameState.SetUpStage1:
+                    ResetObjects();
+                    scoreManager = scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
+                    brickManager.SetupStage1();
+                    currentGameState = GameState.PlayingStage1;
                     break;
+
+                case GameState.PlayingStage1:
+                    UpdatePlayingLoop(gameTime);
+                    PauseAtReset();
+                    break;
+
+                case GameState.SetUpStage2:
+                    ResetObjects();
+                    brickManager.SetupStage2();
+                    currentGameState = nextStageScreen.Update(currentKeyboardState, previousKeyboardState);
+                    break;
+
                 case GameState.PlayingStage2:
-                    // Här lägger vi all spellogik
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
-                    allEntities = new List<Entity>
-                    {
-                        playerBar,
-                        walls[2],
-                        walls[0],
-                        walls[1]
-                    };
-                    foreach (Brick brick in bricks)
-                    {
-                        allEntities.Add(brick);
-                    }
-                    playerBar.Update(gameTime);
-                    bricks = brickManager.Update();
-                    foreach (ShitShooter shitShooter in brickManager.ShitShooters)
-                    {
-                        shitShooter.Update(gameTime, playerBar, life);
-                    }
-                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition, scoreManager);
-                    brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
-                    playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
-                    life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
-                    currentGameState = life.Update();
-                    currentGameState = brickManager.UpdateStageProgress(currentGameState, bricks);
+                    UpdatePlayingLoop(gameTime);
+                    PauseAtReset();
                     break;
+
+                case GameState.Paused:
+                    playerBar.Update(gameTime);
+                    currentGameState = UpdatePausedLoop(currentKeyboardState, previousKeyboardState, gameStateBeforePaus);
+                    break;
+
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
+
                 case GameState.CreatingHighScore:
                     currentGameState = createHighScoreScreen.Update(currentKeyboardState, previousKeyboardState, scoreManager.GetScore());
                     break;
+
                 case GameState.Exiting:
-                    // Här lägger vi logik för att avsluta spelet.
-                    // Fancy exempel: En ruta som frågar om konfirmation på att avsluta spelet, "Yes" "No".
-                    // Lazy exempel: Environment.Exit(0);
                     Environment.Exit(0);
                     break;
+
                 case GameState.GameOver:
                     // Här lägger vi logik för GameOverScreen när den klassen är klar.
+                    // Ta bort detta case bara om vi inte ska ha gameover screen. Inget måste.
                     break;
             }
 
@@ -217,6 +220,20 @@ namespace ArkanoidClone
 
 
             base.Update(gameTime);
+        }
+
+        private void ResetObjects()
+        {
+            stageWasJustSetUp = true;
+            life = new Life();
+            ball.ResetPosition(originalBallPosition); 
+        }
+
+        public GameState UpdatePausedLoop(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState, GameState gameStateBeforePaus)
+        {
+            if (currentKeyboardState.IsKeyDown(Keys.Enter) && !previousKeyboardState.IsKeyDown(Keys.Enter))
+                return gameStateBeforePaus;
+            else return GameState.Paused;
         }
 
         protected override void Draw(GameTime gameTime)
@@ -231,7 +248,8 @@ namespace ArkanoidClone
                     mainMenuScreen.Draw(_spriteBatch);
                     break;
                 case GameState.PlayingStage1:
-
+                case GameState.PlayingStage2:
+                case GameState.Paused:
                     //Draw the walls surrounding the game
                     foreach (var wall in walls)
                     {
@@ -279,59 +297,7 @@ namespace ArkanoidClone
 
                     break;
                 case GameState.SetUpStage2:
-                    nextStageScreen.Draw(_spriteBatch, stage2IsReady);
-                    break;
-                case GameState.PlayingStage2:
-
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
-                    // WORK IN PROGRESS
-
-                    //Draw the walls surrounding the game
-                    foreach (var wall in walls)
-                    {
-                        wall.Draw(_spriteBatch);
-                    }
-
-                    foreach (Brick brick in bricks)
-                    {
-                        brick.Draw(_spriteBatch);
-                    }
-
-                    ball.Draw(_spriteBatch);
-                    _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
-
-                    //Draw score
-                    scoreManager.Draw(_spriteBatch, menuFont);
-
-                    // Draw remaining lives
-                    Vector2 lifeTextPosition = new Vector2(20, 50);
-                    _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
-
-                    if (brickManager.SizeUps != null)
-                    {
-                        foreach (SizeUp sizeUp in brickManager.SizeUps)
-                        {
-                            sizeUp.Draw(_spriteBatch);
-                        }
-                    }
-
-                    if (brickManager.LifeUps != null)
-                    {
-                        foreach (LifeUp lifeUp in brickManager.LifeUps)
-                        {
-                            lifeUp.Draw(_spriteBatch);
-                        }
-                    }
-
-                    if (brickManager.ShitShooters != null)
-                    {
-                        foreach (ShitShooter shitShooter in brickManager.ShitShooters)
-                        {
-                            shitShooter.Draw(_spriteBatch);
-                        }
-                    }
-
+                    nextStageScreen.Draw(_spriteBatch);
                     break;
                 case GameState.ViewingHighScores:
                     highScoreScreen.Draw(_spriteBatch);

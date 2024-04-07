@@ -22,20 +22,20 @@ namespace ArkanoidClone
         private Texture2D lifeUpTexture;
         private Texture2D shitShooterTexture;
         private Texture2D shitBulletTexture;
-        private Texture2D brickTexture;
+        private Texture2D brickTexture1;
+        private Texture2D brickTexture2;
 
-        public BrickManager(Texture2D brickTexture, Texture2D sizeUpTexture, Texture2D lifeUpTexture, Texture2D shitShooterTexture, Texture2D shitBulletTexture)
+        public BrickManager(Texture2D brickTexture1, Texture2D brickTexture2, Texture2D sizeUpTexture, Texture2D lifeUpTexture, Texture2D shitShooterTexture, Texture2D shitBulletTexture)
         {
-            this.brickTexture = brickTexture;
+            this.brickTexture1 = brickTexture1;
+            this.brickTexture2 = brickTexture2;
             this.sizeUpTexture = sizeUpTexture;
             this.lifeUpTexture = lifeUpTexture;
             this.shitShooterTexture = shitShooterTexture;
             this.shitBulletTexture = shitBulletTexture;
-
-            bricks = CreateBrickLayout(brickTexture, 8, 15, 275, 110);
         }
 
-        private List<Brick> CreateBrickLayout(Texture2D brickTexture, int numberOfRows, int numberOfColumns, int startingPositionX, int startingPositionY)
+        private List<Brick> CreateBrickLayout(Texture2D brickTexture, int numberOfRows, int numberOfColumns, int startingPositionX, int startingPositionY, int brickHP)
         {
             List<Brick> newBrickLayout = new List<Brick>();
 
@@ -47,7 +47,7 @@ namespace ArkanoidClone
                     new Vector2(startingPositionX + j * 45, startingPositionY + i * 15),
                     0f,
                     new Rectangle(startingPositionX + j * 45, startingPositionY + i * 15, 45, 15),
-                    1));
+                    brickHP));
                 }
             }
 
@@ -59,36 +59,41 @@ namespace ArkanoidClone
             return bricks;
         }
 
-        public GameState UpdateStageProgress(GameState currentGameState, List<Brick> bricks)
+        public GameState UpdateStageProgress(GameState currentGameState)
         {
             switch (currentGameState)
             {
                 case GameState.PlayingStage1:
-                    if (bricks.Count > 0)
-                    {
-                        return GameState.PlayingStage1;
-                    }
-                    else 
-                    {
-                        //Reset all entities handled by brick manager
-                        sizeUps = new List<SizeUp>();
-                        lifeUps = new List<LifeUp>();
-                        shitShooters = new List<ShitShooter>();
+                    return bricks.Count > 0 ? GameState.PlayingStage1 : GameState.SetUpStage2;
 
-                        // Create brick layout for stage 2
-                        bricks = CreateBrickLayout(brickTexture, 1, 15, 275, 110);
-                        return GameState.SetUpStage2
-                            ;
-                    }
-                    
                 case GameState.PlayingStage2:
-                    if (bricks.Count > 0) { return GameState.PlayingStage2; }
-                    else return GameState.CreatingHighScore;
+                    return bricks.Count > 0 ? GameState.PlayingStage2 : GameState.CreatingHighScore;
 
-            }       
-            return GameState.PlayingStage1;
+            }
+            return GameState.MainMenu;
         }
 
+        public void SetupStage1()
+        {
+            //Reset all entities handled by brick manager
+            sizeUps = new List<SizeUp>();
+            lifeUps = new List<LifeUp>();
+            shitShooters = new List<ShitShooter>();
+
+            // Create brick layout for stage 1        6, 15
+            bricks = CreateBrickLayout(brickTexture1, 6, 15, 275, 110, 1);
+        }
+
+        public void SetupStage2()
+        {
+            //Reset all entities handled by brick manager
+            sizeUps = new List<SizeUp>();
+            lifeUps = new List<LifeUp>();
+            shitShooters = new List<ShitShooter>();
+
+            // Create brick layout for stage 2
+            bricks = CreateBrickLayout(brickTexture2, 6, 15, 275, 110, 2);
+        }
         public PlayerBar UpdateSizeUps(PlayerBar playerBar, GameTime gameTime)
         {
             List<SizeUp> sizeUpsToRemove = new List<SizeUp>();
