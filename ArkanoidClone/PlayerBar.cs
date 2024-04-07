@@ -8,12 +8,14 @@ namespace ArkanoidClone
     public class PlayerBar : Entity
     {
         private Texture2D texture;
-        private Vector2 position; 
+        private Vector2 position;
+        private Vector2 startingPosition;
         private float speed;
         private Rectangle boundingBox;
         public PlayerBar(Texture2D texture, Vector2 position, float speed, Rectangle boundingBox) : base (texture, position, speed, boundingBox) 
         {
             this.texture = texture;
+            this.startingPosition = position;
             this.position = position;
             this.speed = speed;
             this.boundingBox = boundingBox;
@@ -52,15 +54,9 @@ namespace ArkanoidClone
             }
         }
 
-        //public void DecreaseLife() Flyttas till egen klass
-        //{
-        //    lives--;
-        //}
-
-        //public void ResetLives(int initialLives)
-        //{
-        //    lives = initialLives;
-        //}
-
+        public void ResetPosition()
+        {
+            Position = startingPosition;
+        }
     }
 }
