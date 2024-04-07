@@ -14,7 +14,6 @@ namespace ArkanoidClone
     public class Game1 : Game
     {
         private PlayerBar playerBar;
-        private Brick brick;
         private List<Brick> bricks = new List<Brick>();
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
@@ -129,7 +128,7 @@ namespace ArkanoidClone
                         currentGameState = newState;
                     }
                     break;
-                case GameState.Playing:
+                case GameState.PlayingStage1:
                     // Här lägger vi all spellogik
                     List<Entity> allEntities = new List<Entity>();
                     allEntities.Add(playerBar);
@@ -151,6 +150,34 @@ namespace ArkanoidClone
                     playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
                     life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
                     currentGameState = life.Update();
+                    currentGameState = brickManager.UpdateStageProgress(currentGameState, bricks);
+                    break;
+                case GameState.PlayingStage2:
+                    // Här lägger vi all spellogik
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
+                    List<Entity> allEntities = new List<Entity>();
+                    allEntities.Add(playerBar);
+                    allEntities.Add(walls[2]);
+                    allEntities.Add(walls[0]);
+                    allEntities.Add(walls[1]);
+                    foreach (Brick brick in bricks)
+                    {
+                        allEntities.Add(brick);
+                    }
+                    playerBar.Update(gameTime);
+                    bricks = brickManager.Update();
+                    foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+                    {
+                        shitShooter.Update(gameTime, playerBar, life);
+                    }
+                    life = ball.Update(gameTime, allEntities, playerBar, life, originalBallPosition, scoreManager);
+                    brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
+                    playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
+                    life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
+                    currentGameState = life.Update();
+                    currentGameState = brickManager.UpdateStageProgress(currentGameState, bricks);
                     break;
                 case GameState.ViewingHighScores:
                     currentGameState = highScoreScreen.Update(currentKeyboardState, previousKeyboardState);
@@ -186,7 +213,55 @@ namespace ArkanoidClone
                 case GameState.MainMenu:
                     mainMenuScreen.Draw(_spriteBatch);
                     break;
-                case GameState.Playing:
+                case GameState.PlayingStage1:
+
+                    //Draw the walls surrounding the game
+                    foreach (var wall in walls)
+                    {
+                        wall.Draw(_spriteBatch);
+                    }
+
+                    foreach (Brick brick in bricks)
+                    {
+                        brick.Draw(_spriteBatch);
+                    }
+
+                    ball.Draw(_spriteBatch);
+                    _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+
+                    //Draw score
+                    scoreManager.Draw(_spriteBatch, menuFont);
+
+                    // Draw remaining lives
+                    Vector2 lifeTextPosition = new Vector2(20, 50);
+                    _spriteBatch.DrawString(menuFont, $"Lives: {life.RemainingLives}", lifeTextPosition, Color.White);
+
+                    if (brickManager.SizeUps != null)
+                    {
+                        foreach (SizeUp sizeUp in brickManager.SizeUps)
+                        {
+                            sizeUp.Draw(_spriteBatch);
+                        }
+                    }
+
+                    if (brickManager.LifeUps != null)
+                    {
+                        foreach (LifeUp lifeUp in brickManager.LifeUps)
+                        {
+                            lifeUp.Draw(_spriteBatch);
+                        }
+                    }
+
+                    if (brickManager.ShitShooters != null)
+                    {
+                        foreach (ShitShooter shitShooter in brickManager.ShitShooters)
+                        {
+                            shitShooter.Draw(_spriteBatch);
+                        }
+                    }
+
+                    break;
+                case GameState.PlayingStage2:
 
                     //Draw the walls surrounding the game
                     foreach (var wall in walls)

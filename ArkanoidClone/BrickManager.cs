@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.Design;
 using System.Linq;
 using System.Reflection.Metadata;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -55,6 +57,22 @@ namespace ArkanoidClone
         public List<Brick> Update()
         {
             return bricks;
+        }
+
+        public GameState UpdateStageProgress(GameState currentGameState, List<Brick> bricks)
+        {
+            switch (currentGameState)
+            {
+                case GameState.PlayingStage1:
+                    if (bricks.Count > 0) { return GameState.PlayingStage1; }
+                    else return GameState.PlayingStage2;
+                    
+                case GameState.PlayingStage2:
+                    if (bricks.Count > 0) { return GameState.PlayingStage2; }
+                    else return GameState.CreatingHighScore;
+
+            }       
+            return GameState.PlayingStage1;
         }
 
         public PlayerBar UpdateSizeUps(PlayerBar playerBar, GameTime gameTime)

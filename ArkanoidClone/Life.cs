@@ -39,7 +39,7 @@ namespace ArkanoidClone
                 ResetLives();
                 return GameState.CreatingHighScore;
             }
-            return GameState.Playing;
+            return GameState.PlayingStage1;
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
