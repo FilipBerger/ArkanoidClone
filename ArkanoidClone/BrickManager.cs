@@ -64,8 +64,22 @@ namespace ArkanoidClone
             switch (currentGameState)
             {
                 case GameState.PlayingStage1:
-                    if (bricks.Count > 0) { return GameState.PlayingStage1; }
-                    else return GameState.PlayingStage2;
+                    if (bricks.Count > 0)
+                    {
+                        return GameState.PlayingStage1;
+                    }
+                    else 
+                    {
+                        //Reset all entities handled by brick manager
+                        sizeUps = new List<SizeUp>();
+                        lifeUps = new List<LifeUp>();
+                        shitShooters = new List<ShitShooter>();
+
+                        // Create brick layout for stage 2
+                        bricks = CreateBrickLayout(brickTexture, 1, 15, 275, 110);
+                        return GameState.SetUpStage2
+                            ;
+                    }
                     
                 case GameState.PlayingStage2:
                     if (bricks.Count > 0) { return GameState.PlayingStage2; }

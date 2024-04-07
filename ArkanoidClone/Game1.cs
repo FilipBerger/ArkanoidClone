@@ -24,11 +24,13 @@ namespace ArkanoidClone
         private HighScoreScreen highScoreScreen;
         private BrickManager brickManager;
         private CreateHighScoreScreen createHighScoreScreen;
+        private NextStageScreen nextStageScreen;
         private ScoreManager scoreManager;
         private Life life;
         private Vector2 originalBallPosition;
         private GameState currentGameState = GameState.MainMenu;
         private KeyboardState previousKeyboardState;
+        private bool stage2IsReady = false;
 
         public Game1()
         {
@@ -109,6 +111,7 @@ namespace ArkanoidClone
             menuFont = Content.Load<SpriteFont>("MenuFont");
             mainMenuScreen = new MainMenuScreen(menuFont);
             highScoreScreen = new HighScoreScreen(menuFont);
+            nextStageScreen = new NextStageScreen(menuFont);
             createHighScoreScreen = new CreateHighScoreScreen(menuFont);
         }
 
@@ -130,11 +133,13 @@ namespace ArkanoidClone
                     break;
                 case GameState.PlayingStage1:
                     // Här lägger vi all spellogik
-                    List<Entity> allEntities = new List<Entity>();
-                    allEntities.Add(playerBar);
-                    allEntities.Add(walls[2]);
-                    allEntities.Add(walls[0]);
-                    allEntities.Add(walls[1]);
+                    List<Entity> allEntities = new List<Entity>
+                    {
+                        playerBar,
+                        walls[2],
+                        walls[0],
+                        walls[1]
+                    };
                     foreach (Brick brick in bricks)
                     {
                         allEntities.Add(brick);
@@ -152,16 +157,28 @@ namespace ArkanoidClone
                     currentGameState = life.Update();
                     currentGameState = brickManager.UpdateStageProgress(currentGameState, bricks);
                     break;
+                case GameState.SetUpStage2:
+                    stage2IsReady = nextStageScreen.Update(currentKeyboardState, previousKeyboardState, stage2IsReady);
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
+
+                    // Add entity reset logic here.
+                    if (stage2IsReady)
+                        currentGameState = GameState.PlayingStage2;
+                    break;
                 case GameState.PlayingStage2:
                     // Här lägger vi all spellogik
                     // WORK IN PROGRESS
                     // WORK IN PROGRESS
                     // WORK IN PROGRESS
-                    List<Entity> allEntities = new List<Entity>();
-                    allEntities.Add(playerBar);
-                    allEntities.Add(walls[2]);
-                    allEntities.Add(walls[0]);
-                    allEntities.Add(walls[1]);
+                    allEntities = new List<Entity>
+                    {
+                        playerBar,
+                        walls[2],
+                        walls[0],
+                        walls[1]
+                    };
                     foreach (Brick brick in bricks)
                     {
                         allEntities.Add(brick);
@@ -261,7 +278,14 @@ namespace ArkanoidClone
                     }
 
                     break;
+                case GameState.SetUpStage2:
+                    nextStageScreen.Draw(_spriteBatch, stage2IsReady);
+                    break;
                 case GameState.PlayingStage2:
+
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
+                    // WORK IN PROGRESS
 
                     //Draw the walls surrounding the game
                     foreach (var wall in walls)

@@ -52,6 +52,13 @@ namespace ArkanoidClone
             }
         }
 
+        public PlayerBar ResetPosition(PlayerBar playerBar)
+        {
+            playerBar.Position = new Vector2(1224 / 2, 600);
+
+            return playerBar;
+        }
+
         //public void DecreaseLife() Flyttas till egen klass
         //{
         //    lives--;
