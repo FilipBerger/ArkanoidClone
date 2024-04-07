@@ -250,6 +250,9 @@ namespace ArkanoidClone
                 case GameState.PlayingStage1:
                 case GameState.PlayingStage2:
                 case GameState.Paused:
+                    if (currentGameState == GameState.Paused)
+                        ShowPressEnterToRelease(_spriteBatch, menuFont);
+
                     //Draw the walls surrounding the game
                     foreach (var wall in walls)
                     {
@@ -315,6 +318,11 @@ namespace ArkanoidClone
             _spriteBatch.End();
 
             base.Draw(gameTime);
+        }
+
+        private void ShowPressEnterToRelease(SpriteBatch spriteBatch, SpriteFont font)
+        {
+            spriteBatch.DrawString(font, "Press 'Enter' to release the ball!", new Vector2((GraphicsDevice.Viewport.Width / 2) - 123, (GraphicsDevice.Viewport.Height / 2) - 100), Color.Yellow);
         }
     }
 }
