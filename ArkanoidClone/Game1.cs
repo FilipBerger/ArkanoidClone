@@ -145,7 +145,6 @@ namespace ArkanoidClone
             }
             playerBar.Update(gameTime);
             bricks = brickManager.Update();
-            kamikazeManager.Update(gameTime, playerBar, life);
             foreach (ShitShooter shitShooter in brickManager.ShitShooters)
             {
                 shitShooter.Update(gameTime, playerBar, life);
@@ -154,6 +153,7 @@ namespace ArkanoidClone
             brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
             playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
             life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
+            //kamikazeManager.Update(gameTime, playerBar, life);
             currentGameState = brickManager.UpdateStageProgress(currentGameState);
             currentGameState = life.Update(currentGameState);
         }
@@ -206,11 +206,13 @@ namespace ArkanoidClone
                 case GameState.SetUpStage2:
                     ResetObjects();
                     brickManager.SetupStage2();
+
                     currentGameState = nextStageScreen.Update(currentKeyboardState, previousKeyboardState);
                     break;
 
                 case GameState.PlayingStage2:
                     UpdatePlayingLoop(gameTime);
+                    kamikazeManager.Update(gameTime, playerBar, life);
                     PauseAtReset();
                     break;
 
