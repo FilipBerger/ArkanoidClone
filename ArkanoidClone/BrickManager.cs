@@ -1,4 +1,5 @@
-﻿using ArkanoidClone.Powerups;
+﻿using ArkanoidClone.Enemies;
+using ArkanoidClone.Powerups;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;

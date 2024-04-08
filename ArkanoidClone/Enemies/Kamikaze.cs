@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.Enemies
 {
     public class Kamikaze
     {
@@ -20,8 +20,8 @@ namespace ArkanoidClone
         public Kamikaze(Texture2D texture, float speed, Rectangle boundingBox, Vector2 position)
         {
             this.position = position;
-            this.kamikazeTexture = texture;
-            this.kamikazeSpeed = speed;
+            kamikazeTexture = texture;
+            kamikazeSpeed = speed;
             this.boundingBox = boundingBox;
 
         }
@@ -37,7 +37,7 @@ namespace ArkanoidClone
         {
             position += new Vector2(0, direction * kamikazeSpeed * (float)gameTime.ElapsedGameTime.TotalSeconds);
             boundingBox = new Rectangle((int)position.X, (int)position.Y, boundingBox.Width, boundingBox.Height);
-            
+
             if (boundingBox.Intersects(playerBar.BoundingBox) || position.Y > 720)
             {
                 IsMarkedForRemoval = true;
