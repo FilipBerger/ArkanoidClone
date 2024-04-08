@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Metadata.Ecma335;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.Powerups
 {
     public class LifeUp : PowerUp
     {
