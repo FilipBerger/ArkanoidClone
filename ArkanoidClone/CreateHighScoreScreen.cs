@@ -20,15 +20,17 @@ namespace ArkanoidClone
         private Vector2 positionMessage2 = new Vector2(100, 150);
         private Vector2 positionMessage3 = new Vector2(100, 200);
         private bool isEnteringName = true;
-        private int score = 10000; // Placeholder value for score. Add logic to get score in the constructor when proper score counter is implemented.
+        private int score;  
 
         public CreateHighScoreScreen(SpriteFont font)
         {
             this.font = font;
+            
+            
             // Add logic to get score from somewhere.
         }
 
-        public GameState Update(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
+        public GameState Update(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState, int score)
         {
             foreach (var key in currentKeyboardState.GetPressedKeys())
             {

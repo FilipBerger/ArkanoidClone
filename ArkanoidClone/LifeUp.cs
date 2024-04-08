@@ -39,6 +39,11 @@ namespace ArkanoidClone
                 effectApplied = true;
             }
             return life;
-        } 
+        }
+
+        public bool EffectApplied
+        {
+            get { return effectApplied; }
+        }
     }
 }

@@ -36,7 +36,7 @@ namespace ArkanoidClone
                 switch (selectedOption)
                 {
                     case 0:
-                        return GameState.Playing;
+                        return GameState.SetUpStage1;
                     case 1:
                         return GameState.ViewingHighScores;
                     case 2:

@@ -8,7 +8,11 @@ namespace ArkanoidClone
     public enum GameState
     {
         MainMenu,
-        Playing,
+        PlayingStage1,
+        PlayingStage2,
+        SetUpStage1,
+        SetUpStage2,
+        Paused,
         ViewingHighScores,
         CreatingHighScore,
         Exiting,

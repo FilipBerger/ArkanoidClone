@@ -27,19 +27,25 @@ namespace ArkanoidClone
             remainingLives++;
         }
 
+        public void KamikazeHit()
+        {
+            remainingLives -= 3;
+        }
+
+
         public void ResetLives()
         {
             remainingLives = INITIAL_LIVES;
         }
 
-        public GameState Update()
+        public GameState Update(GameState currentGameState)
         {
             if (remainingLives <= 0)
             {
                 ResetLives();
                 return GameState.CreatingHighScore;
             }
-            return GameState.Playing;
+            return currentGameState;
         }
 
         public void Draw(SpriteBatch spriteBatch, SpriteFont font)
