@@ -140,8 +140,8 @@ namespace ArkanoidClone
             brickManager = ball.DetectCollisionWithBrickOrShitShooter(brickManager);
             playerBar = brickManager.UpdateSizeUps(playerBar, gameTime);
             life = brickManager.UpdateLifeUps(playerBar, gameTime, life);
-            currentGameState = life.Update(currentGameState);
             currentGameState = brickManager.UpdateStageProgress(currentGameState);
+            currentGameState = life.Update(currentGameState);
         }
 
         private void PauseAtReset()
