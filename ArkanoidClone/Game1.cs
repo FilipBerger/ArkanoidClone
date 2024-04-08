@@ -32,6 +32,7 @@ namespace ArkanoidClone
         private GameState gameStateBeforePaus;
         private KeyboardState previousKeyboardState;
         private bool stageWasJustSetUp = true;
+        private KamikazeManager kamikazeManager;
 
         public Game1()
         {
@@ -99,6 +100,8 @@ namespace ArkanoidClone
             //vad man får för poäng vid träff
             scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
 
+            kamikazeManager = new KamikazeManager(Content.Load<Texture2D>("plane"), 100);
+
             life = new Life();
             originalBallPosition = new Vector2(GraphicsDevice.Viewport.Width / 2, GraphicsDevice.Viewport.Height / 2); // Spara den ursprungliga positionen för bollen
 
@@ -132,6 +135,7 @@ namespace ArkanoidClone
             }
             playerBar.Update(gameTime);
             bricks = brickManager.Update();
+            kamikazeManager.Update(gameTime, playerBar, life);
             foreach (ShitShooter shitShooter in brickManager.ShitShooters)
             {
                 shitShooter.Update(gameTime, playerBar, life);
@@ -273,6 +277,8 @@ namespace ArkanoidClone
 
                     ball.Draw(_spriteBatch);
                     _spriteBatch.Draw(playerBar.Texture, playerBar.BoundingBox, Color.White);
+
+                    kamikazeManager.Draw(_spriteBatch);
 
                     //Draw score
                     scoreManager.Draw(_spriteBatch, menuFont);
