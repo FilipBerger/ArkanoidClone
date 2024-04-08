@@ -1,88 +1,193 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<ClassDiagram MajorVersion="1" MinorVersion="1">
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
   <Class Name="ArkanoidClone.Entity">
-    <Position X="6" Y="0.5" Width="1.5" />
+    <Position X="8.5" Y="0.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAQAQAAAAAAAAAAAAAAAAABgAAAAAAA=</HashCode>
+      <HashCode>AAAAAAAAAAAAAgAgAAAAIAABACAAAwAgAAIAAAAAAAA=</HashCode>
       <FileName>Entity.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Enemy">
-    <Position X="4.75" Y="4.5" Width="1.5" />
+    <Position X="5.25" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Enemy.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAA=</HashCode>
+      <FileName>Enemies\Enemy.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.PlayerBar">
-    <Position X="3.75" Y="2.5" Width="1.5" />
+    <Position X="0.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PlayerBar.cs</FileName>
+      <HashCode>AAQAAAAACAAAAAAAAAAAIAAAAAAAAwAgAAAAAAACAAA=</HashCode>
+      <FileName>Player\PlayerBar.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Wall">
-    <Position X="8.25" Y="2.5" Width="1.5" />
+    <Position X="12" Y="4.5" Width="1.5" />
+    <NestedTypes>
+      <Enum Name="ArkanoidClone.Wall.WallPosition" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Wall.cs</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Wall.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ArkanoidClone.PowerUps">
-    <Position X="10.25" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>PowerUps.cs</FileName>
-    </TypeIdentifier>
-  </Class>
-  <Class Name="ArkanoidClone.Ball">
-    <Position X="1.5" Y="2.5" Width="1.5" />
-    <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Ball.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Wall.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Brick">
-    <Position X="7.25" Y="4.5" Width="1.5" />
+    <Position X="7.5" Y="7.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Brick.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAgBQAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Brick.cs</FileName>
     </TypeIdentifier>
   </Class>
   <Class Name="ArkanoidClone.Destroyable">
-    <Position X="6" Y="2.5" Width="1.5" />
+    <Position X="6.25" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
-      <FileName>Destroyable.cs</FileName>
+      <HashCode>AAAAAAAAAAAAAAAAAAAABAAAAAAAAAAEAAAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Destroyable.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ArkanoidClone.Highscore">
-    <Position X="12.75" Y="0.75" Width="1.5" />
+  <Class Name="ArkanoidClone.SizeUp" Collapsed="true">
+    <Position X="16.5" Y="6" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Highscore.cs</FileName>
+      <HashCode>AAQAAAAAAAAAAIAAAAAAAAAAACAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Powerups\SizeUp.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ArkanoidClone.Stage">
-    <Position X="12.75" Y="3.75" Width="1.5" />
+  <Class Name="ArkanoidClone.ShitShooter">
+    <Position X="5.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Stage.cs</FileName>
+      <HashCode>AAQAAAAAAIAAJgBAAAAAAAAAAAAAAAAAAAAAAgAIAAA=</HashCode>
+      <FileName>Enemies\ShitShooter.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ArkanoidClone.Game">
-    <Position X="14.75" Y="3.75" Width="1.5" />
+  <Class Name="ArkanoidClone.KamikazeManager" Collapsed="true">
+    <Position X="3.25" Y="10.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>Game.cs</FileName>
+      <HashCode>AAwAAAAgAAAAAgAAAgACAAAAAAAAEIAAAAQAAAAAAAA=</HashCode>
+      <FileName>Enemies\KamikazeManager.cs</FileName>
     </TypeIdentifier>
   </Class>
-  <Class Name="ArkanoidClone.SizeUp">
+  <Class Name="Ball">
+    <Position X="3" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQQAAAACAAAAgAAAABAAAAEAAQAAAAAAAAAAAAEAAA=</HashCode>
+      <FileName>GameObjects\Ball.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.PowerUp" Collapsed="true">
+    <Position X="15.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Powerups\PowerUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Powerups.LifeUp" Collapsed="true">
+    <Position X="14.25" Y="6" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAIAAAAAAAAAAACAAAAAAAAAAAAAAgAA=</HashCode>
+      <FileName>Powerups\LifeUp.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.GameObjects.Stage" Collapsed="true">
+    <Position X="13" Y="3" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAAgAAAAAAAAAAAAAAAQAAAAAAAIAAAAAAAAA=</HashCode>
+      <FileName>GameObjects\Stage.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.GameObjects.MainMenuScreen" Collapsed="true">
+    <Position X="13" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEYAAAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>GameObjects\MainMenuScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.ScoreStuff.HighScoreScreen" Collapsed="true">
+    <Position X="17" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYABAAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ScoreStuff\HighScoreScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.ShitBullet" Collapsed="true">
     <Position X="9.75" Y="4.5" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAA=</HashCode>
-      <FileName>SizeUp.cs</FileName>
+      <HashCode>AAQAAAAAgAAABgAAAAAAIAAAAAAAAwAgAAAAAAAEAAA=</HashCode>
+      <FileName>Enemies\Shitbullet.cs</FileName>
     </TypeIdentifier>
   </Class>
+  <Class Name="ArkanoidClone.Enemies.Kamikaze" Collapsed="true">
+    <Position X="3.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAggAAAJgAAAAACIAAAAAAAEAAgAAAAAAAEAAA=</HashCode>
+      <FileName>Enemies\Kamikaze.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.BrickManager" Collapsed="true">
+    <Position X="7.5" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAIAAABAEKAIAQAADBEAABAQAAAAAIIAAAAABAGDA=</HashCode>
+      <FileName>GameObjects\BrickManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.NextStageScreen" Collapsed="true">
+    <Position X="13" Y="2.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAYAAQAAAAAAAgAAAAAAIAAAAAAAAAAAAAAAAAAAACA=</HashCode>
+      <FileName>GameObjects\NextStageScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Life" Collapsed="true">
+    <Position X="11" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAAAAAgAAgEAAAAAAAAiABAAAoAAAAAAAAAA=</HashCode>
+      <FileName>Player\Life.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.ScoreStuff.CreateHighScoreScreen" Collapsed="true">
+    <Position X="17" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAcAAAAAAAcAAgAAQAEIAAAAAAAIAAAAAAgEAAAAAAA=</HashCode>
+      <FileName>ScoreStuff\CreateHighScoreScreen.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.ScoreStuff.HighScore" Collapsed="true">
+    <Position X="17" Y="2" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAEAAAAAAAAAAAgAAAEIAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>ScoreStuff\HighScore.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.HighScoreManager" Collapsed="true">
+    <Position X="17" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAABAAAAAAAQAAAAAAAAAAEAAAAAAAAAABAE=</HashCode>
+      <FileName>ScoreStuff\HighScoreManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.ScoreStuff.ScoreManager" Collapsed="true">
+    <Position X="17" Y="1.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAIAAAAAgAAAAAIAAAAAIAAAAEAAAAAgAAIAEA=</HashCode>
+      <FileName>ScoreStuff\ScoreManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ArkanoidClone.Game1" Collapsed="true">
+    <Position X="13" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAUIgAMgAgAACwgBAAAAAAAEAQAAQBBCIIEAAAAAQgQ=</HashCode>
+      <FileName>Game1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="ArkanoidClone.GameState" Collapsed="true">
+    <Position X="15" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAggAAAAAAAAAAAEgAAAAAQAAAAAgAAQEAAgAAAAAA=</HashCode>
+      <FileName>GameState.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
   <Font Name="Segoe UI" Size="9" />
 </ClassDiagram>
