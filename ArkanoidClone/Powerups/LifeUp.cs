@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Reflection.Metadata.Ecma335;
+using ArkanoidClone.Player;
 
 namespace ArkanoidClone.Powerups
 {
