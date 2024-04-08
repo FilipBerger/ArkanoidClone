@@ -1,7 +1,9 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Media;
 using System;
 using System.Collections.Generic;
 using System.Net.Http.Headers;
@@ -118,7 +120,15 @@ namespace ArkanoidClone
             highScoreScreen = new HighScoreScreen(menuFont);
             nextStageScreen = new NextStageScreen(menuFont);
             createHighScoreScreen = new CreateHighScoreScreen(menuFont);
+
+            //Musik
+            Song backgroundMusic = Content.Load<Song>("Metal-Man-Stage");
+            MediaPlayer.IsRepeating = true;
+            MediaPlayer.Volume = 0.1f;
+            MediaPlayer.Play(backgroundMusic);
+
         }
+
 
         private void UpdatePlayingLoop(GameTime gameTime)
         {
