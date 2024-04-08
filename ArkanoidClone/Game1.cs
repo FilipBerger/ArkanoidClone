@@ -1,4 +1,5 @@
-﻿using ArkanoidClone.Powerups;
+﻿using ArkanoidClone.GameObjects;
+using ArkanoidClone.Powerups;
 using ArkanoidClone.ScoreStuff;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
