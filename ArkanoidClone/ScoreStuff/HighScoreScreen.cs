@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 
 
-namespace ArkanoidClone
+namespace ArkanoidClone.ScoreStuff
 {
     public class HighScoreScreen
     {

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.ScoreStuff
 {
     public class HighScore
     {

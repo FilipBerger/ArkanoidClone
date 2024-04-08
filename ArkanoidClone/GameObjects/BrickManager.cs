@@ -1,14 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using ArkanoidClone.Powerups;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.Design;
-using System.Linq;
-using System.Reflection.Metadata;
-using System.Reflection.Metadata.Ecma335;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace ArkanoidClone
 {
