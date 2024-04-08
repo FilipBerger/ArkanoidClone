@@ -174,6 +174,13 @@ namespace ArkanoidClone
                     ResetObjects();
                     scoreManager = scoreManager = new ScoreManager(brickHitPoints: 50, enemyHitPoints: 100);
                     brickManager.SetupStage1();
+                    playerBar = new PlayerBar(Content.Load<Texture2D>("49-Breakout-Tiles"),
+                new Vector2(GraphicsDevice.Viewport.Width / 2, 600),
+                500,
+                new Rectangle(GraphicsDevice.Viewport.Width / 2,
+                600,
+                100,
+                20));
                     currentGameState = GameState.PlayingStage1;
                     break;
 
@@ -226,7 +233,7 @@ namespace ArkanoidClone
         {
             stageWasJustSetUp = true;
             life = new Life();
-            ball.ResetPosition(originalBallPosition); 
+            ball.ResetPosition(originalBallPosition);
         }
 
         public GameState UpdatePausedLoop(KeyboardState currentKeyboardState, KeyboardState previousKeyboardState, GameState gameStateBeforePaus)
