@@ -27,6 +27,12 @@ namespace ArkanoidClone
             remainingLives++;
         }
 
+        public void KamikazeHit()
+        {
+            remainingLives -= 3;
+        }
+
+
         public void ResetLives()
         {
             remainingLives = INITIAL_LIVES;
