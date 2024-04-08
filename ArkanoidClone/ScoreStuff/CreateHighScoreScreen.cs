@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.ScoreStuff
 {
     public class CreateHighScoreScreen
     {
@@ -20,13 +20,13 @@ namespace ArkanoidClone
         private Vector2 positionMessage2 = new Vector2(100, 150);
         private Vector2 positionMessage3 = new Vector2(100, 200);
         private bool isEnteringName = true;
-        private int score;  
+        private int score;
 
         public CreateHighScoreScreen(SpriteFont font)
         {
             this.font = font;
-            
-            
+
+
             // Add logic to get score from somewhere.
         }
 

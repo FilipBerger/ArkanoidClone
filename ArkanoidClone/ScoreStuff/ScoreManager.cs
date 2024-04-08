@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace ArkanoidClone
+namespace ArkanoidClone.ScoreStuff
 {
     public class ScoreManager
     {
@@ -9,11 +9,11 @@ namespace ArkanoidClone
         private int brickHitPoints;
         private int enemyHitPoints;
 
-        public ScoreManager (int brickHitPoints, int enemyHitPoints)
+        public ScoreManager(int brickHitPoints, int enemyHitPoints)
         {
             this.brickHitPoints = brickHitPoints;
             this.enemyHitPoints = enemyHitPoints;
-            this.score = 0;
+            score = 0;
         }
 
         public void BrickHit() //inuti brickhit och enemyhit kan man lägga till logik från ball.cs och enemy.cs för när dem går sönder
